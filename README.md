@@ -24,8 +24,7 @@
 | الملف | الوصف |
 |-------|-------|
 | `index.html` | التطبيق كامل |
-| `manifest.json` | بيانات PWA |
-| `sw.js` | Service Worker للعمل offline |
+| `icon-192.png` | الصورة |
 
 ## الترخيص
 
