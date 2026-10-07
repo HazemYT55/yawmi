@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#1a237e">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="./manifest.json">
 <title>يومي - منظّم الطالب الذكي</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -286,7 +284,7 @@
   .nav-item {
     display: flex; flex-direction: column; align-items: center;
     color: var(--text-light); font-size: 10px; cursor: pointer;
-    padding: 5px 12px; border-radius: 12px; transition: 0.2s; gap: 2px;
+    padding: 5px 10px; border-radius: 12px; transition: 0.2s; gap: 2px;
   }
   .nav-item.active { color: var(--primary); }
   body.dark .nav-item.active { color: #7986cb; }
@@ -490,6 +488,22 @@
     margin-bottom: 10px; font-size: 13px; line-height: 1.6;
   }
   .tactical-tip strong { display: block; margin-bottom: 4px; font-size: 14px; }
+
+  /* Download page */
+  #downloadScreen .btn {
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    padding: 14px;
+    margin-top: 0;
+  }
+  #downloadScreen ol {
+    padding-right: 25px;
+    margin: 8px 0;
+  }
+  #downloadScreen ol li {
+    margin-bottom: 4px;
+  }
 </style>
 </head>
 <body>
@@ -690,6 +704,75 @@
     </div>
   </div>
 
+  <!-- ============ شاشة التحميل ============ -->
+  <div id="downloadScreen" class="hidden">
+    
+    <div class="card" style="text-align: center;">
+      <div style="font-size: 60px; margin-bottom: 10px;">📱</div>
+      <h2 style="justify-content: center;"><div class="title-text">تحميل التطبيق</div></h2>
+      <p style="font-size: 14px; color: var(--text-light); margin-bottom: 20px; line-height: 1.6;">
+        حمّل نسخة من التطبيق تشتغل على تليفونك أو كمبيوترك
+      </p>
+    </div>
+
+    <div class="card">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="font-size: 40px;">🤖</div>
+        <div style="flex: 1;">
+          <div style="font-size: 16px; font-weight: bold; color: var(--primary);">Android</div>
+          <div style="font-size: 12px; color: var(--text-light);">يعمل على كل أجهزة أندرويد</div>
+        </div>
+      </div>
+      <a href="yawmi.apk" download="yawmi.apk" class="btn btn-success">
+        ⬇️ تحميل ملف APK
+      </a>
+      <p style="font-size: 12px; color: var(--text-light); margin-top: 10px; text-align: center;">
+        الحجم: ~5 MB • بدون إعلانات
+      </p>
+    </div>
+
+    <div class="card">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="font-size: 40px;">💻</div>
+        <div style="flex: 1;">
+          <div style="font-size: 16px; font-weight: bold; color: var(--primary);">Windows</div>
+          <div style="font-size: 12px; color: var(--text-light);">يعمل على أجهزة الكمبيوتر</div>
+        </div>
+      </div>
+      <a href="yawmi.hta" download="yawmi.hta" class="btn">
+        ⬇️ تحميل ملف HTA
+      </a>
+      <p style="font-size: 12px; color: var(--text-light); margin-top: 10px; text-align: center;">
+        الحجم: صغير جداً • يعمل بدون تثبيت
+      </p>
+    </div>
+
+    <div class="card">
+      <h2><div class="title-text">📖 طريقة التثبيت</div></h2>
+      
+      <div style="margin-bottom: 15px;">
+        <div style="font-size: 14px; font-weight: bold; color: var(--primary); margin-bottom: 8px;">🤖 على أندرويد:</div>
+        <ol style="font-size: 13px; color: var(--text-light); line-height: 1.8;">
+          <li>حمّل ملف <strong>yawmi.apk</strong></li>
+          <li>افتح الملف من <strong>مدير الملفات</strong></li>
+          <li>اسمح بـ <strong>"تثبيت من مصادر غير معروفة"</strong></li>
+          <li>اضغط <strong>تثبيت</strong></li>
+          <li>افتح التطبيق واستمتع 🎉</li>
+        </ol>
+      </div>
+
+      <div>
+        <div style="font-size: 14px; font-weight: bold; color: var(--primary); margin-bottom: 8px;">💻 على ويندوز:</div>
+        <ol style="font-size: 13px; color: var(--text-light); line-height: 1.8;">
+          <li>حمّل ملف <strong>yawmi.hta</strong></li>
+          <li>دوس عليه مرتين</li>
+          <li>هيفتح كتطبيق عادي 🎉</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
 <div class="bottom-nav">
@@ -704,6 +787,9 @@
   </div>
   <div class="nav-item" onclick="switchTab('stats')" id="navStats">
     <span class="nav-icon">📊</span><span>إحصائيات</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('download')" id="navDownload">
+    <span class="nav-icon">⬇️</span><span>التحميل</span>
   </div>
 </div>
 
@@ -1618,7 +1704,7 @@ function shareProgress() {
 }
 
 function switchTab(tab) {
-  ['schedule', 'input', 'stats', 'workout'].forEach(t => {
+  ['schedule', 'input', 'stats', 'workout', 'download'].forEach(t => {
     document.getElementById(t + 'Screen').classList.toggle('hidden', t !== tab);
     document.getElementById('nav' + t.charAt(0).toUpperCase() + t.slice(1))
       .classList.toggle('active', t === tab);
@@ -1811,15 +1897,6 @@ function init() {
   }, 60000);
   
   setInterval(saveState, 30000);
-  
-  // Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('✅ SW registered'))
-        .catch(err => console.log('❌ SW failed:', err));
-    });
-  }
 }
 
 document.addEventListener('touchstart', function unlockAudio() {
