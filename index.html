@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1a237e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="./manifest.json">
+<title>يومي - منظّم الطالب الذكي</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; -webkit-tap-highlight-color: transparent; }
+  
+  :root {
+    --primary: #1a237e;
+    --primary-light: #3949ab;
+    --bg: #f0f2f5;
+    --card: #ffffff;
+    --text: #333;
+    --text-light: #666;
+    --border: #e0e0e0;
+    --success: #43a047;
+    --warning: #fb8c00;
+    --danger: #e53935;
+    --quran: #fdd835;
+    --sleep: #8e24aa;
+    --school: #1e88e5;
+  }
+  
+  body.dark {
+    --bg: #121212;
+    --card: #1e1e1e;
+    --text: #e0e0e0;
+    --text-light: #aaa;
+    --border: #333;
+  }
+  
+  body {
+    background: var(--bg); color: var(--text);
+    padding-bottom: 90px; transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
+  }
+  
+  header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white; padding: 16px 18px;
+    border-radius: 0 0 25px 25px;
+    box-shadow: 0 4px 20px rgba(26,35,126,0.3);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: center; }
+  header h1 { font-size: 20px; margin-bottom: 3px; }
+  header p { font-size: 11px; opacity: 0.9; }
+  
+  .header-actions { display: flex; gap: 6px; }
+  .icon-btn {
+    background: rgba(255,255,255,0.2); border: none; color: white;
+    width: 38px; height: 38px; border-radius: 50%;
+    font-size: 16px; cursor: pointer; transition: 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .icon-btn:active { transform: scale(0.9); background: rgba(255,255,255,0.35); }
+  
+  .info-bar { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .info-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(255,255,255,0.18); padding: 4px 10px;
+    border-radius: 15px; font-size: 11px;
+  }
+  
+  .container { padding: 15px; max-width: 550px; margin: auto; }
+  
+  .card {
+    background: var(--card); border-radius: 18px; padding: 18px;
+    margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    animation: slideUp 0.4s ease-out;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .card h2 {
+    font-size: 16px; color: var(--primary); margin-bottom: 15px;
+    display: flex; align-items: center; gap: 8px; justify-content: space-between;
+  }
+  body.dark .card h2 { color: #7986cb; }
+  .card h2 .title-text { display: flex; align-items: center; gap: 8px; }
+  
+  label {
+    display: block; font-size: 13px; margin-bottom: 6px;
+    color: var(--text-light); font-weight: 600;
+  }
+  input, select, textarea {
+    width: 100%; padding: 12px; border: 2px solid var(--border);
+    border-radius: 12px; font-size: 15px; margin-bottom: 12px;
+    background: var(--card); color: var(--text);
+    transition: border 0.3s; font-family: inherit;
+  }
+  input:focus, select:focus { border-color: var(--primary-light); outline: none; }
+  
+  .btn {
+    width: 100%; padding: 15px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white; border: none; border-radius: 14px; font-size: 16px;
+    font-weight: bold; cursor: pointer; margin-top: 8px;
+    box-shadow: 0 4px 12px rgba(26,35,126,0.3);
+    transition: transform 0.1s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-secondary { background: linear-gradient(135deg, #fb8c00, #ef6c00); }
+  .btn-danger { background: linear-gradient(135deg, #e53935, #c62828); }
+  .btn-success { background: linear-gradient(135deg, #43a047, #2e7d32); }
+  .btn-small { padding: 10px; font-size: 14px; margin-top: 5px; }
+  
+  .toggle-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px; background: var(--bg); border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  .toggle-row .toggle-label {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600;
+  }
+  .toggle {
+    position: relative; width: 50px; height: 28px;
+    background: #ccc; border-radius: 14px; cursor: pointer;
+    transition: 0.3s;
+  }
+  .toggle.on { background: var(--success); }
+  .toggle::after {
+    content: ''; position: absolute; top: 3px; left: 3px;
+    width: 22px; height: 22px; background: white;
+    border-radius: 50%; transition: 0.3s;
+  }
+  .toggle.on::after { left: 25px; }
+  
+  .homework-item { display: flex; gap: 6px; margin-bottom: 8px; }
+  .homework-item input { margin-bottom: 0; font-size: 14px; padding: 10px; }
+  .homework-item input[type="text"] { flex: 2; }
+  .homework-item input[type="time"] { flex: 1; }
+  .homework-item button {
+    background: var(--danger); color: white; border: none;
+    border-radius: 12px; padding: 0 14px; font-size: 18px; cursor: pointer;
+  }
+  .add-hw {
+    background: transparent; color: var(--primary); border: 2px dashed var(--primary-light);
+    padding: 12px; width: 100%; border-radius: 12px; font-size: 14px;
+    font-weight: bold; cursor: pointer; margin-bottom: 12px;
+  }
+  body.dark .add-hw { color: #7986cb; border-color: #5c6bc0; }
+  
+  .mood-selector {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  }
+  .mood-option {
+    padding: 12px 8px; border-radius: 12px; text-align: center;
+    border: 2px solid var(--border); background: var(--card);
+    cursor: pointer; transition: 0.2s;
+  }
+  .mood-option.selected {
+    border-color: var(--primary-light); background: rgba(57,73,171,0.1);
+    transform: scale(1.03);
+  }
+  .mood-emoji { font-size: 28px; display: block; margin-bottom: 4px; }
+  .mood-text { font-size: 11px; font-weight: 600; color: var(--text); }
+  
+  .timeline { position: relative; padding-right: 30px; }
+  .timeline::before {
+    content: ''; position: absolute; right: 10px; top: 0; bottom: 0;
+    width: 3px; background: var(--border); border-radius: 3px;
+  }
+  
+  .task {
+    position: relative; background: var(--card); border-radius: 14px;
+    padding: 14px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    border-right: 5px solid var(--primary-light);
+    transition: all 0.3s; animation: slideUp 0.4s ease-out backwards;
+  }
+  .task::before {
+    content: ''; position: absolute; right: -25px; top: 20px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--primary-light); border: 3px solid var(--card);
+    box-shadow: 0 0 0 2px var(--primary-light);
+  }
+  
+  .task.study { border-color: var(--success); }
+  .task.study::before { background: var(--success); box-shadow: 0 0 0 2px var(--success); }
+  .task.sport { border-color: var(--warning); }
+  .task.sport::before { background: var(--warning); box-shadow: 0 0 0 2px var(--warning); }
+  .task.quran { border-color: var(--quran); }
+  .task.quran::before { background: var(--quran); box-shadow: 0 0 0 2px var(--quran); }
+  .task.sleep { border-color: var(--sleep); }
+  .task.sleep::before { background: var(--sleep); box-shadow: 0 0 0 2px var(--sleep); }
+  .task.school { border-color: var(--school); }
+  .task.school::before { background: var(--school); box-shadow: 0 0 0 2px var(--school); }
+  .task.meal { border-color: #6d4c41; }
+  .task.meal::before { background: #6d4c41; box-shadow: 0 0 0 2px #6d4c41; }
+  
+  .task.done { opacity: 0.5; }
+  .task.done .task-title { text-decoration: line-through; }
+  .task.done::before { background: var(--success) !important; box-shadow: 0 0 0 2px var(--success) !important; }
+  .task.current {
+    transform: scale(1.02);
+    box-shadow: 0 4px 20px rgba(57,73,171,0.3);
+    border-right-width: 7px;
+  }
+  .task.current::before { animation: pulse-dot 1.5s infinite; }
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+  }
+  
+  .task-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .task-time { font-size: 11px; color: var(--text-light); font-weight: bold; margin-bottom: 4px; }
+  .task-title { font-size: 15px; color: var(--text); font-weight: 600; flex: 1; }
+  .task-desc { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+  
+  .task-check {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--border); background: transparent;
+    cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--success); font-size: 16px; font-weight: bold;
+  }
+  .task-check.done { background: var(--success); border-color: var(--success); color: white; }
+  
+  .pomodoro-btn {
+    background: rgba(229,57,53,0.1); color: var(--danger);
+    border: 1px solid var(--danger); border-radius: 20px;
+    padding: 4px 12px; font-size: 11px; font-weight: bold;
+    cursor: pointer; margin-top: 6px;
+  }
+  
+  .progress-container {
+    background: var(--card); border-radius: 18px; padding: 18px;
+    margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .progress-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+  .progress-label { font-size: 14px; font-weight: 600; }
+  .progress-percent { font-size: 18px; font-weight: bold; color: var(--primary); }
+  body.dark .progress-percent { color: #7986cb; }
+  .progress-bar {
+    height: 12px; background: var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light), #5c6bc0);
+    border-radius: 10px; transition: width 0.5s ease;
+    background-size: 200% 100%; animation: shimmer 2s infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
+  .stat-card {
+    background: var(--card); border-radius: 14px; padding: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center;
+  }
+  .stat-value { font-size: 22px; font-weight: bold; color: var(--primary); }
+  body.dark .stat-value { color: #7986cb; }
+  .stat-label { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+  
+  .badges-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .badge-item {
+    text-align: center; padding: 10px 5px; border-radius: 12px;
+    background: var(--bg); transition: 0.3s; opacity: 0.4;
+  }
+  .badge-item.unlocked {
+    opacity: 1; background: linear-gradient(135deg, #fff9c4, #ffeb3b);
+    box-shadow: 0 4px 12px rgba(255,235,59,0.4);
+  }
+  .badge-icon { font-size: 28px; }
+  .badge-name { font-size: 10px; font-weight: bold; margin-top: 4px; color: var(--text); }
+  
+  .hidden { display: none !important; }
+  
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--card); border-top: 1px solid var(--border);
+    display: flex; justify-content: space-around; padding: 8px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.08); z-index: 200;
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center;
+    color: var(--text-light); font-size: 10px; cursor: pointer;
+    padding: 5px 12px; border-radius: 12px; transition: 0.2s; gap: 2px;
+  }
+  .nav-item.active { color: var(--primary); }
+  body.dark .nav-item.active { color: #7986cb; }
+  .nav-item .nav-icon { font-size: 20px; }
+  
+  .current-banner {
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+    color: white; border-radius: 18px; padding: 16px;
+    margin-bottom: 15px; box-shadow: 0 4px 15px rgba(67,160,71,0.3);
+    animation: slideUp 0.4s;
+  }
+  .current-banner-label { font-size: 11px; opacity: 0.9; }
+  .current-banner-title { font-size: 17px; font-weight: bold; margin: 4px 0; }
+  .current-banner-time { font-size: 13px; }
+  .countdown {
+    background: rgba(255,255,255,0.25); padding: 3px 10px;
+    border-radius: 20px; display: inline-block; font-weight: bold;
+    font-size: 12px; margin-top: 6px;
+  }
+  
+  .empty { text-align: center; padding: 40px 20px; color: var(--text-light); }
+  .empty-icon { font-size: 60px; margin-bottom: 10px; opacity: 0.5; }
+  
+  .confetti {
+    position: fixed; width: 10px; height: 10px; top: -10px;
+    z-index: 999; pointer-events: none; border-radius: 2px;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+  
+  .toast {
+    position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: #333; color: white; padding: 12px 24px; border-radius: 25px;
+    font-size: 14px; z-index: 1000; opacity: 0;
+    transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    max-width: 90%; text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 500; opacity: 0; pointer-events: none; transition: 0.3s;
+    padding: 20px;
+  }
+  .modal-overlay.show { opacity: 1; pointer-events: auto; }
+  .modal {
+    background: var(--card); border-radius: 20px; padding: 24px;
+    max-width: 400px; width: 100%; text-align: center;
+    transform: scale(0.9); transition: 0.3s;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-overlay.show .modal { transform: scale(1); }
+  .modal-icon { font-size: 60px; margin-bottom: 10px; }
+  .modal h3 { font-size: 20px; margin-bottom: 10px; color: var(--primary); }
+  body.dark .modal h3 { color: #7986cb; }
+  .modal p { font-size: 14px; color: var(--text-light); margin-bottom: 20px; line-height: 1.6; }
+  
+  .notif-banner {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-200px);
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white; padding: 14px 20px; border-radius: 14px;
+    z-index: 999; opacity: 0; transition: 0.4s;
+    box-shadow: 0 6px 20px rgba(26,35,126,0.4);
+    max-width: 90%; min-width: 280px;
+  }
+  .notif-banner.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .notif-title { font-weight: bold; font-size: 14px; margin-bottom: 3px; }
+  .notif-body { font-size: 12px; opacity: 0.9; }
+  
+  .pomodoro-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 600; opacity: 0; pointer-events: none; transition: 0.3s;
+    padding: 20px;
+  }
+  .pomodoro-overlay.show { opacity: 1; pointer-events: auto; }
+  .pomodoro-box {
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    color: white; border-radius: 30px; padding: 40px 30px;
+    text-align: center; max-width: 400px; width: 100%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  }
+  .pomodoro-mode { font-size: 16px; opacity: 0.85; margin-bottom: 15px; }
+  .pomodoro-ring {
+    width: 220px; height: 220px; margin: 0 auto 20px;
+    position: relative;
+  }
+  .pomodoro-ring svg { transform: rotate(-90deg); }
+  .pomodoro-ring .bg-circle { fill: none; stroke: rgba(255,255,255,0.15); stroke-width: 10; }
+  .pomodoro-ring .progress-circle {
+    fill: none; stroke: #fdd835; stroke-width: 10; stroke-linecap: round;
+    stroke-dasharray: 628; stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+  }
+  .pomodoro-time-inner {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 42px; font-weight: bold; font-variant-numeric: tabular-nums;
+  }
+  .pomodoro-controls { display: flex; gap: 10px; margin-top: 20px; }
+  .pomodoro-controls .btn { flex: 1; padding: 12px; font-size: 14px; }
+  .sound-selector {
+    display: flex; gap: 8px; margin-top: 15px; justify-content: center;
+    flex-wrap: wrap;
+  }
+  .sound-btn {
+    background: rgba(255,255,255,0.2); color: white; border: none;
+    padding: 8px 14px; border-radius: 20px; font-size: 12px;
+    cursor: pointer; transition: 0.2s;
+  }
+  .sound-btn.active { background: #fdd835; color: #333; font-weight: bold; }
+  
+  .stopwatch-display {
+    font-size: 56px; font-weight: bold; text-align: center;
+    font-variant-numeric: tabular-nums; margin: 20px 0;
+    color: var(--warning);
+  }
+  .stopwatch-controls {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  
+  .weather-card {
+    background: linear-gradient(135deg, #29b6f6, #0288d1);
+    color: white; border-radius: 18px; padding: 18px;
+    margin-bottom: 15px; box-shadow: 0 4px 15px rgba(41,182,246,0.3);
+  }
+  .weather-main { display: flex; justify-content: space-between; align-items: center; }
+  .weather-temp { font-size: 32px; font-weight: bold; }
+  .weather-icon { font-size: 44px; }
+  .weather-desc { font-size: 13px; opacity: 0.95; margin-top: 4px; }
+  .weather-advice {
+    background: rgba(255,255,255,0.2); padding: 10px;
+    border-radius: 12px; margin-top: 10px; font-size: 12px; line-height: 1.5;
+  }
+  
+  .weekend-badge {
+    background: linear-gradient(135deg, #26a69a, #00897b);
+    color: white; padding: 6px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: bold;
+    display: inline-block; margin-bottom: 10px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  .reward-item {
+    background: var(--bg); border-radius: 14px; padding: 14px;
+    margin-bottom: 10px; display: flex; justify-content: space-between;
+    align-items: center; gap: 10px;
+  }
+  .reward-info { flex: 1; }
+  .reward-name { font-size: 14px; font-weight: 600; }
+  .reward-desc { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+  .reward-progress {
+    height: 6px; background: var(--border); border-radius: 3px;
+    margin-top: 6px; overflow: hidden;
+  }
+  .reward-fill {
+    height: 100%; background: linear-gradient(90deg, var(--warning), #ef6c00);
+    border-radius: 3px; transition: width 0.5s;
+  }
+  .reward-status { font-size: 20px; }
+  
+  .quran-section {
+    background: linear-gradient(135deg, #fff9c4, #ffeb3b);
+    border-radius: 14px; padding: 14px; margin-bottom: 10px;
+    color: #333;
+  }
+  .quran-section h4 { font-size: 13px; margin-bottom: 8px; }
+  .quran-section input { background: rgba(255,255,255,0.7); }
+  
+  .ai-btn {
+    background: linear-gradient(135deg, #7e57c2, #5e35b1);
+    color: white; border: none; padding: 14px; width: 100%;
+    border-radius: 14px; font-size: 14px; font-weight: bold;
+    cursor: pointer; margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(126,87,194,0.3);
+  }
+  
+  .timer-options {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+    margin-bottom: 15px;
+  }
+  .timer-option {
+    padding: 12px; background: var(--bg); border-radius: 12px;
+    text-align: center; font-weight: bold; cursor: pointer;
+    font-size: 13px; border: 2px solid transparent;
+  }
+  .timer-option.selected {
+    border-color: var(--primary-light); background: rgba(57,73,171,0.1);
+  }
+  
+  .tactical-tip {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+    color: white; padding: 14px; border-radius: 14px;
+    margin-bottom: 10px; font-size: 13px; line-height: 1.6;
+  }
+  .tactical-tip strong { display: block; margin-bottom: 4px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <h1>⚽ يومي</h1>
+      <p>منظّم الطالب الذكي</p>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="toggleSound()" id="soundBtn">🔊</button>
+      <button class="icon-btn" onclick="toggleDarkMode()" id="darkBtn">🌙</button>
+      <button class="icon-btn" onclick="showSettings()">⚙️</button>
+    </div>
+  </div>
+  <div class="info-bar">
+    <div class="info-chip" id="streakBadge">🔥 <span id="streakDays">0</span> يوم</div>
+    <div class="info-chip" id="pointsBadge">⭐ <span id="pointsValue">0</span> نقطة</div>
+    <div class="info-chip hidden" id="weekendBadge">🏖️ يوم إجازة</div>
+    <div class="info-chip hidden" id="weatherChip">🌤️ جاري التحميل...</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div id="inputScreen">
+    <div class="card">
+      <h2><div class="title-text">🏖️ وضع اليوم</div></h2>
+      <div class="toggle-row">
+        <div class="toggle-label">🏖️ يوم إجازة (بدون مدرسة)</div>
+        <div class="toggle" id="weekendToggle" onclick="toggleWeekend()"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><div class="title-text">😊 طاقتك اليوم</div></h2>
+      <div class="mood-selector">
+        <div class="mood-option" data-mood="high" onclick="selectMood('high')">
+          <span class="mood-emoji">💪</span>
+          <div class="mood-text">طاقة عالية</div>
+        </div>
+        <div class="mood-option selected" data-mood="medium" onclick="selectMood('medium')">
+          <span class="mood-emoji">🙂</span>
+          <div class="mood-text">متوسطة</div>
+        </div>
+        <div class="mood-option" data-mood="low" onclick="selectMood('low')">
+          <span class="mood-emoji">😴</span>
+          <div class="mood-text">منخفضة</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><div class="title-text">🌅 أوقاتك اليومية</div></h2>
+      <label>وقت الاستيقاظ</label>
+      <input type="time" id="wakeUp" value="06:00">
+      <div id="schoolFields">
+        <label>وقت الذهاب للمدرسة</label>
+        <input type="time" id="schoolStart" value="07:00">
+        <label>وقت العودة من المدرسة</label>
+        <input type="time" id="schoolEnd" value="14:30">
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><div class="title-text">📚 الواجبات المدرسية</div></h2>
+      <div id="homeworkList"></div>
+      <button class="add-hw" onclick="addHomework()">➕ إضافة واجب جديد</button>
+    </div>
+
+    <div class="card">
+      <h2><div class="title-text">📖 الحفظ القرآني</div></h2>
+      <div class="quran-section">
+        <h4>📌 مراجعة قريبة</h4>
+        <input type="number" id="quranRecent" value="2" min="0" max="20">
+      </div>
+      <div class="quran-section" style="background: linear-gradient(135deg, #c5e1a5, #aed581);">
+        <h4>📖 مراجعة قديمة</h4>
+        <input type="number" id="quranOld" value="1" min="0" max="20">
+      </div>
+      <div class="quran-section" style="background: linear-gradient(135deg, #fff59d, #ffee58);">
+        <h4>🆕 حفظ جديد</h4>
+        <input type="number" id="quranNew" value="1" min="0" max="10">
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><div class="title-text">⚽ الرياضة والتدريب</div></h2>
+      <label>وقت التدريب الرياضي</label>
+      <input type="time" id="trainingTime" value="17:00">
+      <label>مدة التدريب (دقائق)</label>
+      <input type="number" id="trainingDuration" value="90" min="30" max="180">
+      <label>نوع التمرين اليومي</label>
+      <select id="trainingType">
+        <option value="agility">🏃 رشاقة وتغيير اتجاه</option>
+        <option value="jump">🦘 قفز ورأسيات</option>
+        <option value="fitness">💪 لياقة بدنية</option>
+        <option value="defense">🛡️ تمركز دفاعي</option>
+        <option value="rest">😌 راحة واستشفاء</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="generateSchedule()">🎯 ولّد جدولي الآن</button>
+  </div>
+
+  <div id="scheduleScreen" class="hidden">
+    <div id="weatherCard"></div>
+    <div id="weekendScheduleBadge"></div>
+    <div id="tacticalTip"></div>
+    <div id="currentTaskBanner"></div>
+    
+    <div class="progress-container">
+      <div class="progress-header">
+        <span class="progress-label">📊 تقدم اليوم</span>
+        <span class="progress-percent" id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+      <div style="font-size: 11px; color: var(--text-light); margin-top: 8px; text-align: center;">
+        <span id="completedCount">0</span> من <span id="totalCount">0</span> مهمة
+      </div>
+    </div>
+    
+    <div class="timeline" id="timeline"></div>
+    
+    <button class="ai-btn" onclick="emergencyAdjust()">🤖 تعديل طارئ</button>
+    <button class="btn btn-secondary" onclick="backToInput()" style="margin-top: 10px;">🔄 تعديل البيانات</button>
+    <button class="btn" onclick="resetDay()" style="margin-top: 10px;">🌅 بداية يوم جديد</button>
+  </div>
+
+  <div id="statsScreen" class="hidden">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="statStreak">0</div>
+        <div class="stat-label">🔥 أيام متتالية</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statPoints">0</div>
+        <div class="stat-label">⭐ نقاط</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statTasks">0</div>
+        <div class="stat-label">✅ مهام مكتملة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statQuran">0</div>
+        <div class="stat-label">📖 صفحات قرآن</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><div class="title-text">🎁 مكافآت عائلية</div></h2>
+      <div id="rewardsList"></div>
+      <button class="add-hw" onclick="addReward()" style="margin-top: 10px;">➕ إضافة مكافأة</button>
+    </div>
+
+    <div class="card">
+      <h2><div class="title-text">🏆 الشارات</div></h2>
+      <div class="badges-grid" id="badgesGrid"></div>
+    </div>
+
+    <div class="card">
+      <h2><div class="title-text">📈 آخر 7 أيام</div></h2>
+      <div id="weeklyChart" style="display: flex; align-items: flex-end; gap: 6px; height: 120px; padding: 10px 0;"></div>
+    </div>
+
+    <button class="btn" onclick="shareProgress()" style="margin-bottom: 10px;">📤 مشاركة إنجازي</button>
+    <button class="btn btn-danger" onclick="resetAllData()">🗑️ حذف كل البيانات</button>
+  </div>
+
+  <div id="workoutScreen" class="hidden">
+    <div class="card">
+      <h2><div class="title-text">⏱️ مؤقت التمارين</div></h2>
+      <div class="stopwatch-display" id="stopwatchDisplay">00:00.0</div>
+      <div class="stopwatch-controls">
+        <button class="btn btn-success" onclick="startStopwatch()" id="startStopBtn">▶️ ابدأ</button>
+        <button class="btn btn-danger" onclick="resetStopwatch()">🔄 إعادة</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><div class="title-text">🎯 مؤقت جاهز</div></h2>
+      <div class="timer-options">
+        <div class="timer-option" onclick="quickTimer(30)">30 ث</div>
+        <div class="timer-option" onclick="quickTimer(60)">1 د</div>
+        <div class="timer-option" onclick="quickTimer(120)">2 د</div>
+        <div class="timer-option" onclick="quickTimer(180)">3 د</div>
+        <div class="timer-option" onclick="quickTimer(300)">5 د</div>
+        <div class="timer-option" onclick="quickTimer(600)">10 د</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><div class="title-text">💪 تمارين المدافع المنزلية</div></h2>
+      <div id="homeWorkoutList"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="bottom-nav">
+  <div class="nav-item" onclick="switchTab('input')" id="navInput">
+    <span class="nav-icon">✏️</span><span>الإدخال</span>
+  </div>
+  <div class="nav-item active" onclick="switchTab('schedule')" id="navSchedule">
+    <span class="nav-icon">📅</span><span>الجدول</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('workout')" id="navWorkout">
+    <span class="nav-icon">⚽</span><span>التمارين</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('stats')" id="navStats">
+    <span class="nav-icon">📊</span><span>إحصائيات</span>
+  </div>
+</div>
+
+<div class="pomodoro-overlay" id="pomodoroOverlay">
+  <div class="pomodoro-box">
+    <div class="pomodoro-mode" id="pomodoroMode">🍅 وقت التركيز</div>
+    <div class="pomodoro-ring">
+      <svg width="220" height="220">
+        <circle class="bg-circle" cx="110" cy="110" r="100"></circle>
+        <circle class="progress-circle" cx="110" cy="110" r="100" id="pomodoroCircle"></circle>
+      </svg>
+      <div class="pomodoro-time-inner" id="pomodoroTime">25:00</div>
+    </div>
+    <div class="pomodoro-controls">
+      <button class="btn btn-small" onclick="togglePomodoro()" id="pomodoroToggleBtn">⏸️ إيقاف</button>
+      <button class="btn btn-small btn-danger" onclick="closePomodoro()">✖️ إغلاق</button>
+    </div>
+    <div class="sound-selector">
+      <button class="sound-btn active" onclick="selectSound('none', this)">🔇 صامت</button>
+      <button class="sound-btn" onclick="selectSound('rain', this)">🌧️ مطر</button>
+      <button class="sound-btn" onclick="selectSound('forest', this)">🌲 غابة</button>
+      <button class="sound-btn" onclick="selectSound('waves', this)">🌊 أمواج</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-icon" id="modalIcon">🎉</div>
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <div id="modalContent"></div>
+    <button class="btn" onclick="closeModal()">حسناً</button>
+  </div>
+</div>
+
+<div class="notif-banner" id="notifBanner">
+  <div class="notif-title" id="notifTitle"></div>
+  <div class="notif-body" id="notifBody"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================
+   STATE & STORAGE
+============================================ */
+const STORAGE_KEY = 'yawmi_v3';
+
+const defaultState = {
+  inputs: {
+    wakeUp: '06:00',
+    schoolStart: '07:00',
+    schoolEnd: '14:30',
+    trainingTime: '17:00',
+    trainingDuration: 90,
+    trainingType: 'agility',
+    homeworks: [],
+    quranRecent: 2,
+    quranOld: 1,
+    quranNew: 1
+  },
+  schedule: [],
+  completed: {},
+  streak: 0,
+  lastActiveDate: null,
+  totalPoints: 0,
+  totalTasksCompleted: 0,
+  totalQuranPages: 0,
+  weeklyHistory: {},
+  darkMode: false,
+  soundEnabled: true,
+  weekendMode: false,
+  mood: 'medium',
+  rewards: [
+    { id: 'r1', name: '🎮 ساعة ألعاب إضافية', cost: 500 },
+    { id: 'r2', name: '🍕 رحلة مطعم نهاية الأسبوع', cost: 1000 },
+    { id: 'r3', name: '⚽ كرة قدم جديدة', cost: 2000 }
+  ],
+  weather: null
+};
+
+let state = JSON.parse(JSON.stringify(defaultState));
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) state = { ...defaultState, ...JSON.parse(saved) };
+  } catch(e) {}
+}
+
+/* ============================================
+   UTILS
+============================================ */
+function timeToMinutes(t) {
+  if (!t) return 0;
+  const [h, m] = t.split(':').map(Number);
+  return h * 60 + m;
+}
+
+function minutesToTime(m) {
+  m = ((m % 1440) + 1440) % 1440;
+  const h = Math.floor(m / 60);
+  const min = m % 60;
+  return `${String(h).padStart(2,'0')}:${String(min).padStart(2,'0')}`;
+}
+
+function formatTime12(t) {
+  const [h, m] = t.split(':').map(Number);
+  const period = h >= 12 ? 'م' : 'ص';
+  const h12 = h % 12 || 12;
+  return `${h12}:${String(m).padStart(2,'0')} ${period}`;
+}
+
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function showNotif(title, body) {
+  const n = document.getElementById('notifBanner');
+  document.getElementById('notifTitle').textContent = title;
+  document.getElementById('notifBody').textContent = body;
+  n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 4000);
+}
+
+function showModal(icon, title, text, content = '') {
+  document.getElementById('modalIcon').textContent = icon;
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').textContent = text;
+  document.getElementById('modalContent').innerHTML = content;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+}
+
+/* ============================================
+   SOUND
+============================================ */
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  }
+  return audioCtx;
+}
+
+function playBeep(frequency = 800, duration = 150, type = 'sine') {
+  if (!state.soundEnabled) return;
+  const ctx = getAudioCtx();
+  if (!ctx) return;
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = frequency;
+    gain.gain.value = 0.15;
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration / 1000);
+    osc.stop(ctx.currentTime + duration / 1000);
+  } catch(e) {}
+}
+
+function playTick() { playBeep(1200, 40, 'square'); }
+function playSuccess() {
+  if (!state.soundEnabled) return;
+  [523, 659, 784].forEach((f, i) => setTimeout(() => playBeep(f, 120), i * 100));
+}
+function playAlert() {
+  if (!state.soundEnabled) return;
+  [880, 660, 880].forEach((f, i) => setTimeout(() => playBeep(f, 200, 'triangle'), i * 200));
+}
+
+function toggleSound() {
+  state.soundEnabled = !state.soundEnabled;
+  document.getElementById('soundBtn').textContent = state.soundEnabled ? '🔊' : '🔇';
+  if (state.soundEnabled) playBeep(800, 150);
+  saveState();
+}
+
+function toggleDarkMode() {
+  state.darkMode = !state.darkMode;
+  document.body.classList.toggle('dark', state.darkMode);
+  document.getElementById('darkBtn').textContent = state.darkMode ? '☀️' : '🌙';
+  saveState();
+}
+
+function toggleWeekend() {
+  state.weekendMode = !state.weekendMode;
+  document.getElementById('weekendToggle').classList.toggle('on', state.weekendMode);
+  document.getElementById('weekendBadge').classList.toggle('hidden', !state.weekendMode);
+  document.getElementById('schoolFields').style.display = state.weekendMode ? 'none' : 'block';
+  showToast(state.weekendMode ? '🏖️ يوم إجازة' : '🏫 وضع المدرسة');
+  playBeep(700, 100);
+  saveState();
+}
+
+function selectMood(mood) {
+  state.mood = mood;
+  document.querySelectorAll('.mood-option').forEach(el => {
+    el.classList.toggle('selected', el.dataset.mood === mood);
+  });
+  playTick();
+  saveState();
+}
+
+function addHomework(data = null) {
+  const div = document.createElement('div');
+  div.className = 'homework-item';
+  div.innerHTML = `
+    <input type="text" placeholder="اسم المادة" value="${data?.name || ''}">
+    <input type="time" value="${data?.due || ''}">
+    <button onclick="this.parentElement.remove(); playTick();">×</button>
+  `;
+  document.getElementById('homeworkList').appendChild(div);
+}
+
+function collectHomeworks() {
+  const list = [];
+  document.querySelectorAll('.homework-item').forEach((item, idx) => {
+    const inputs = item.querySelectorAll('input');
+    const name = inputs[0].value.trim();
+    if (name) list.push({
+      id: 'hw_' + idx + '_' + Date.now(),
+      name,
+      due: inputs[1].value || '23:59'
+    });
+  });
+  return list;
+}
+
+async function fetchWeather() {
+  try {
+    const pos = await new Promise((resolve, reject) => {
+      if (!navigator.geolocation) return reject('no geo');
+      navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
+    });
+    const { latitude, longitude } = pos.coords;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const cw = data.current_weather;
+    state.weather = { temp: Math.round(cw.temperature), code: cw.weathercode, wind: cw.windspeed };
+  } catch(e) {
+    state.weather = { temp: 28, code: 0, wind: 10 };
+  }
+  saveState();
+  renderWeather();
+}
+
+function getWeatherInfo(code) {
+  if (code === 0) return { icon: '☀️', desc: 'صافي' };
+  if (code <= 3) return { icon: '⛅', desc: 'غائم جزئياً' };
+  if (code <= 48) return { icon: '🌫️', desc: 'ضباب' };
+  if (code <= 67) return { icon: '🌧️', desc: 'مطر' };
+  if (code <= 77) return { icon: '❄️', desc: 'ثلج' };
+  if (code <= 82) return { icon: '🌧️', desc: 'زخات مطر' };
+  return { icon: '⛈️', desc: 'عاصف' };
+}
+
+function renderWeather() {
+  const card = document.getElementById('weatherCard');
+  const chip = document.getElementById('weatherChip');
+  const w = state.weather;
+  if (!w) return;
+
+  const info = getWeatherInfo(w.code);
+  const isBad = w.code >= 51 || w.temp > 38 || w.temp < 10;
+  
+  chip.classList.remove('hidden');
+  chip.textContent = `${info.icon} ${w.temp}°C`;
+  
+  card.innerHTML = `
+    <div class="weather-card">
+      <div class="weather-main">
+        <div>
+          <div class="weather-temp">${w.temp}°C</div>
+          <div class="weather-desc">${info.desc} • رياح ${w.wind} كم/س</div>
+        </div>
+        <div class="weather-icon">${info.icon}</div>
+      </div>
+      <div class="weather-advice">
+        ${isBad 
+          ? '⚠️ <strong>الجو مش مناسب للتمرين الخارجي!</strong><br>التطبيق هيرشحلك تمارين منزلية.'
+          : '✅ <strong>الجو مناسب للتمرين الخارجي!</strong><br>استمتع بتدريبك.'}
+      </div>
+    </div>
+  `;
+}
+
+function generateSchedule() {
+  const wakeUp = timeToMinutes(document.getElementById('wakeUp').value);
+  const trainingTime = timeToMinutes(document.getElementById('trainingTime').value);
+  const trainingDur = parseInt(document.getElementById('trainingDuration').value) || 90;
+  const trainingType = document.getElementById('trainingType').value;
+  const homeworks = collectHomeworks();
+  const quranRecent = parseInt(document.getElementById('quranRecent').value) || 0;
+  const quranOld = parseInt(document.getElementById('quranOld').value) || 0;
+  const quranNew = parseInt(document.getElementById('quranNew').value) || 0;
+  const isWeekend = state.weekendMode;
+  
+  let schoolStart, schoolEnd;
+  if (isWeekend) { schoolStart = 0; schoolEnd = 0; }
+  else {
+    schoolStart = timeToMinutes(document.getElementById('schoolStart').value);
+    schoolEnd = timeToMinutes(document.getElementById('schoolEnd').value);
+  }
+
+  state.inputs = {
+    wakeUp: document.getElementById('wakeUp').value,
+    schoolStart: document.getElementById('schoolStart').value,
+    schoolEnd: document.getElementById('schoolEnd').value,
+    trainingTime: document.getElementById('trainingTime').value,
+    trainingDuration: trainingDur,
+    trainingType, homeworks,
+    quranRecent, quranOld, quranNew
+  };
+
+  const schedule = [];
+  let cursor = wakeUp;
+  let idCounter = 0;
+
+  const add = (start, duration, title, category, desc = '') => {
+    schedule.push({
+      id: 'task_' + idCounter++,
+      start: minutesToTime(start),
+      end: minutesToTime(start + duration),
+      title, category, desc,
+      startMin: start, endMin: start + duration
+    });
+  };
+
+  const moodFactor = state.mood === 'high' ? 1.15 : state.mood === 'low' ? 0.75 : 1;
+
+  add(cursor, 15, '🌅 استيقاظ + وضوء + صلاة الفجر', 'meal');
+  cursor += 15;
+
+  const quranMinBase = 15 + (quranNew * 5) + (quranRecent * 3) + (quranOld * 2);
+  const quranMin = Math.round(quranMinBase * (isWeekend ? 1.5 : 1));
+  add(cursor, quranMin, `📖 الحفظ القرآني`, 'quran', `جديد: ${quranNew}، قريب: ${quranRecent}، بعيد: ${quranOld}`);
+  cursor += quranMin;
+
+  if (!isWeekend) {
+    const prepTime = Math.max(15, schoolStart - cursor - 5);
+    if (prepTime > 0) {
+      add(cursor, prepTime, '🍳 الفطور والاستعداد', 'meal');
+      cursor += prepTime;
+    }
+    add(schoolStart, schoolEnd - schoolStart, '🏫 المدرسة', 'school', 'ركّز وخذ ملاحظات');
+    cursor = schoolEnd;
+  } else {
+    add(cursor, 40, '🍳 فطور مريح + وقت عائلي', 'meal');
+    cursor += 40;
+    if (homeworks.length > 0) {
+      add(cursor, 45, '📝 جلسة مذاكرة صباحية', 'study');
+      cursor += 45;
+    }
+  }
+
+  add(cursor, 45, '🍽️ غداء + راحة', 'meal');
+  cursor += 45;
+
+  homeworks.sort((a, b) => timeToMinutes(a.due) - timeToMinutes(b.due));
+  homeworks.forEach(hw => {
+    const dur = Math.round(40 * moodFactor);
+    add(cursor, dur, `📝 واجب: ${hw.name}`, 'study', `التسليم: ${formatTime12(hw.due)}`);
+    cursor += dur;
+    add(cursor, 10, '☕ راحة قصيرة', 'meal');
+    cursor += 10;
+  });
+
+  add(cursor, 15, '📖 مراجعة سريعة للحفظ', 'quran');
+  cursor += 15;
+
+  if (trainingTime > cursor) cursor = trainingTime;
+  const trainingDurFinal = Math.round(trainingDur * moodFactor * (isWeekend ? 1.2 : 1));
+  const isBadWeather = state.weather && (state.weather.code >= 51 || state.weather.temp > 38 || state.weather.temp < 10);
+  const trainingTitle = isBadWeather ? `⚽ تدريب كرة (منزلي)` : `⚽ تدريب كرة القدم`;
+  const trainingDesc = isBadWeather ? 'تمارين داخلية: رشاقة، تمركز، قفز' : 'ركّز على التمركز والرشاقة';
+  
+  add(cursor, trainingDurFinal, trainingTitle, 'sport', trainingDesc);
+  cursor += trainingDurFinal;
+
+  const homeWorkoutDur = isWeekend ? 30 : 20;
+  add(cursor, homeWorkoutDur, '💪 تمارين مدافع منزلية', 'sport', getWorkoutForToday(trainingType));
+  cursor += homeWorkoutDur;
+
+  add(cursor, 45, '🍽️ عشاء + وقت عائلي', 'meal');
+  cursor += 45;
+
+  const freeTime = isWeekend ? 90 : 30;
+  add(cursor, freeTime, isWeekend ? '🎮 وقت حر طويل' : '🎮 وقت حر', 'meal');
+  cursor += freeTime;
+
+  add(cursor, 15, '📖 مراجعة قرآن قبل النوم', 'quran', 'تثبيت الحفظ');
+  cursor += 15;
+
+  const sleepTargetMin = wakeUp - 60*9 + 1440;
+  add(sleepTargetMin % 1440, 60*9, '😴 النوم (9 ساعات)', 'sleep', 'نم مبكراً');
+
+  state.schedule = schedule;
+  state.completed = {};
+  updateStreak();
+  saveState();
+  renderSchedule();
+  scheduleNotifications();
+  switchTab('schedule');
+  playSuccess();
+  showToast('✅ تم توليد جدولك!');
+}
+
+function getWorkoutForToday(type) {
+  const workouts = {
+    agility: 'سلّم رشاقة + تغيير اتجاه سريع',
+    jump: 'قفز رأسي 3×12 + قفز جانبي',
+    fitness: 'بلانك 3×60ث + قرفصاء 3×20',
+    defense: 'تمركز + تغطية عكسية + قطع الكرة',
+    rest: 'تمدد خفيف + إطالة'
+  };
+  return workouts[type] || workouts.agility;
+}
+
+function renderSchedule() {
+  const timeline = document.getElementById('timeline');
+  timeline.innerHTML = '';
+  
+  if (!state.schedule.length) {
+    timeline.innerHTML = '<div class="empty"><div class="empty-icon">📅</div><p>لا يوجد جدول بعد</p></div>';
+    return;
+  }
+
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+
+  state.schedule.forEach((task, idx) => {
+    const div = document.createElement('div');
+    div.className = `task ${task.category}`;
+    if (state.completed[task.id]) div.classList.add('done');
+    
+    const isCurrent = nowMin >= task.startMin && nowMin < task.endMin && !state.completed[task.id];
+    if (isCurrent) div.classList.add('current');
+    
+    div.style.animationDelay = (idx * 0.05) + 's';
+    
+    const showPomodoro = task.category === 'study' || task.category === 'quran';
+    
+    div.innerHTML = `
+      <div class="task-header">
+        <div style="flex: 1;">
+          <div class="task-time">${formatTime12(task.start)} - ${formatTime12(task.end)}</div>
+          <div class="task-title">${task.title}</div>
+          ${task.desc ? `<div class="task-desc">${task.desc}</div>` : ''}
+          ${showPomodoro && !state.completed[task.id] ? 
+            `<button class="pomodoro-btn" onclick="openPomodoro('${task.id}')">🍅 ابدأ Pomodoro</button>` : ''}
+        </div>
+        <button class="task-check ${state.completed[task.id] ? 'done' : ''}" 
+                onclick="toggleTask('${task.id}')">
+          ${state.completed[task.id] ? '✓' : ''}
+        </button>
+      </div>
+    `;
+    timeline.appendChild(div);
+  });
+
+  updateProgress();
+  updateCurrentBanner(nowMin);
+  renderWeather();
+  
+  document.getElementById('weekendScheduleBadge').innerHTML = state.weekendMode 
+    ? '<div class="weekend-badge">🏖️ وضع الإجازة مفعّل</div>' 
+    : '';
+}
+
+function toggleTask(taskId) {
+  const wasCompleted = state.completed[taskId];
+  if (wasCompleted) {
+    delete state.completed[taskId];
+    state.totalPoints = Math.max(0, state.totalPoints - 10);
+  } else {
+    state.completed[taskId] = true;
+    state.totalPoints += 10;
+    state.totalTasksCompleted++;
+    playSuccess();
+    
+    const task = state.schedule.find(t => t.id === taskId);
+    if (task && task.category === 'quran') {
+      const pages = (state.inputs.quranNew || 0) + (state.inputs.quranRecent || 0) + (state.inputs.quranOld || 0);
+      state.totalQuranPages += pages;
+    }
+    
+    if (Object.keys(state.completed).length === state.schedule.length) {
+      setTimeout(() => {
+        fireConfetti();
+        showModal('🏆', 'أحسنت يا بطل!', 'أكملت جميع مهام اليوم!');
+      }, 300);
+    } else {
+      showToast('🎉 أحسنت! +10 نقاط');
+    }
+  }
+  
+  const tk = todayKey();
+  state.weeklyHistory[tk] = Object.keys(state.completed).length;
+  saveState();
+  renderSchedule();
+}
+
+function updateProgress() {
+  const total = state.schedule.length;
+  const done = Object.keys(state.completed).length;
+  const percent = total ? Math.round((done / total) * 100) : 0;
+  
+  document.getElementById('progressFill').style.width = percent + '%';
+  document.getElementById('progressPercent').textContent = percent + '%';
+  document.getElementById('completedCount').textContent = done;
+  document.getElementById('totalCount').textContent = total;
+  document.getElementById('pointsValue').textContent = state.totalPoints;
+}
+
+function updateCurrentBanner(nowMin) {
+  const banner = document.getElementById('currentTaskBanner');
+  const current = state.schedule.find(t => 
+    nowMin >= t.startMin && nowMin < t.endMin && !state.completed[t.id]
+  );
+  
+  if (!current) { banner.innerHTML = ''; return; }
+  
+  const remaining = current.endMin - nowMin;
+  const h = Math.floor(remaining / 60);
+  const m = remaining % 60;
+  const remainStr = h > 0 ? `${h} س ${m} د` : `${m} دقيقة`;
+  
+  banner.innerHTML = `
+    <div class="current-banner">
+      <div class="current-banner-label">⏰ المهمة الحالية</div>
+      <div class="current-banner-title">${current.title}</div>
+      <div class="current-banner-time">حتى ${formatTime12(current.end)}</div>
+      <div class="countdown">⏳ متبقي: ${remainStr}</div>
+    </div>
+  `;
+}
+
+function emergencyAdjust() {
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  
+  const remaining = state.schedule.filter(t => !state.completed[t.id] && t.endMin > nowMin);
+  const done = state.schedule.filter(t => state.completed[t.id] || t.endMin <= nowMin);
+  
+  if (remaining.length === 0) { showToast('لا يوجد مهام متبقية!'); return; }
+  
+  let cursor = Math.max(nowMin + 5, timeToMinutes(state.inputs.wakeUp));
+  const newSchedule = [...done];
+  
+  remaining.forEach(task => {
+    const duration = task.endMin - task.startMin;
+    const newDuration = duration > 40 ? Math.round(duration * 0.7) : duration;
+    newSchedule.push({
+      ...task,
+      start: minutesToTime(cursor),
+      end: minutesToTime(cursor + newDuration),
+      startMin: cursor,
+      endMin: cursor + newDuration,
+      title: task.title + (newDuration < duration ? ' ⚡' : ''),
+      desc: (task.desc || '') + ' (مُعدّل)'
+    });
+    cursor += newDuration + 5;
+  });
+  
+  state.schedule = newSchedule.sort((a, b) => a.startMin - b.startMin);
+  saveState();
+  renderSchedule();
+  playAlert();
+  showModal('🤖', 'تم التعديل الذكي!', 'أعاد التطبيق ترتيب مهامك المتبقية.');
+}
+
+let pomodoroState = {
+  active: false, timeLeft: 25 * 60, isBreak: false, interval: null,
+  currentTaskId: null, sound: 'none', soundNodes: []
+};
+
+function openPomodoro(taskId = null) {
+  pomodoroState.currentTaskId = taskId;
+  pomodoroState.timeLeft = 25 * 60;
+  pomodoroState.isBreak = false;
+  pomodoroState.active = true;
+  document.getElementById('pomodoroOverlay').classList.add('show');
+  document.getElementById('pomodoroMode').textContent = '🍅 وقت التركيز';
+  updatePomodoroDisplay();
+  startPomodoroInterval();
+  playBeep(660, 200);
+}
+
+function startPomodoroInterval() {
+  clearInterval(pomodoroState.interval);
+  pomodoroState.interval = setInterval(() => {
+    if (!pomodoroState.active) return;
+    pomodoroState.timeLeft--;
+    updatePomodoroDisplay();
+    
+    if (pomodoroState.timeLeft <= 10 && pomodoroState.timeLeft > 0) playTick();
+    
+    if (pomodoroState.timeLeft <= 0) {
+      if (!pomodoroState.isBreak) {
+        playSuccess();
+        showNotif('✅ انتهى وقت التركيز!', 'خذ راحة 5 دقائق');
+        pomodoroState.isBreak = true;
+        pomodoroState.timeLeft = 5 * 60;
+        document.getElementById('pomodoroMode').textContent = '☕ وقت الراحة';
+      } else {
+        playAlert();
+        showNotif('⏰ انتهت الراحة!', 'ارجع للتركيز');
+        pomodoroState.isBreak = false;
+        pomodoroState.timeLeft = 25 * 60;
+        document.getElementById('pomodoroMode').textContent = '🍅 وقت التركيز';
+      }
+      updatePomodoroDisplay();
+    }
+  }, 1000);
+}
+
+function updatePomodoroDisplay() {
+  const t = pomodoroState.timeLeft;
+  const m = Math.floor(t / 60);
+  const s = t % 60;
+  document.getElementById('pomodoroTime').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  
+  const total = pomodoroState.isBreak ? 5 * 60 : 25 * 60;
+  const progress = 1 - (t / total);
+  document.getElementById('pomodoroCircle').style.strokeDashoffset = 628 * (1 - progress);
+}
+
+function togglePomodoro() {
+  pomodoroState.active = !pomodoroState.active;
+  document.getElementById('pomodoroToggleBtn').textContent = pomodoroState.active ? '⏸️ إيقاف' : '▶️ استئناف';
+  playBeep(500, 100);
+}
+
+function closePomodoro() {
+  clearInterval(pomodoroState.interval);
+  pomodoroState.active = false;
+  stopAmbientSound();
+  document.getElementById('pomodoroOverlay').classList.remove('show');
+}
+
+function selectSound(type, btn) {
+  document.querySelectorAll('.sound-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  pomodoroState.sound = type;
+  stopAmbientSound();
+  if (type !== 'none') startAmbientSound(type);
+}
+
+function startAmbientSound(type) {
+  stopAmbientSound();
+  const ctx = getAudioCtx();
+  if (!ctx) return;
+  
+  try {
+    const bufferSize = 2 * ctx.sampleRate;
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    
+    for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
+    
+    const whiteNoise = ctx.createBufferSource();
+    whiteNoise.buffer = noiseBuffer;
+    whiteNoise.loop = true;
+    
+    const filter = ctx.createBiquadFilter();
+    const gain = ctx.createGain();
+    
+    if (type === 'rain') { filter.type = 'lowpass'; filter.frequency.value = 400; gain.gain.value = 0.1; }
+    else if (type === 'forest') { filter.type = 'bandpass'; filter.frequency.value = 800; gain.gain.value = 0.06; }
+    else if (type === 'waves') { filter.type = 'lowpass'; filter.frequency.value = 200; gain.gain.value = 0.12; }
+    
+    whiteNoise.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+    whiteNoise.start();
+    
+    pomodoroState.soundNodes = [whiteNoise, gain];
+  } catch(e) {}
+}
+
+function stopAmbientSound() {
+  pomodoroState.soundNodes.forEach(node => {
+    try { node.stop && node.stop(); } catch(e) {}
+    try { node.disconnect && node.disconnect(); } catch(e) {}
+  });
+  pomodoroState.soundNodes = [];
+}
+
+let stopwatchState = { running: false, elapsed: 0, interval: null };
+
+function startStopwatch() {
+  stopwatchState.running = !stopwatchState.running;
+  document.getElementById('startStopBtn').textContent = stopwatchState.running ? '⏸️ إيقاف' : '▶️ ابدأ';
+  
+  if (stopwatchState.running) {
+    const start = Date.now() - stopwatchState.elapsed;
+    stopwatchState.interval = setInterval(() => {
+      stopwatchState.elapsed = Date.now() - start;
+      updateStopwatchDisplay();
+    }, 100);
+    playBeep(700, 100);
+  } else {
+    clearInterval(stopwatchState.interval);
+    playBeep(500, 100);
+  }
+}
+
+function resetStopwatch() {
+  clearInterval(stopwatchState.interval);
+  stopwatchState.running = false;
+  stopwatchState.elapsed = 0;
+  document.getElementById('startStopBtn').textContent = '▶️ ابدأ';
+  updateStopwatchDisplay();
+  playTick();
+}
+
+function updateStopwatchDisplay() {
+  const ms = stopwatchState.elapsed;
+  const totalSec = Math.floor(ms / 1000);
+  const m = Math.floor(totalSec / 60);
+  const s = totalSec % 60;
+  const tenth = Math.floor((ms % 1000) / 100);
+  document.getElementById('stopwatchDisplay').textContent = 
+    `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}.${tenth}`;
+}
+
+function quickTimer(seconds) {
+  if (quickTimer.interval) clearInterval(quickTimer.interval);
+  let remaining = seconds;
+  playAlert();
+  showToast(`⏱️ بدأ العد: ${seconds} ثانية`);
+  
+  quickTimer.interval = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      clearInterval(quickTimer.interval);
+      playAlert();
+      setTimeout(playAlert, 300);
+      showNotif('⏰ انتهى الوقت!', 'أحسنت!');
+    } else if (remaining <= 3) playTick();
+  }, 1000);
+}
+
+async function requestNotificationPermission() {
+  if ('Notification' in window && Notification.permission === 'default') {
+    await Notification.requestPermission();
+  }
+}
+
+function scheduleNotifications() {
+  if (!state.schedule.length) return;
+  
+  if (window.__yawmiTimeouts) window.__yawmiTimeouts.forEach(t => clearTimeout(t));
+  window.__yawmiTimeouts = [];
+  
+  const now = new Date();
+  const nowMs = now.getTime();
+  
+  state.schedule.forEach(task => {
+    const [h, m] = task.start.split(':').map(Number);
+    const target = new Date();
+    target.setHours(h, m, 0, 0);
+    if (target.getTime() < nowMs) target.setDate(target.getDate() + 1);
+    
+    const delay = target.getTime() - nowMs;
+    const delay5 = delay - 5 * 60 * 1000;
+    
+    if (delay5 > 0 && delay5 < 24*60*60*1000) {
+      const tid = setTimeout(() => {
+        playAlert();
+        showNotif('⏰ استعد!', `بعد 5 دقائق: ${task.title}`);
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('⏰ يومي', { body: `بعد 5 دقائق: ${task.title}` });
+        }
+      }, delay5);
+      window.__yawmiTimeouts.push(tid);
+    }
+    
+    if (delay > 0 && delay < 24*60*60*1000) {
+      const tid = setTimeout(() => {
+        playAlert();
+        showNotif('🎯 الوقت الآن!', task.title);
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('🎯 يومي', { body: `ابدأ: ${task.title}` });
+        }
+      }, delay);
+      window.__yawmiTimeouts.push(tid);
+    }
+  });
+}
+
+function renderRewards() {
+  const list = document.getElementById('rewardsList');
+  list.innerHTML = state.rewards.map(r => {
+    const canClaim = state.totalPoints >= r.cost;
+    const progress = Math.min(100, (state.totalPoints / r.cost) * 100);
+    return `
+      <div class="reward-item">
+        <div class="reward-info">
+          <div class="reward-name">${r.name}</div>
+          <div class="reward-desc">${state.totalPoints} / ${r.cost} نقطة</div>
+          <div class="reward-progress">
+            <div class="reward-fill" style="width: ${progress}%"></div>
+          </div>
+        </div>
+        <div class="reward-status">${canClaim ? '🎁' : '🔒'}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function addReward() {
+  const name = prompt('اسم المكافأة:');
+  if (!name) return;
+  const cost = parseInt(prompt('عدد النقاط:', '500'));
+  if (!cost) return;
+  state.rewards.push({ id: 'r_' + Date.now(), name, cost });
+  saveState();
+  renderRewards();
+  showToast('✅ تمت الإضافة');
+}
+
+function renderStats() {
+  document.getElementById('statStreak').textContent = state.streak;
+  document.getElementById('statPoints').textContent = state.totalPoints;
+  document.getElementById('statTasks').textContent = state.totalTasksCompleted;
+  document.getElementById('statQuran').textContent = state.totalQuranPages;
+  renderBadges();
+  renderWeeklyChart();
+  renderRewards();
+}
+
+function renderBadges() {
+  const badges = [
+    { icon: '🌱', name: 'البداية', unlocked: state.totalTasksCompleted >= 1 },
+    { icon: '🔥', name: '3 أيام', unlocked: state.streak >= 3 },
+    { icon: '⭐', name: '100 نقطة', unlocked: state.totalPoints >= 100 },
+    { icon: '📖', name: '10 صفحات', unlocked: state.totalQuranPages >= 10 },
+    { icon: '⚽', name: 'رياضي', unlocked: state.totalTasksCompleted >= 5 },
+    { icon: '🏆', name: 'بطل', unlocked: state.streak >= 7 },
+    { icon: '💎', name: '500 نقطة', unlocked: state.totalPoints >= 500 },
+    { icon: '👑', name: 'ملك الحفظ', unlocked: state.totalQuranPages >= 50 },
+    { icon: '🌟', name: 'أسطورة', unlocked: state.streak >= 30 }
+  ];
+  document.getElementById('badgesGrid').innerHTML = badges.map(b => `
+    <div class="badge-item ${b.unlocked ? 'unlocked' : ''}">
+      <div class="badge-icon">${b.icon}</div>
+      <div class="badge-name">${b.name}</div>
+    </div>
+  `).join('');
+}
+
+function renderWeeklyChart() {
+  const chart = document.getElementById('weeklyChart');
+  const days = [];
+  const dayNames = ['أحد','إثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    days.push({ label: dayNames[d.getDay()], value: state.weeklyHistory[key] || 0 });
+  }
+  const max = Math.max(...days.map(d => d.value), 5);
+  chart.innerHTML = days.map(d => {
+    const h = (d.value / max) * 100;
+    return `
+      <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+        <div style="font-size: 10px; color: var(--text-light); font-weight: bold;">${d.value}</div>
+        <div style="width: 100%; height: 80px; display: flex; align-items: flex-end;">
+          <div style="width: 100%; height: ${h}%; min-height: 4px; 
+                      background: linear-gradient(180deg, var(--primary-light), var(--primary));
+                      border-radius: 6px 6px 0 0;"></div>
+        </div>
+        <div style="font-size: 10px; color: var(--text-light);">${d.label}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function shareProgress() {
+  const text = `🏆 إنجازي في تطبيق يومي:\n` +
+    `🔥 ${state.streak} يوم متتالي\n` +
+    `⭐ ${state.totalPoints} نقطة\n` +
+    `✅ ${state.totalTasksCompleted} مهمة\n` +
+    `📖 ${state.totalQuranPages} صفحة قرآن`;
+  
+  if (navigator.share) {
+    navigator.share({ title: 'إنجازي في يومي', text }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text).then(() => showToast('📋 تم نسخ الإنجاز!'));
+  }
+}
+
+function switchTab(tab) {
+  ['schedule', 'input', 'stats', 'workout'].forEach(t => {
+    document.getElementById(t + 'Screen').classList.toggle('hidden', t !== tab);
+    document.getElementById('nav' + t.charAt(0).toUpperCase() + t.slice(1))
+      .classList.toggle('active', t === tab);
+  });
+  if (tab === 'stats') renderStats();
+  if (tab === 'schedule' && state.schedule.length) renderSchedule();
+  if (tab === 'workout') renderHomeWorkouts();
+  window.scrollTo(0, 0);
+}
+
+function backToInput() {
+  document.getElementById('wakeUp').value = state.inputs.wakeUp;
+  document.getElementById('schoolStart').value = state.inputs.schoolStart;
+  document.getElementById('schoolEnd').value = state.inputs.schoolEnd;
+  document.getElementById('trainingTime').value = state.inputs.trainingTime;
+  document.getElementById('trainingDuration').value = state.inputs.trainingDuration;
+  document.getElementById('trainingType').value = state.inputs.trainingType || 'agility';
+  document.getElementById('quranRecent').value = state.inputs.quranRecent || 2;
+  document.getElementById('quranOld').value = state.inputs.quranOld || 1;
+  document.getElementById('quranNew').value = state.inputs.quranNew || 1;
+  
+  document.getElementById('homeworkList').innerHTML = '';
+  if (state.inputs.homeworks?.length) {
+    state.inputs.homeworks.forEach(hw => addHomework(hw));
+  } else {
+    addHomework();
+  }
+  
+  document.getElementById('weekendToggle').classList.toggle('on', state.weekendMode);
+  document.getElementById('schoolFields').style.display = state.weekendMode ? 'none' : 'block';
+  
+  document.querySelectorAll('.mood-option').forEach(el => {
+    el.classList.toggle('selected', el.dataset.mood === state.mood);
+  });
+  
+  switchTab('input');
+}
+
+function resetDay() {
+  if (confirm('هل تريد بدء يوم جديد؟')) {
+    state.completed = {};
+    saveState();
+    renderSchedule();
+    playSuccess();
+    showToast('🌅 يوم جديد سعيد!');
+  }
+}
+
+function resetAllData() {
+  if (confirm('⚠️ هل أنت متأكد؟ سيتم حذف كل بياناتك!')) {
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+}
+
+function renderHomeWorkouts() {
+  const list = document.getElementById('homeWorkoutList');
+  const workouts = [
+    { name: '🦘 قفز رأسي', detail: '3 مجموعات × 12 عدة' },
+    { name: '🏃 جري في المكان', detail: '3 دقائق سريع' },
+    { name: '💪 بلانك', detail: '3 × 45 ثانية' },
+    { name: '🦵 قرفصاء', detail: '3 × 15 عدة' },
+    { name: '🎯 تمركز دفاعي', detail: 'تدريب ظل 5 دقائق' },
+    { name: '🧘 تمدد وإطالة', detail: '10 دقائق كاملة' },
+    { name: '⚡ سلّم رشاقة وهمي', detail: 'خطوات سريعة أرضية' }
+  ];
+  list.innerHTML = workouts.map(w => `
+    <div class="reward-item">
+      <div class="reward-info">
+        <div class="reward-name">${w.name}</div>
+        <div class="reward-desc">${w.detail}</div>
+      </div>
+      <button class="task-check" onclick="this.classList.toggle('done'); this.textContent = this.classList.contains('done') ? '✓' : ''; playTick();"></button>
+    </div>
+  `).join('');
+}
+
+function renderTacticalTip() {
+  const tips = [
+    { title: '🛡️ التغطية العكسية', text: 'راقب المهاجم اللي بيقطع من العمق. اتخذ خطوة للخلف قبل ما يوصلك الباص.' },
+    { title: '⏱️ توقيت القطع', text: 'لا تقطع الكرة إلا لما المهاجم يلمسها تحكم كامل.' },
+    { title: '🦶 الوقفة الصحيحة', text: 'قدماك بعرض كتفيك، ووزنك على مقدمة القدم.' },
+    { title: '👀 التواصل مع الحارس', text: 'اتفق مع حارسك على إشارات. لما يطلع، أنت ترجع تغطي.' },
+    { title: '🎯 الدفاع كوحدة', text: 'تحرك مع خط الدفاع ككتلة واحدة.' },
+    { title: '⚡ الالتحام الذكي', text: 'التحم بكتفك مش بذراعك. القوة في التوازن.' },
+    { title: '🔄 التعافي بعد الخطأ', text: 'لو غلطت، اركض بسرعة للخلف.' }
+  ];
+  const tip = tips[Math.floor(Math.random() * tips.length)];
+  document.getElementById('tacticalTip').innerHTML = `
+    <div class="tactical-tip">
+      <strong>${tip.title}</strong>
+      ${tip.text}
+    </div>
+  `;
+}
+
+function updateStreak() {
+  const today = todayKey();
+  const yesterday = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  })();
+  if (state.lastActiveDate === today) return;
+  if (state.lastActiveDate === yesterday) state.streak++;
+  else state.streak = 1;
+  state.lastActiveDate = today;
+  document.getElementById('streakDays').textContent = state.streak;
+  saveState();
+}
+
+function fireConfetti() {
+  const colors = ['#1a237e', '#3949ab', '#43a047', '#fb8c00', '#fdd835', '#e53935', '#8e24aa'];
+  for (let i = 0; i < 50; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + '%';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4000);
+    }, i * 30);
+  }
+}
+
+function showSettings() {
+  showModal('⚙️', 'الإعدادات',
+    `🔊 الصوت: ${state.soundEnabled ? 'مفعّل' : 'معطّل'}\n` +
+    `🌙 الوضع الليلي: ${state.darkMode ? 'مفعّل' : 'معطّل'}\n` +
+    `🏖️ وضع الإجازة: ${state.weekendMode ? 'مفعّل' : 'معطّل'}`
+  );
+}
+
+function init() {
+  loadState();
+  
+  if (state.darkMode) {
+    document.body.classList.add('dark');
+    document.getElementById('darkBtn').textContent = '☀️';
+  }
+  
+  document.getElementById('soundBtn').textContent = state.soundEnabled ? '🔊' : '🔇';
+  document.getElementById('streakDays').textContent = state.streak;
+  document.getElementById('pointsValue').textContent = state.totalPoints;
+  
+  document.getElementById('wakeUp').value = state.inputs.wakeUp;
+  document.getElementById('schoolStart').value = state.inputs.schoolStart;
+  document.getElementById('schoolEnd').value = state.inputs.schoolEnd;
+  document.getElementById('trainingTime').value = state.inputs.trainingTime;
+  document.getElementById('trainingDuration').value = state.inputs.trainingDuration;
+  document.getElementById('trainingType').value = state.inputs.trainingType || 'agility';
+  document.getElementById('quranRecent').value = state.inputs.quranRecent || 2;
+  document.getElementById('quranOld').value = state.inputs.quranOld || 1;
+  document.getElementById('quranNew').value = state.inputs.quranNew || 1;
+  
+  document.getElementById('weekendToggle').classList.toggle('on', state.weekendMode);
+  document.getElementById('weekendBadge').classList.toggle('hidden', !state.weekendMode);
+  document.getElementById('schoolFields').style.display = state.weekendMode ? 'none' : 'block';
+  
+  document.querySelectorAll('.mood-option').forEach(el => {
+    el.classList.toggle('selected', el.dataset.mood === state.mood);
+  });
+  
+  document.getElementById('homeworkList').innerHTML = '';
+  if (state.inputs.homeworks?.length) {
+    state.inputs.homeworks.forEach(hw => addHomework(hw));
+  } else {
+    addHomework();
+  }
+  
+  fetchWeather().then(() => renderWeather());
+  renderTacticalTip();
+  
+  if (state.schedule.length) {
+    renderSchedule();
+    switchTab('schedule');
+    scheduleNotifications();
+  } else {
+    switchTab('input');
+  }
+  
+  requestNotificationPermission();
+  
+  setInterval(() => {
+    if (state.schedule.length && !document.getElementById('scheduleScreen').classList.contains('hidden')) {
+      const now = new Date();
+      updateCurrentBanner(now.getHours() * 60 + now.getMinutes());
+    }
+  }, 60000);
+  
+  setInterval(saveState, 30000);
+  
+  // Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('✅ SW registered'))
+        .catch(err => console.log('❌ SW failed:', err));
+    });
+  }
+}
+
+document.addEventListener('touchstart', function unlockAudio() {
+  getAudioCtx();
+  document.removeEventListener('touchstart', unlockAudio);
+}, { once: true });
+
+document.addEventListener('click', function unlockAudioClick() {
+  getAudioCtx();
+  document.removeEventListener('click', unlockAudioClick);
+}, { once: true });
+
+window.addEventListener('beforeunload', saveState);
+init();
+</script>
+
+</body>
+</html>
