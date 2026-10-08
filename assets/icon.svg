@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- ============================================
+       ⚽ يومي v4.0 - App Icon
+       ============================================ -->
+  
+  <defs>
+    <!-- التدرج الرئيسي للخلفية -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a237e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#283593;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3949ab;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- تدرج الكرة -->
+    <radialGradient id="ballGradient" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#f5f5f5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- تدرج الساعة -->
+    <linearGradient id="clockGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd54f" />
+      <stop offset="100%" style="stop-color:#fbc02d" />
+    </linearGradient>
+    
+    <!-- تدرج الظل -->
+    <radialGradient id="shadowGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0" />
+    </radialGradient>
+    
+    <!-- فلتر الظل -->
+    <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" />
+      <feOffset dx="0" dy="6" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    
+    <!-- ظل داخلي للكرة -->
+    <filter id="innerShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+      <feOffset dx="2" dy="2" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="offsetblur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- ============================================
+       الخلفية الدائرية
+       ============================================ -->
+  <rect width="512" height="512" rx="112" ry="112" fill="url(#bgGradient)" />
+  
+  <!-- تأثير دائري خلفي -->
+  <circle cx="256" cy="256" r="200" fill="rgba(255,255,255,0.06)" />
+  <circle cx="256" cy="256" r="160" fill="rgba(255,255,255,0.04)" />
+  
+  <!-- ============================================
+       زخارف خلفية (نجوم صغيرة)
+       ============================================ -->
+  <circle cx="80" cy="80" r="3" fill="rgba(255,255,255,0.4)" />
+  <circle cx="432" cy="100" r="2" fill="rgba(255,255,255,0.3)" />
+  <circle cx="100" cy="420" r="2.5" fill="rgba(255,255,255,0.35)" />
+  <circle cx="430" cy="400" r="3" fill="rgba(255,255,255,0.4)" />
+  <circle cx="60" cy="250" r="2" fill="rgba(255,255,255,0.3)" />
+  <circle cx="450" cy="280" r="2.5" fill="rgba(255,255,255,0.35)" />
+  
+  <!-- ============================================
+       الكرة (الجزء الرئيسي)
+       ============================================ -->
+  <g filter="url(#dropShadow)">
+    <!-- جسم الكرة -->
+    <circle cx="256" cy="256" r="128" fill="url(#ballGradient)" 
+            stroke="#1a237e" stroke-width="4" />
+    
+    <!-- البنتاغون المركزي (الشكل الخماسي) -->
+    <polygon points="256,178 302,213 284,268 228,268 210,213" 
+             fill="#1a237e" />
+    
+    <!-- الأشكال الخماسية المحيطة -->
+    <!-- الأعلى -->
+    <polygon points="256,72 288,96 276,130 236,130 224,96" 
+             fill="#1a237e" />
+    
+    <!-- يمين أعلى -->
+    <polygon points="380,140 410,160 404,196 366,196 360,164" 
+             fill="#1a237e" />
+    
+    <!-- يمين أسفل -->
+    <polygon points="396,320 426,344 414,380 378,374 372,342" 
+             fill="#1a237e" />
+    
+    <!-- الأسفل -->
+    <polygon points="256,428 292,408 298,440 268,458 238,440" 
+             fill="#1a237e" />
+    
+    <!-- يسار أسفل -->
+    <polygon points="116,320 150,314 156,348 132,374 106,344" 
+             fill="#1a237e" />
+    
+    <!-- يسار أعلى -->
+    <polygon points="132,140 166,134 172,168 148,196 118,160" 
+             fill="#1a237e" />
+    
+    <!-- خطوط الربط -->
+    <line x1="256" y1="178" x2="256" y2="130" stroke="#1a237e" stroke-width="4" />
+    <line x1="302" y1="213" x2="366" y2="196" stroke="#1a237e" stroke-width="4" />
+    <line x1="284" y1="268" x2="372" y2="342" stroke="#1a237e" stroke-width="4" />
+    <line x1="228" y1="268" x2="132" y2="348" stroke="#1a237e" stroke-width="4" />
+    <line x1="210" y1="213" x2="148" y2="168" stroke="#1a237e" stroke-width="4" />
+    
+    <!-- لمعان على الكرة -->
+    <ellipse cx="200" cy="180" rx="50" ry="30" 
+             fill="rgba(255,255,255,0.5)" 
+             transform="rotate(-30 200 180)" />
+    <ellipse cx="210" cy="200" rx="20" ry="12" 
+             fill="rgba(255,255,255,0.7)" 
+             transform="rotate(-30 210 200)" />
+  </g>
+  
+  <!-- ============================================
+       الساعة (في الزاوية العلوية اليمنى)
+       ============================================ -->
+  <g filter="url(#dropShadow)" transform="translate(388, 92)">
+    <!-- الجسم الخارجي للساعة -->
+    <circle cx="0" cy="0" r="52" fill="#1a237e" opacity="0.9" />
+    <circle cx="0" cy="0" r="48" fill="url(#clockGradient)" 
+            stroke="#1a237e" stroke-width="3" />
+    
+    <!-- الوجه الداخلي -->
+    <circle cx="0" cy="0" r="40" fill="#fffde7" />
+    
+    <!-- علامات الساعة -->
+    <g stroke="#1a237e" stroke-width="3" stroke-linecap="round">
+      <!-- 12 -->
+      <line x1="0" y1="-34" x2="0" y2="-28" />
+      <!-- 3 -->
+      <line x1="34" y1="0" x2="28" y2="0" />
+      <!-- 6 -->
+      <line x1="0" y1="34" x2="0" y2="28" />
+      <!-- 9 -->
+      <line x1="-34" y1="0" x2="-28" y2="0" />
+    </g>
+    
+    <!-- علامات صغيرة -->
+    <g stroke="#1a237e" stroke-width="2" stroke-linecap="round" opacity="0.6">
+      <line x1="17" y1="-29.5" x2="14" y2="-24.2" />
+      <line x1="29.5" y1="-17" x2="24.2" y2="-14" />
+      <line x1="29.5" y1="17" x2="24.2" y2="14" />
+      <line x1="17" y1="29.5" x2="14" y2="24.2" />
+      <line x1="-17" y1="29.5" x2="-14" y2="24.2" />
+      <line x1="-29.5" y1="17" x2="-24.2" y2="14" />
+      <line x1="-29.5" y1="-17" x2="-24.2" y2="-14" />
+      <line x1="-17" y1="-29.5" x2="-14" y2="-24.2" />
+    </g>
+    
+    <!-- عقرب الساعات -->
+    <line x1="0" y1="0" x2="-2" y2="-18" 
+          stroke="#1a237e" stroke-width="5" stroke-linecap="round" />
+    
+    <!-- عقرب الدقائق -->
+    <line x1="0" y1="0" x2="14" y2="-6" 
+          stroke="#1a237e" stroke-width="4" stroke-linecap="round" />
+    
+    <!-- عقرب الثواني -->
+    <line x1="0" y1="0" x2="-6" y2="20" 
+          stroke="#e53935" stroke-width="2" stroke-linecap="round" />
+    
+    <!-- النقطة المركزية -->
+    <circle cx="0" cy="0" r="5" fill="#1a237e" />
+    <circle cx="0" cy="0" r="2.5" fill="#ffd54f" />
+  </g>
+  
+  <!-- ============================================
+       رمز الهدف/التركيز (زاوية سفلية يسرى)
+       ============================================ -->
+  <g filter="url(#dropShadow)" transform="translate(124, 388)">
+    <circle cx="0" cy="0" r="40" fill="#43a047" 
+            stroke="white" stroke-width="3" />
+    <circle cx="0" cy="0" r="28" fill="white" />
+    <circle cx="0" cy="0" r="18" fill="#43a047" />
+    <circle cx="0" cy="0" r="8" fill="white" />
+    <circle cx="0" cy="0" r="3" fill="#e53935" />
+  </g>
+  
+  <!-- ============================================
+       لمعان نهائي على التصميم
+       ============================================ -->
+  <ellipse cx="140" cy="120" rx="90" ry="50" 
+           fill="rgba(255,255,255,0.08)" 
+           transform="rotate(-40 140 120)" />
+  
+</svg>
