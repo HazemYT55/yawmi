@@ -1,0 +1,367 @@
+{
+  "_metadata": {
+    "app": "yawmi",
+    "version": "4.0.0",
+    "language": "ar",
+    "direction": "rtl",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z",
+    "description": "الملف الرئيسي لكل البيانات المحلية لتطبيق يومي",
+    "encoding": "UTF-8"
+  },
+
+  "user": {
+    "name": "",
+    "age": 13,
+    "gender": "male",
+    "height": null,
+    "weight": null,
+    "avatar": null,
+    "joinDate": null,
+    "lastLogin": null,
+    "preferences": {
+      "theme": "auto",
+      "fontSize": "medium",
+      "notifications": true,
+      "language": "ar"
+    }
+  },
+
+  "settings": {
+    "darkMode": false,
+    "soundEnabled": true,
+    "soundVolume": 0.15,
+    "notificationsEnabled": false,
+    "notificationSound": true,
+    "notificationVibration": true,
+    "language": "ar",
+    "weekendMode": false,
+    "mood": "medium",
+    "autoSave": true,
+    "autoSaveInterval": 30000,
+    "showTutorial": true,
+    "animationsEnabled": true,
+    "hapticFeedback": true
+  },
+
+  "inputs": {
+    "wakeUp": "06:00",
+    "schoolStart": "07:00",
+    "schoolEnd": "14:30",
+    "trainingTime": "17:00",
+    "trainingDuration": 90,
+    "trainingType": "agility",
+    "homeworks": [],
+    "quran": {
+      "recent": 2,
+      "old": 1,
+      "new": 1
+    },
+    "lastUpdated": null
+  },
+
+  "schedule": {
+    "current": [],
+    "templates": [
+      {
+        "id": "template_weekday",
+        "name": "يوم دراسي عادي",
+        "description": "جدول مثالي لأيام الأسبوع",
+        "tasks": []
+      },
+      {
+        "id": "template_weekend",
+        "name": "يوم إجازة",
+        "description": "جدول مريح للإجازات",
+        "tasks": []
+      }
+    ],
+    "history": []
+  },
+
+  "completed": {},
+
+  "stats": {
+    "streak": 0,
+    "longestStreak": 0,
+    "lastActiveDate": null,
+    "totalPoints": 0,
+    "totalTasksCompleted": 0,
+    "totalTasksMissed": 0,
+    "totalQuranPages": 0,
+    "totalWorkouts": 0,
+    "totalWorkoutMinutes": 0,
+    "totalCalories": 0,
+    "totalStrength": 0,
+    "totalAgility": 0,
+    "totalEndurance": 0,
+    "pomodoroSessions": 0,
+    "pomodoroMinutes": 0,
+    "earlyWakeups": 0,
+    "perfectDays": 0,
+    "joinDate": null,
+    "firstLaunch": null
+  },
+
+  "weeklyHistory": {},
+
+  "monthlyHistory": {},
+
+  "badges": {
+    "unlocked": [],
+    "inProgress": [],
+    "locked": [],
+    "newlyUnlocked": [],
+    "totalUnlocked": 0,
+    "totalBadges": 27,
+    "completionPercentage": 0
+  },
+
+  "rewards": [
+    {
+      "id": "r1",
+      "name": "🎮 ساعة ألعاب إضافية",
+      "description": "ساعة زيادة في وقت الألعاب",
+      "cost": 500,
+      "claimed": false,
+      "claimedAt": null,
+      "createdAt": null
+    },
+    {
+      "id": "r2",
+      "name": "🍕 رحلة مطعم نهاية الأسبوع",
+      "description": "رحلة لمطعمك المفضل",
+      "cost": 1000,
+      "claimed": false,
+      "claimedAt": null,
+      "createdAt": null
+    },
+    {
+      "id": "r3",
+      "name": "⚽ كرة قدم جديدة",
+      "description": "كرة قدم احترافية",
+      "cost": 2000,
+      "claimed": false,
+      "claimedAt": null,
+      "createdAt": null
+    }
+  ],
+
+  "quran": {
+    "currentSurah": 1,
+    "currentAyah": 1,
+    "currentJuz": 1,
+    "currentPage": 1,
+    "memorized": {
+      "surahs": [],
+      "ayahs": [],
+      "pages": [],
+      "juz": []
+    },
+    "reviews": {
+      "recent": [],
+      "old": [],
+      "schedule": []
+    },
+    "plan": {
+      "dailyNew": 1,
+      "dailyRecent": 2,
+      "dailyOld": 1,
+      "weeklyGoal": 7,
+      "monthlyGoal": 30
+    },
+    "progress": {
+      "totalPages": 0,
+      "totalAyahs": 0,
+      "totalSurahs": 0,
+      "percentage": 0
+    },
+    "lastReview": null,
+    "streak": 0
+  },
+
+  "workouts": {
+    "currentCategory": "agility",
+    "favorites": [],
+    "history": [],
+    "customWorkouts": [],
+    "currentRoutine": null,
+    "weeklyPlan": null,
+    "lastWorkout": null,
+    "streak": 0
+  },
+
+  "weather": {
+    "temp": null,
+    "code": null,
+    "wind": null,
+    "humidity": null,
+    "description": null,
+    "icon": null,
+    "city": null,
+    "country": null,
+    "lastUpdate": null,
+    "forecast": []
+  },
+
+  "notifications": {
+    "enabled": false,
+    "soundEnabled": true,
+    "vibrationEnabled": true,
+    "scheduled": [],
+    "history": [],
+    "permission": "default"
+  },
+
+  "sessions": {
+    "current": null,
+    "history": [],
+    "totalSessions": 0,
+    "totalTimeMinutes": 0,
+    "avgSessionMinutes": 0
+  },
+
+  "backups": {
+    "autoBackupEnabled": true,
+    "lastBackup": null,
+    "backupCount": 0,
+    "autoBackupInterval": 86400000
+  },
+
+  "app": {
+    "version": "4.0.0",
+    "buildNumber": 1,
+    "installedDate": null,
+    "lastOpened": null,
+    "launchCount": 0,
+    "platform": "web",
+    "deviceType": "unknown",
+    "screenSize": "unknown",
+    "language": "ar",
+    "timezone": "Asia/Riyadh"
+  },
+
+  "themes": {
+    "current": "default",
+    "available": [
+      "default",
+      "dark",
+      "blue",
+      "green",
+      "purple",
+      "gold"
+    ],
+    "custom": {}
+  },
+
+  "sounds": {
+    "current": "none",
+    "available": [
+      "none",
+      "rain",
+      "forest",
+      "waves",
+      "cafe",
+      "fire"
+    ],
+    "volume": 0.1,
+    "enabled": true
+  },
+
+  "onboarding": {
+    "completed": false,
+    "currentStep": 0,
+    "totalSteps": 5,
+    "steps": [
+      { "id": 1, "name": "welcome", "completed": false },
+      { "id": 2, "name": "user-info", "completed": false },
+      { "id": 3, "name": "schedule-input", "completed": false },
+      { "id": 4, "name": "first-schedule", "completed": false },
+      { "id": 5, "name": "tour", "completed": false }
+    ]
+  },
+
+  "tutorials": {
+    "scheduleTour": false,
+    "workoutsTour": false,
+    "quranTour": false,
+    "statsTour": false,
+    "pomodoroTour": false
+  },
+
+  "tacticalTips": {
+    "seen": [],
+    "favorites": [],
+    "lastShown": null
+  },
+
+  "cache": {
+    "weather": {
+      "data": null,
+      "expiresAt": null
+    },
+    "quran": {
+      "data": null,
+      "expiresAt": null
+    },
+    "surahs": {
+      "data": null,
+      "expiresAt": null
+    }
+  },
+
+  "errors": {
+    "log": [],
+    "lastError": null,
+    "errorCount": 0
+  },
+
+  "analytics": {
+    "enabled": false,
+    "events": [],
+    "totalEvents": 0
+  },
+
+  "sync": {
+    "enabled": false,
+    "provider": null,
+    "lastSync": null,
+    "autoSync": false,
+    "conflictResolution": "local-wins"
+  },
+
+  "permissions": {
+    "geolocation": "prompt",
+    "notifications": "default",
+    "camera": "prompt",
+    "microphone": "prompt",
+    "storage": "granted"
+  },
+
+  "deviceInfo": {
+    "userAgent": null,
+    "platform": null,
+    "language": null,
+    "cookiesEnabled": true,
+    "localStorageEnabled": true,
+    "indexedDBEnabled": true,
+    "webAudioEnabled": true,
+    "geolocationEnabled": true,
+    "notificationsSupported": false
+  },
+
+  "flags": {
+    "betaFeatures": false,
+    "experimentalUI": false,
+    "debugMode": false,
+    "verboseLogging": false,
+    "offlineMode": true,
+    "pwaMode": false
+  },
+
+  "migrationInfo": {
+    "fromVersion": null,
+    "migratedAt": null,
+    "migrationNotes": []
+  }
+}
