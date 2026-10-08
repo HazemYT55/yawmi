@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#000">
+<meta name="description" content="تثبيت تطبيق يومي على iPhone و iPad">
+<meta name="author" content="Hazem">
+
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/index.css">
+
+<title>🍎 تثبيت على iOS - يومي</title>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #1c1c1e, #3a3a3c);
+    color: white;
+    padding: 130px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  }
+
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-hero-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: white;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+
+  .page-hero p {
+    color: white;
+    opacity: 0.95;
+    font-size: 1.05rem;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.85;
+  }
+
+  .breadcrumb span:not(:last-child)::after {
+    content: '›';
+    margin-right: 8px;
+    opacity: 0.6;
+  }
+
+  .container-download {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  .warning-box {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    border-right: 5px solid #1976d2;
+    color: #333;
+  }
+
+  body.dark .warning-box {
+    background: linear-gradient(135deg, #0d47a1, #0a3d7a);
+    color: white;
+  }
+
+  .warning-box-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .warning-box-content h3 {
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    color: #0d47a1;
+  }
+
+  body.dark .warning-box-content h3 {
+    color: #42a5f5;
+  }
+
+  .warning-box-content p {
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .steps-card {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .steps-card h2 {
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  body.dark .steps-card h2 {
+    color: var(--primary-lighter);
+  }
+
+  .steps-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: step-counter;
+  }
+
+  .steps-list li {
+    counter-increment: step-counter;
+    padding: 18px 18px 18px 70px;
+    margin-bottom: 12px;
+    background: var(--bg);
+    border-radius: 16px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+    border-right: 4px solid #000;
+  }
+
+  .steps-list li::before {
+    content: counter(step-counter);
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #1c1c1e, #3a3a3c);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 16px;
+  }
+
+  .steps-list li strong {
+    color: var(--primary);
+    display: block;
+    margin-bottom: 5px;
+    font-size: 15px;
+  }
+
+  body.dark .steps-list li strong {
+    color: var(--primary-lighter);
+  }
+
+  .share-icon {
+    display: inline-block;
+    background: #007aff;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 110px 15px 50px;
+    }
+
+    .container-download {
+      padding: 0 12px 60px;
+    }
+
+    .steps-card {
+      padding: 22px 18px;
+    }
+
+    .steps-card h2 {
+      font-size: 1.15rem;
+    }
+
+    .steps-list li {
+      padding: 14px 14px 14px 60px;
+      font-size: 13px;
+    }
+
+    .steps-list li::before {
+      width: 32px;
+      height: 32px;
+      font-size: 14px;
+      right: 14px;
+      top: 14px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">يومي</span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNavMenu()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="features.html">المميزات</a></li>
+      <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+      <li><a href="quran.html">القرآن</a></li>
+      <li><a href="workouts.html">التمارين</a></li>
+      <li><a href="about.html">عن التطبيق</a></li>
+      <li class="nav-cta"><a href="information.html">🚀 ابدأ الآن</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="../index.html">الرئيسية</a>
+      <a href="download.html">التحميل</a>
+      <span>iOS</span>
+    </div>
+    <div class="page-hero-icon">🍎</div>
+    <h1>تثبيت على iOS</h1>
+    <p>iPhone و iPad — بدون App Store</p>
+  </div>
+</section>
+
+<div class="container-download">
+
+  <div class="warning-box">
+    <span class="warning-box-icon">⚠️</span>
+    <div class="warning-box-content">
+      <h3>مهم: استخدم Safari فقط</h3>
+      <p>
+        لازم تفتح الرابط من <strong>Safari</strong> عشان تقدر تضيف التطبيق للشاشة الرئيسية. 
+        لو بتستخدم Chrome أو متصفح تاني، انسخ الرابط وافتحه في Safari.
+      </p>
+    </div>
+  </div>
+
+  <div class="steps-card">
+    <h2>📖 خطوات التثبيت</h2>
+
+    <ol class="steps-list">
+      <li>
+        <strong>افتح الرابط من Safari</strong>
+        لازم تكون في Safari — مش Chrome أو غيره.
+      </li>
+
+      <li>
+        <strong>اضغط زر المشاركة 📤</strong>
+        في شريط Safari السفلي أو العلوي، اضغط على أيقونة <span class="share-icon">⬆</span> المشاركة.
+      </li>
+
+      <li>
+        <strong>اختر "إضافة إلى الشاشة الرئيسية"</strong>
+        انزل في القائمة لحد ما تلاقي <strong>"Add to Home Screen"</strong> أو <strong>"إضافة إلى الشاشة الرئيسية"</strong>.
+      </li>
+
+      <li>
+        <strong>سمّي التطبيق "يومي"</strong>
+        في خانة الاسم، اكتب <strong>يومي</strong>، وبعدين اضغط <strong>"Add"</strong>.
+      </li>
+
+      <li>
+        <strong>افتح التطبيق</strong>
+        هتلاقي أيقونة <strong>⚽ يومي</strong> على شاشة الآيفون. اضغط عليها واستخدم التطبيق!
+      </li>
+    </ol>
+  </div>
+
+  <div class="steps-card" style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-right: 4px solid #43a047;">
+    <h2 style="color: #1b5e20;">✨ مميزات نسخة iOS</h2>
+    <ul style="font-size: 14px; line-height: 2; color: #333; padding-right: 20px; margin: 0;">
+      <li>📱 يشتغل زي التطبيقات العادية</li>
+      <li>🚫 بدون شريط عناوين</li>
+      <li>⚡ سريع وخفيف</li>
+      <li>🔒 بياناتك محفوظة على جهازك</li>
+      <li>📴 يعمل بدون إنترنت</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-icon">⚽</span>
+        <span class="brand-text">يومي</span>
+      </div>
+      <p class="footer-desc">منظّم الطالب الرياضي الذكي</p>
+    </div>
+    <div class="footer-col">
+      <h4>التطبيق</h4>
+      <ul>
+        <li><a href="app.html">افتح التطبيق</a></li>
+        <li><a href="download.html">التحميل</a></li>
+        <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+        <li><a href="features.html">المميزات</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>أنظمة تانية</h4>
+      <ul>
+        <li><a href="download-android.html">🤖 Android</a></li>
+        <li><a href="download-pc.html">🪟 Windows</a></li>
+        <li><a href="download.html">⬅️ الرجوع</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>عن التطبيق</h4>
+      <ul>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="github.html">GitHub</a></li>
+        <li><a href="about.html#license">الترخيص</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 يومي — MIT License</p>
+    <p>صُنع بحب للطلاب الرياضيين ⚽📚</p>
+  </div>
+</footer>
+
+<script>
+function toggleNavMenu() {
+  var links = document.getElementById('navLinks');
+  var toggle = document.querySelector('.nav-toggle');
+  links.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  });
+});
+
+window.addEventListener('scroll', function() {
+  var navbar = document.getElementById('navbar');
+  if (window.pageYOffset > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+try {
+  var saved = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+  if (saved.darkMode) {
+    document.body.classList.add('dark');
+  }
+} catch (e) {}
+
+console.log('🍎 iOS Download Page Loaded');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#1a237e">
+<meta name="description" content="بياناتك الشخصية - يومي">
+<meta name="author" content="Hazem">
+
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="manifest" href="../assets/site.webmanifest">
+
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/app.css">
+
+<title>👤 بياناتك الشخصية - يومي</title>
+
+<style>
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(255,255,255,0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .welcome-container {
+    max-width: 520px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .welcome-header {
+    text-align: center;
+    margin-bottom: 25px;
+    animation: fadeInDown 0.6s ease;
+  }
+
+  .welcome-logo {
+    font-size: 80px;
+    margin-bottom: 12px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+  }
+
+  .welcome-title {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 6px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .welcome-subtitle {
+    font-size: 1rem;
+    color: white;
+    opacity: 0.85;
+  }
+
+  .welcome-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 30px 25px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: fadeInUp 0.6s ease;
+  }
+
+  .card-step-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+
+  .card-step-title span {
+    font-size: 26px;
+  }
+
+  .card-step-subtitle {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 6px;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 15px;
+    background: #f8f9fa;
+    color: #333;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .form-group input:focus {
+    border-color: #3949ab;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(57,73,171,0.15);
+    background: #fff;
+  }
+
+  .gender-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .gender-option {
+    padding: 18px 12px;
+    border-radius: 14px;
+    text-align: center;
+    border: 2px solid #e0e0e0;
+    background: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .gender-option:hover {
+    border-color: #5c6bc0;
+    transform: translateY(-2px);
+  }
+
+  .gender-option.selected {
+    border-color: #3949ab;
+    background: linear-gradient(135deg, rgba(57,73,171,0.1), rgba(57,73,171,0.15));
+    box-shadow: 0 6px 20px rgba(57,73,171,0.2);
+    transform: translateY(-2px);
+  }
+
+  .gender-emoji {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .gender-label {
+    font-size: 14px;
+    font-weight: 800;
+    color: #333;
+  }
+
+  .optional-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .continue-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(67,160,71,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: inherit;
+  }
+
+  .continue-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(67,160,71,0.5);
+  }
+
+  .continue-btn:active {
+    transform: translateY(-1px);
+  }
+
+  .continue-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .skip-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #666;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .skip-link:hover {
+    color: #3949ab;
+  }
+
+  .progress-dots {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .progress-dot {
+    width: 30px;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
+  }
+
+  .progress-dot.active {
+    background: #ffd700;
+    width: 50px;
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @media (max-width: 480px) {
+    .welcome-logo { font-size: 65px; }
+    .welcome-title { font-size: 1.8rem; }
+    .welcome-card { padding: 22px 18px; }
+    .card-step-title { font-size: 1rem; }
+    .optional-row { grid-template-columns: 1fr; gap: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="welcome-container">
+
+  <div class="welcome-header">
+    <div class="welcome-logo">⚽</div>
+    <div class="welcome-title">أهلاً بيك في يومي!</div>
+    <div class="welcome-subtitle">خلينا نتعرف عليك الأول 👋</div>
+  </div>
+
+  <div class="progress-dots">
+    <div class="progress-dot active"></div>
+    <div class="progress-dot"></div>
+    <div class="progress-dot"></div>
+  </div>
+
+  <div class="welcome-card">
+
+    <div class="card-step-title">
+      <span>👤</span>
+      بياناتك الشخصية
+    </div>
+    <p class="card-step-subtitle">
+      البيانات دي بتساعدنا نخصصلك تجربتك. كل حاجة محفوظة على جهازك فقط 🔒
+    </p>
+
+    <div class="form-group">
+      <label>الاسم</label>
+      <input type="text" id="userName" placeholder="اكتب اسمك هنا" maxlength="30" autofocus>
+    </div>
+
+    <div class="form-group">
+      <label>العمر</label>
+      <input type="number" id="userAge" value="13" min="10" max="18">
+    </div>
+
+    <div class="form-group">
+      <label>الجنس</label>
+      <div class="gender-grid">
+        <div class="gender-option selected" data-gender="male" onclick="selectGender('male')">
+          <span class="gender-emoji">👦</span>
+          <div class="gender-label">ولد</div>
+        </div>
+        <div class="gender-option" data-gender="female" onclick="selectGender('female')">
+          <span class="gender-emoji">👧</span>
+          <div class="gender-label">بنت</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="optional-row">
+      <div class="form-group">
+        <label>الطول (سم) — اختياري</label>
+        <input type="number" id="userHeight" placeholder="155" min="100" max="220">
+      </div>
+      <div class="form-group">
+        <label>الوزن (كجم) — اختياري</label>
+        <input type="number" id="userWeight" placeholder="45" min="20" max="150">
+      </div>
+    </div>
+
+    <button class="continue-btn" id="continueBtn" onclick="saveAndContinue()">
+      <span>🚀</span>
+      يلا نبدأ!
+    </button>
+
+    <a href="app.html" class="skip-link">تخطي وابدأ الآن ←</a>
+
+  </div>
+
+</div>
+
+<script>
+/* ============================================
+   INFORMATION PAGE - SAVE & REDIRECT
+============================================ */
+
+var STORAGE_KEY = 'yawmi_yawmi_v4';
+var selectedGender = 'male';
+
+function selectGender(gender) {
+  selectedGender = gender;
+  var options = document.querySelectorAll('.gender-option');
+  options.forEach(function(el) {
+    el.classList.toggle('selected', el.dataset.gender === gender);
+  });
+  if (navigator.vibrate) navigator.vibrate(10);
+}
+
+function saveAndContinue() {
+  var btn = document.getElementById('continueBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span> جاري الحفظ...';
+
+  var name = document.getElementById('userName').value.trim();
+  var age = parseInt(document.getElementById('userAge').value) || 13;
+  var height = parseInt(document.getElementById('userHeight').value) || null;
+  var weight = parseInt(document.getElementById('userWeight').value) || null;
+
+  if (!name) {
+    alert('⚠️ لازم تكتب اسمك الأول');
+    document.getElementById('userName').focus();
+    btn.disabled = false;
+    btn.innerHTML = '<span>🚀</span> يلا نبدأ!';
+    return;
+  }
+
+  // Load existing state
+  var state = {};
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      state = JSON.parse(raw);
+    }
+  } catch (e) {
+    console.error('Parse error:', e);
+    state = {};
+  }
+
+  // Ensure structure
+  if (!state.user) state.user = {};
+  if (!state.stats) state.stats = {};
+  if (!state.inputs) state.inputs = {
+    wakeUp: '06:00',
+    schoolStart: '07:00',
+    schoolEnd: '14:30',
+    trainingTime: '17:00',
+    trainingDuration: 90,
+    trainingType: 'agility',
+    homeworks: [],
+    quranRecent: 2,
+    quranOld: 1,
+    quranNew: 1
+  };
+  if (!state.schedule) state.schedule = [];
+  if (!state.completed) state.completed = {};
+
+  // Set user data
+  state.user.name = name;
+  state.user.age = age;
+  state.user.gender = selectedGender;
+  state.user.height = height;
+  state.user.weight = weight;
+  state.user.joinDate = new Date().toISOString();
+
+  if (!state.stats.firstLaunch) {
+    state.stats.firstLaunch = new Date().toISOString();
+  }
+
+  // Save
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    console.log('✅ User saved:', name);
+    console.log('📦 State:', state);
+  } catch (e) {
+    console.error('Storage error:', e);
+    alert('❌ فشل الحفظ: ' + e.message);
+    btn.disabled = false;
+    btn.innerHTML = '<span>🚀</span> يلا نبدأ!';
+    return;
+  }
+
+  // Vibrate
+  if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
+
+  // Redirect
+  console.log('🚀 Redirecting to app.html...');
+  setTimeout(function() {
+    window.location.href = 'app.html';
+  }, 300);
+}
+
+// Enter to continue
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !document.getElementById('continueBtn').disabled) {
+    saveAndContinue();
+  }
+});
+
+console.log('👤 Information Page Loaded');
+</script>
+
+</body>
+</html>

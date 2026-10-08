@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#1a237e">
+<meta name="description" content="مميزات تطبيق يومي - منظّم الطالب الرياضي الذكي">
+<meta name="author" content="Hazem">
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="manifest" href="../assets/site.webmanifest">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/index.css">
+
+<title>✨ المميزات - يومي</title>
+
+<style>
+  /* ============ Features Page Specific ============ */
+  .page-hero {
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    color: white;
+    padding: 130px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  }
+
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .page-hero-icon {
+    font-size: 72px;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 15px;
+    color: white;
+    font-weight: 900;
+  }
+
+  .page-hero p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    color: white;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .breadcrumb span:not(:last-child)::after {
+    content: '›';
+    margin-right: 8px;
+    opacity: 0.6;
+  }
+
+  /* ============ Main Container ============ */
+  .features-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ============ Section Header ============ */
+  .section-head {
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 60px;
+  }
+
+  .section-head-tag {
+    display: inline-block;
+    background: rgba(26,35,126,0.08);
+    color: var(--primary);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  body.dark .section-head-tag {
+    background: rgba(121,134,203,0.15);
+    color: var(--primary-lighter);
+  }
+
+  .section-head h2 {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    color: var(--text);
+    margin-bottom: 12px;
+    font-weight: 800;
+  }
+
+  .section-head p {
+    font-size: 1rem;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ============ Feature Categories Grid ============ */
+  .feature-category {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-bottom: 60px;
+  }
+
+  .category-card {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 30px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 5px;
+    background: var(--category-color, var(--primary));
+    border-radius: 22px 22px 0 0;
+  }
+
+  .category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--category-color, var(--primary));
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .category-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--category-color, var(--primary)), var(--category-color-light, var(--primary-light)));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  }
+
+  .category-title {
+    font-size: 1.3rem;
+    color: var(--text);
+    font-weight: 800;
+    margin: 0;
+  }
+
+  .category-subtitle {
+    font-size: 13px;
+    color: var(--text-light);
+    margin: 4px 0 0;
+  }
+
+  .category-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .category-features li {
+    padding: 10px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .category-features li:last-child {
+    border-bottom: none;
+  }
+
+  .category-features li::before {
+    content: '✓';
+    color: var(--success);
+    font-weight: 800;
+    flex-shrink: 0;
+    background: rgba(67,160,71,0.1);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  /* ============ Workouts Preview ============ */
+  .workouts-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 25px;
+  }
+
+  .workout-preview-item {
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.25s ease;
+    cursor: default;
+  }
+
+  .workout-preview-item:hover {
+    transform: translateY(-4px);
+    background: var(--card);
+    box-shadow: var(--shadow-md);
+  }
+
+  .workout-preview-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .workout-preview-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .workout-preview-count {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 4px;
+  }
+
+  /* ============ Badges Showcase ============ */
+  .badges-showcase {
+    background: linear-gradient(135deg, #ffa000, #f57c00);
+    border-radius: 22px;
+    padding: 35px 25px;
+    color: white;
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(255,160,0,0.3);
+  }
+
+  .badges-showcase::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    animation: rotate 40s linear infinite;
+  }
+
+  @keyframes rotate {
+    to { transform: rotate(360deg); }
+  }
+
+  .badges-showcase-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .badges-showcase h3 {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .badges-showcase p {
+    text-align: center;
+    color: white;
+    opacity: 0.95;
+    margin-bottom: 25px;
+    font-size: 14px;
+  }
+
+  .badges-grid-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 12px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .badge-preview {
+    background: rgba(255,255,255,0.25);
+    border-radius: 14px;
+    padding: 12px 6px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
+  }
+
+  .badge-preview:hover {
+    transform: scale(1.08);
+    background: rgba(255,255,255,0.35);
+  }
+
+  .badge-preview-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .badge-preview-name {
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+  }
+
+  /* ============ Comparison Table ============ */
+  .comparison-section {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 30px 20px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 60px;
+    overflow-x: auto;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 14px 12px;
+    text-align: right;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 14px;
+  }
+
+  .comparison-table th {
+    color: var(--primary);
+    font-weight: 800;
+    background: var(--bg);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  body.dark .comparison-table th {
+    color: var(--primary-lighter);
+  }
+
+  .comparison-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .comparison-table .check {
+    color: var(--success);
+    font-weight: 800;
+    font-size: 18px;
+  }
+
+  .comparison-table .cross {
+    color: var(--text-muted);
+    font-size: 18px;
+  }
+
+  /* ============ Stats Showcase ============ */
+  .stats-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 60px;
+  }
+
+  .stat-showcase-item {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 25px 15px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .stat-showcase-item:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-lighter);
+  }
+
+  .stat-showcase-value {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  body.dark .stat-showcase-value {
+    background: linear-gradient(135deg, var(--primary-lighter), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-showcase-label {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 600;
+  }
+
+  /* ============ CTA Section ============ */
+  .cta-section {
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    border-radius: 22px;
+    padding: 50px 25px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 15px 40px rgba(26,35,126,0.3);
+    margin-bottom: 30px;
+  }
+
+  .cta-section h3 {
+    font-size: 1.6rem;
+    color: white;
+    margin-bottom: 15px;
+  }
+
+  .cta-section p {
+    color: white;
+    opacity: 0.95;
+    margin-bottom: 25px;
+    font-size: 1rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta-buttons .btn {
+    width: auto;
+    min-width: 180px;
+    margin: 0;
+  }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 110px 15px 50px;
+    }
+
+    .page-hero-icon {
+      font-size: 55px;
+    }
+
+    .features-container {
+      padding: 0 15px 60px;
+    }
+
+    .category-card {
+      padding: 22px;
+    }
+
+    .category-icon {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+    }
+
+    .category-title {
+      font-size: 1.15rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 10px 8px;
+      font-size: 13px;
+    }
+
+    .stat-showcase-value {
+      font-size: 2rem;
+    }
+
+    .badges-showcase {
+      padding: 25px 15px;
+    }
+
+    .cta-section {
+      padding: 35px 20px;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+      min-width: auto;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">يومي</span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNavMenu()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="features.html" class="active">المميزات</a></li>
+      <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+      <li><a href="quran.html">القرآن</a></li>
+      <li><a href="workouts.html">التمارين</a></li>
+      <li><a href="about.html">عن التطبيق</a></li>
+      <li class="nav-cta"><a href="app.html">🚀 افتح التطبيق</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="../index.html">الرئيسية</a>
+      <span>المميزات</span>
+    </div>
+    <div class="page-hero-icon">✨</div>
+    <h1>كل المميزات</h1>
+    <p>اكتشف كل اللي يقدمه تطبيق يومي — من توليد الجدول الذكي، للتمارين المتخصصة، لحفظ القرآن، وأكتر</p>
+  </div>
+</section>
+
+<!-- ============ CONTENT ============ -->
+<div class="features-container">
+
+  <!-- ============ CORE FEATURES ============ -->
+  <div class="section-head">
+    <span class="section-head-tag">🎯 الأساسيات</span>
+    <h2>المميزات الأساسية</h2>
+    <p>الأدوات اللي بتخلي يومك منظم ومتوازن</p>
+  </div>
+
+  <div class="feature-category">
+
+    <!-- Schedule Generation -->
+    <div class="category-card" style="--category-color: #1a237e; --category-color-light: #3949ab;">
+      <div class="category-header">
+        <div class="category-icon">🎯</div>
+        <div>
+          <h3 class="category-title">توليد الجدول الذكي</h3>
+          <p class="category-subtitle">في ثواني واحدة</p>
+        </div>
+      </div>
+      <ul class="category-features">
+        <li>إدخال وقت الاستيقاظ وأوقات المدرسة</li>
+        <li>إضافة الواجبات مع مواعيد التسليم</li>
+        <li>تحديد وقت ومدة التدريب الرياضي</li>
+        <li>جدول متوازن يحترم أولوياتك</li>
+        <li>ضمان 9 ساعات نوم كافية</li>
+      </ul>
+    </div>
+
+    <!-- Quran -->
+    <div class="category-card" style="--category-color: #fbc02d; --category-color-light: #fdd835;">
+      <div class="category-header">
+        <div class="category-icon">📖</div>
+        <div>
+          <h3 class="category-title">الحفظ القرآني</h3>
+          <p class="category-subtitle">114 سورة كاملة</p>
+        </div>
+      </div>
+      <ul class="category-features">
+        <li>تقسيم ذكي: مراجعة قريبة، بعيدة، وحفظ جديد</li>
+        <li>114 سورة من CDN موثوق</li>
+        <li>10 قراء مشهورين للاستماع</li>
+        <li>تلاوة آية بآية</li>
+        <li>خطة حفظ مخصصة</li>
+      </ul>
+    </div>
+
+    <!-- Workouts -->
+    <div class="category-card" style="--category-color: #fb8c00; --category-color-light: #ffa726;">
+      <div class="category-header">
+        <div class="category-icon">⚽</div>
+        <div>
+          <h3 class="category-title">التمارين الرياضية</h3>
+          <p class="category-subtitle">18 تمرين مخصص</p>
+        </div>
+      </div>
+      <ul class="category-features">
+        <li>6 تمارين رشاقة (Agility)</li>
+        <li>6 تمارين قوة عضلية (Strength)</li>
+        <li>6 تمارين تحمل (Endurance)</li>
+        <li>خطوات تفصيلية لكل تمرين</li>
+        <li>عرض توضيحي متحرك</li>
+      </ul>
+    </div>
+
+    <!-- Pomodoro -->
+    <div class="category-card" style="--category-color: #e53935; --category-color-light: #ef5350;">
+      <div class="category-header">
+        <div class="category-icon">🍅</div>
+        <div>
+          <h3 class="category-title">Pomodoro Timer</h3>
+          <p class="category-subtitle">تركيز 25/5</p>
+        </div>
+      </div>
+      <ul class="category-features">
+        <li>25 دقيقة تركيز / 5 دقائق راحة</li>
+        <li>دائرة تقدم متحركة</li>
+        <li>4 أصوات محيطة (مطر، غابة، أمواج، صامت)</li>
+        <li>إشعارات ذكية</li>
+        <li>تتبع عدد الجلسات</li>
+      </ul>
+    </div>
+
+    <!-- Badges -->
+    <div class="category-card" style="--category-color: #43a047; --category-color-light: #66bb6a;">
+      <div class="category-header">
+        <div class="category-icon">🏆</div>
+        <div>
+          <h3 class="category-title">نظام التحفيز</h3>
+          <p class="category-subtitle">27 شارة</p>
+        </div>
+      </div>
+      <ul class="category-features">
+        <li>+10 نقاط لكل مهمة مكتملة</li>
+        <li>27 شارة في 5 فئات</li>
+        <li>Streak للأيام المتتالية</li>
+        <li>مكافآت أسرية قابلة للتخصيص</li>
+        <li>مشاركة الإنجاز</li>
+      </ul>
+    </div>
+
+    <!-- Weather -->
+    <div class="category-card" style="--category-color: #29b6f6; --category-color-light: #4fc3f7;">
+      <div class="category-header">
+        <div class="category-icon">🌤️</div>
+        <div>
+          <h3 class="category-title">الطقس الذكي</h3>
+          <p class="category-subtitle">مخصص لموقعك</p>
+        </div>
+      </div>
+      <ul class="category-features">
+        <li>قراءة تلقائية لحالة الجو</li>
+        <li>اقتراح تمارين منزلية لو مطر</li>
+        <li>تحذيرات من الحرارة العالية</li>
+        <li>نصائح للتسخين في الجو البارد</li>
+        <li>يعتمد على Open-Meteo API</li>
+      </ul>
+    </div>
+
+    <!-- Mood -->
+    <div class="category-card" style="--category-color: #8e24aa; --category-color-light: #ab47bc;">
+      <div class="category-header">
+        <div class="category-icon">😊</div>
+        <div>
+          <h3 class="category-title">الطاقة والمزاج</h3>
+          <p class="category-subtitle">تعديل تلقائي</p>
+        </div>
+      </div>
+      <ul class="category-features">
+        <li>3 مستويات: عالي، متوسط، منخفض</li>
+        <li>تعديل مدة المذاكرة</li>
+        <li>ضبط صعوبة التمارين</li>
+        <li>تعديل حجم حفظ القرآن</li>
+        <li>حماية من الإرهاق</li>
+      </ul>
+    </div>
+
+    <!-- Weekend Mode -->
+    <div class="category-card" style="--category-color: #26a69a; --category-color-light: #4db6ac;">
+      <div class="category-header">
+        <div class="category-icon">🏖️</div>
+        <div>
+          <h3 class="category-title">وضع الإجازة</h3>
+          <p class="category-subtitle">Weekend Mode</p>
+        </div>
+      </div>
+      <ul class="category-features">
+        <li>إلغاء المدرسة تلقائياً</li>
+        <li>زيادة وقت الرياضة (× 1.2)</li>
+        <li>وقت أطول للترفيه</li>
+        <li>حفظ قرآن مضاعف</li>
+        <li>يوم مريح ومتوازن</li>
+      </ul>
+    </div>
+
+    <!-- AI Adjust -->
+    <div class="category-card" style="--category-color: #7e57c2; --category-color-light: #9575cd;">
+      <div class="category-header">
+        <div class="category-icon">🤖</div>
+        <div>
+          <h3 class="category-title">التعديل الطارئ</h3>
+          <p class="category-subtitle">AI Adjust</p>
+        </div>
+      </div>
+      <ul class="category-features">
+        <li>إعادة ترتيب المهام المتبقية</li>
+        <li>ضغط المهام الطويلة تلقائياً</li>
+        <li>الحفاظ على وقت النوم</li>
+        <li>مثالي عند التأخر</li>
+        <li>حل فوري للظروف المفاجئة</li>
+      </ul>
+    </div>
+
+    <!-- Offline -->
+    <div class="category-card" style="--category-color: #37474f; --category-color-light: #546e7a;">
+      <div class="category-header">
+        <div class="category-icon">📴</div>
+        <div>
+          <h3 class="category-title">بدون إنترنت</h3>
+          <p class="category-subtitle">Offline Ready</p>
+        </div>
+      </div>
+      <ul class="category-features">
+        <li>حفظ محلي كامل</li>
+        <li>يعمل بعد أول تحميل</li>
+        <li>بدون إعلانات</li>
+        <li>خصوصية 100%</li>
+        <li>سرعة فائقة</li>
+      </ul>
+    </div>
+
+    <!-- Dark Mode -->
+    <div class="category-card" style="--category-color: #455a64; --category-color-light: #607d8b;">
+      <div class="category-header">
+        <div class="category-icon">🌙</div>
+        <div>
+          <h3 class="category-title">الوضع الليلي</h3>
+          <p class="category-subtitle">Dark Mode</p>
+        </div>
+      </div>
+      <ul class="category-features">
+        <li>تصميم مريح للعين</li>
+        <li>تبديل فوري</li>
+        <li>محفوظ تلقائياً</li>
+        <li>يعمل مع كل الشاشات</li>
+        <li>توفير للبطارية</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ============ WORKOUTS PREVIEW ============ -->
+  <div class="section-head">
+    <span class="section-head-tag">⚽ التمارين</span>
+    <h2>مكتبة التمارين</h2>
+    <p>18 تمرين مخصص لمدافعي كرة القدم</p>
+  </div>
+
+  <div class="category-card" style="--category-color: #fb8c00; --category-color-light: #ffa726; margin-bottom: 60px;">
+    <div class="category-header">
+      <div class="category-icon">🏋️</div>
+      <div>
+        <h3 class="category-title">عينة من المكتبة</h3>
+        <p class="category-subtitle">3 فئات × 6 تمارين = 18 تمرين</p>
+      </div>
+    </div>
+
+    <div class="workouts-preview">
+      <div class="workout-preview-item">
+        <span class="workout-preview-icon">🪜</span>
+        <div class="workout-preview-name">سلّم الرشاقة</div>
+        <div class="workout-preview-count">🏃 رشاقة</div>
+      </div>
+      <div class="workout-preview-item">
+        <span class="workout-preview-icon">🔄</span>
+        <div class="workout-preview-name">تغيير الاتجاه 180°</div>
+        <div class="workout-preview-count">🏃 رشاقة</div>
+      </div>
+      <div class="workout-preview-item">
+        <span class="workout-preview-icon">🦵</span>
+        <div class="workout-preview-name">قرفصاء</div>
+        <div class="workout-preview-count">💪 قوة</div>
+      </div>
+      <div class="workout-preview-item">
+        <span class="workout-preview-icon">💪</span>
+        <div class="workout-preview-name">بلانك</div>
+        <div class="workout-preview-count">💪 قوة</div>
+      </div>
+      <div class="workout-preview-item">
+        <span class="workout-preview-icon">🏃</span>
+        <div class="workout-preview-name">جري خفيف</div>
+        <div class="workout-preview-count">🫀 تحمل</div>
+      </div>
+      <div class="workout-preview-item">
+        <span class="workout-preview-icon">🪢</span>
+        <div class="workout-preview-name">قفز الحبل</div>
+        <div class="workout-preview-count">🫀 تحمل</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BADGES SHOWCASE ============ -->
+  <div class="section-head">
+    <span class="section-head-tag">🏆 الإنجازات</span>
+    <h2>27 شارة قابلة للفتح</h2>
+    <p>5 فئات مختلفة لتحفيزك على الاستمرار</p>
+  </div>
+
+  <div class="badges-showcase">
+    <div class="badges-showcase-content">
+      <h3>🏆 شاراتك في انتظارك</h3>
+      <p>كل شارة تحكي قصة إنجاز حقيقي</p>
+
+      <div class="badges-grid-preview">
+        <div class="badge-preview">
+          <span class="badge-preview-icon">🌱</span>
+          <div class="badge-preview-name">بداية</div>
+        </div>
+        <div class="badge-preview">
+          <span class="badge-preview-icon">🔥</span>
+          <div class="badge-preview-name">3 أيام</div>
+        </div>
+        <div class="badge-preview">
+          <span class="badge-preview-icon">⭐</span>
+          <div class="badge-preview-name">100 نقطة</div>
+        </div>
+        <div class="badge-preview">
+          <span class="badge-preview-icon">📖</span>
+          <div class="badge-preview-name">قرآن</div>
+        </div>
+        <div class="badge-preview">
+          <span class="badge-preview-icon">⚽</span>
+          <div class="badge-preview-name">رياضي</div>
+        </div>
+        <div class="badge-preview">
+          <span class="badge-preview-icon">🏆</span>
+          <div class="badge-preview-name">بطل</div>
+        </div>
+        <div class="badge-preview">
+          <span class="badge-preview-icon">💎</span>
+          <div class="badge-preview-name">محترف</div>
+        </div>
+        <div class="badge-preview">
+          <span class="badge-preview-icon">👑</span>
+          <div class="badge-preview-name">خبير</div>
+        </div>
+        <div class="badge-preview">
+          <span class="badge-preview-icon">🌟</span>
+          <div class="badge-preview-name">أسطورة</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ COMPARISON ============ -->
+  <div class="section-head">
+    <span class="section-head-tag">📊 المقارنة</span>
+    <h2>ليه يومي؟</h2>
+    <p>مقارنة مع التطبيقات التانية</p>
+  </div>
+
+  <div class="comparison-section">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>الميزة</th>
+          <th>يومي</th>
+          <th>تطبيقات تانية</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>توليد جدول تلقائي</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>تمارين مخصصة للمدافع</td>
+          <td class="check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>حفظ قرآن مدمج</td>
+          <td class="check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Pomodoro Timer</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>يعمل بدون إنترنت</td>
+          <td class="check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>بدون إعلانات</td>
+          <td class="check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>مجاني بالكامل</td>
+          <td class="check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>مفتوح المصدر</td>
+          <td class="check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============ STATS ============ -->
+  <div class="section-head">
+    <span class="section-head-tag">📈 الأرقام</span>
+    <h2>بالأرقام</h2>
+  </div>
+
+  <div class="stats-showcase">
+    <div class="stat-showcase-item">
+      <div class="stat-showcase-value">18</div>
+      <div class="stat-showcase-label">تمرين رياضي</div>
+    </div>
+    <div class="stat-showcase-item">
+      <div class="stat-showcase-value">27</div>
+      <div class="stat-showcase-label">شارة إنجاز</div>
+    </div>
+    <div class="stat-showcase-item">
+      <div class="stat-showcase-value">114</div>
+      <div class="stat-showcase-label">سورة قرآنية</div>
+    </div>
+    <div class="stat-showcase-item">
+      <div class="stat-showcase-value">10</div>
+      <div class="stat-showcase-label">قراء مشهورين</div>
+    </div>
+    <div class="stat-showcase-item">
+      <div class="stat-showcase-value">0</div>
+      <div class="stat-showcase-label">إعلانات</div>
+    </div>
+    <div class="stat-showcase-item">
+      <div class="stat-showcase-value">100%</div>
+      <div class="stat-showcase-label">مجاني</div>
+    </div>
+  </div>
+
+  <!-- ============ CTA ============ -->
+  <div class="cta-section">
+    <h3>⚽ جاهز تبدأ؟</h3>
+    <p>انضم لمئات الطلاب اللي بينظموا وقتهم مع يومي</p>
+    <div class="cta-buttons">
+      <a href="app.html" class="btn btn-primary btn-large">🚀 افتح التطبيق</a>
+      <a href="../index.html#download" class="btn btn-secondary btn-large">⬇️ حمّل الآن</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-icon">⚽</span>
+        <span class="brand-text">يومي</span>
+      </div>
+      <p class="footer-desc">منظّم الطالب الرياضي الذكي</p>
+    </div>
+    <div class="footer-col">
+      <h4>التطبيق</h4>
+      <ul>
+        <li><a href="app.html">افتح التطبيق</a></li>
+        <li><a href="features.html">المميزات</a></li>
+        <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+        <li><a href="../index.html#download">التحميل</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>المصادر</h4>
+      <ul>
+        <li><a href="github.html">GitHub</a></li>
+        <li><a href="api.html">API</a></li>
+        <li><a href="table_creator.html">صانع الجداول</a></li>
+        <li><a href="test.html">اختبار</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>عن التطبيق</h4>
+      <ul>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="about.html#privacy">سياسة الخصوصية</a></li>
+        <li><a href="about.html#terms">شروط الاستخدام</a></li>
+        <li><a href="about.html#license">الترخيص</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 يومي — MIT License</p>
+    <p>صُنع بحب للطلاب الرياضيين ⚽📚</p>
+  </div>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script>
+// Toggle Mobile Nav
+function toggleNavMenu() {
+  const links = document.getElementById('navLinks');
+  const toggle = document.querySelector('.nav-toggle');
+  links.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+// Close nav on link click
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  });
+});
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  if (window.pageYOffset > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+// Dark mode from localStorage
+try {
+  const state = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+  if (state.darkMode) {
+    document.body.classList.add('dark');
+  }
+} catch (e) {}
+
+console.log('✨ Features Page Loaded');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#1a237e">
+<meta name="description" content="طريقة استخدام تطبيق يومي - دليل شامل خطوة بخطوة">
+<meta name="author" content="Hazem">
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="manifest" href="../assets/site.webmanifest">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/index.css">
+
+<title>📚 طريقة الاستخدام - يومي</title>
+
+<style>
+  /* ============ How to Use Page ============ */
+  .page-hero {
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    color: white;
+    padding: 130px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  }
+
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-hero-icon {
+    font-size: 72px;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 15px;
+    color: white;
+    font-weight: 900;
+  }
+
+  .page-hero p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    color: white;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .breadcrumb span:not(:last-child)::after {
+    content: '›';
+    margin-right: 8px;
+    opacity: 0.6;
+  }
+
+  /* ============ Container ============ */
+  .guide-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ============ Quick Nav ============ */
+  .quick-nav {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 25px 20px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+  }
+
+  .quick-nav h3 {
+    font-size: 1rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .quick-nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .quick-nav-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--bg);
+    border-radius: 20px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.25s ease;
+    border: 1px solid var(--border);
+  }
+
+  .quick-nav-list a:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26,35,126,0.2);
+  }
+
+  /* ============ Step Section ============ */
+  .step-section {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 35px 30px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-sm);
+    scroll-margin-top: 100px;
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 6px;
+    height: 100%;
+    background: var(--step-color, var(--primary));
+    border-radius: 22px 0 0 22px;
+  }
+
+  .step-section:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .step-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+
+  .step-number {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--step-color, var(--primary)), var(--step-color-light, var(--primary-light)));
+    color: white;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 900;
+    flex-shrink: 0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+
+  .step-title-block {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .step-title {
+    font-size: 1.35rem;
+    color: var(--text);
+    font-weight: 800;
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+
+  .step-subtitle {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 600;
+  }
+
+  .step-content {
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.9;
+    padding-right: 74px;
+  }
+
+  .step-content p {
+    margin-bottom: 15px;
+  }
+
+  .step-content strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .step-content ul,
+  .step-content ol {
+    padding-right: 22px;
+    margin: 15px 0;
+    line-height: 2;
+  }
+
+  .step-content li {
+    margin-bottom: 8px;
+  }
+
+  .step-content li strong {
+    color: var(--primary);
+  }
+
+  body.dark .step-content li strong {
+    color: var(--primary-lighter);
+  }
+
+  /* ============ Tips Box ============ */
+  .tip-box {
+    background: linear-gradient(135deg, #fff9c4, #ffeb3b);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin: 15px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    color: #333;
+  }
+
+  .tip-box-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .tip-box-content {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  .tip-box-content strong {
+    color: #e65100;
+    font-weight: 800;
+  }
+
+  /* ============ Warning Box ============ */
+  .warning-box {
+    background: linear-gradient(135deg, #ffccbc, #ffab91);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin: 15px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    color: #333;
+    border-right: 4px solid #e53935;
+  }
+
+  .warning-box-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .warning-box-content {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  /* ============ Screenshot Placeholder ============ */
+  .screenshot-demo {
+    background: linear-gradient(135deg, #e8eaf6, #c5cae9);
+    border-radius: 18px;
+    padding: 40px 20px;
+    text-align: center;
+    margin: 20px 0;
+    border: 2px dashed var(--primary-lighter);
+    color: var(--primary);
+  }
+
+  .screenshot-demo-icon {
+    font-size: 60px;
+    margin-bottom: 12px;
+    display: block;
+    opacity: 0.7;
+  }
+
+  .screenshot-demo-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  body.dark .screenshot-demo {
+    background: linear-gradient(135deg, #1a237e, #0d1654);
+    border-color: var(--primary-light);
+    color: var(--primary-lighter);
+  }
+
+  body.dark .screenshot-demo-text {
+    color: var(--primary-lighter);
+  }
+
+  /* ============ FAQ Grid ============ */
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    margin-top: 25px;
+  }
+
+  .faq-card {
+    background: var(--bg);
+    border-radius: 18px;
+    padding: 22px 20px;
+    border-right: 5px solid var(--primary);
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+
+  .faq-card:hover {
+    background: var(--card);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+  }
+
+  .faq-question {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+
+  .faq-question-icon {
+    color: var(--primary);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .faq-answer {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+
+  /* ============ Keyboard Shortcuts ============ */
+  .shortcuts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: var(--bg);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .shortcuts-table tr {
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .shortcuts-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .shortcuts-table td {
+    padding: 12px 15px;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .shortcuts-table td:first-child {
+    width: 40%;
+    font-weight: 700;
+  }
+
+  kbd {
+    display: inline-block;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-bottom-width: 3px;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+
+  /* ============ Final CTA ============ */
+  .final-cta {
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    color: white;
+    border-radius: 22px;
+    padding: 40px 30px;
+    text-align: center;
+    margin-top: 30px;
+    box-shadow: 0 15px 40px rgba(26,35,126,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  }
+
+  .final-cta-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .final-cta-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+  }
+
+  .final-cta h2 {
+    font-size: 1.75rem;
+    color: white;
+    margin-bottom: 12px;
+    font-weight: 900;
+  }
+
+  .final-cta p {
+    color: white;
+    opacity: 0.95;
+    margin-bottom: 25px;
+    font-size: 15px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta-buttons .btn {
+    width: auto;
+    min-width: 200px;
+    margin: 0;
+  }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 110px 15px 50px;
+    }
+
+    .page-hero-icon {
+      font-size: 55px;
+    }
+
+    .guide-container {
+      padding: 0 12px 60px;
+    }
+
+    .step-section {
+      padding: 25px 20px;
+      border-radius: 18px;
+    }
+
+    .step-section::before {
+      width: 5px;
+    }
+
+    .step-header {
+      gap: 14px;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+      border-radius: 14px;
+    }
+
+    .step-title {
+      font-size: 1.15rem;
+    }
+
+    .step-content {
+      padding-right: 62px;
+      font-size: 14px;
+    }
+
+    .tip-box,
+    .warning-box {
+      padding: 14px 15px;
+    }
+
+    .tip-box-content,
+    .warning-box-content {
+      font-size: 12px;
+    }
+
+    .screenshot-demo {
+      padding: 30px 15px;
+    }
+
+    .screenshot-demo-icon {
+      font-size: 45px;
+    }
+
+    .final-cta {
+      padding: 30px 20px;
+    }
+
+    .final-cta h2 {
+      font-size: 1.4rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+      min-width: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .step-content {
+      padding-right: 0;
+      margin-top: 15px;
+    }
+
+    .step-header {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .step-number {
+      width: 44px;
+      height: 44px;
+      font-size: 18px;
+    }
+
+    .step-title {
+      font-size: 1.1rem;
+    }
+
+    .quick-nav-list {
+      flex-direction: column;
+    }
+
+    .quick-nav-list a {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">يومي</span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNavMenu()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="features.html">المميزات</a></li>
+      <li><a href="how_to_use.html" class="active">طريقة الاستخدام</a></li>
+      <li><a href="quran.html">القرآن</a></li>
+      <li><a href="workouts.html">التمارين</a></li>
+      <li><a href="about.html">عن التطبيق</a></li>
+      <li class="nav-cta"><a href="app.html">🚀 افتح التطبيق</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="../index.html">الرئيسية</a>
+      <span>طريقة الاستخدام</span>
+    </div>
+    <div class="page-hero-icon">📚</div>
+    <h1>طريقة الاستخدام</h1>
+    <p>دليل شامل خطوة بخطوة — من التثبيت لحد الاحتراف</p>
+  </div>
+</section>
+
+<!-- ============ CONTENT ============ -->
+<div class="guide-container">
+
+  <!-- ============ QUICK NAV ============ -->
+  <div class="quick-nav">
+    <h3>🧭 اذهب مباشرة إلى</h3>
+    <ul class="quick-nav-list">
+      <li><a href="#install">📥 التثبيت</a></li>
+      <li><a href="#first-time">🚀 أول مرة</a></li>
+      <li><a href="#schedule">📅 توليد الجدول</a></li>
+      <li><a href="#tasks">✅ المهام</a></li>
+      <li><a href="#pomodoro">🍅 Pomodoro</a></li>
+      <li><a href="#workouts">⚽ التمارين</a></li>
+      <li><a href="#quran">📖 القرآن</a></li>
+      <li><a href="#badges">🏆 الشارات</a></li>
+      <li><a href="#tips">💡 نصائح</a></li>
+      <li><a href="#faq">❓ أسئلة</a></li>
+    </ul>
+  </div>
+
+  <!-- ============ STEP 1: INSTALL ============ -->
+  <div class="step-section" id="install" style="--step-color: #1a237e; --step-color-light: #3949ab;">
+    <div class="step-header">
+      <div class="step-number">1</div>
+      <div class="step-title-block">
+        <div class="step-title">📥 تثبيت التطبيق</div>
+        <div class="step-subtitle">اختر الطريقة المناسبة لجهازك</div>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <p>عندك <strong>4 طرق</strong> لتثبيت يومي على جهازك:</p>
+
+      <ul>
+        <li>
+          <strong>🤖 Android:</strong> حمّل ملف APK من صفحة التحميل، 
+          وافق على "تثبيت من مصادر غير معروفة"، واضغط تثبيت.
+        </li>
+        <li>
+          <strong>🍎 iPhone / iPad:</strong> افتح الرابط من Safari، 
+          اضغط زر المشاركة 📤، اختر "إضافة إلى الشاشة الرئيسية".
+        </li>
+        <li>
+          <strong>💻 Windows:</strong> حمّل ملف HTA، دوس عليه مرتين. 
+          أو استخدم Chrome لـ "تثبيت التطبيق".
+        </li>
+        <li>
+          <strong>🐧 Linux / macOS:</strong> افتح الرابط في المتصفح — 
+          التطبيق يعمل مباشرة بدون تثبيت.
+        </li>
+      </ul>
+
+      <div class="tip-box">
+        <span class="tip-box-icon">💡</span>
+        <div class="tip-box-content">
+          <strong>نصيحة:</strong> لو تستخدم Android، النسخة APK هي الأفضل — 
+          تعمل بدون إنترنت وتشتغل من أيقونة على الشاشة الرئيسية.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 2: FIRST TIME ============ -->
+  <div class="step-section" id="first-time" style="--step-color: #fb8c00; --step-color-light: #ffa726;">
+    <div class="step-header">
+      <div class="step-number">2</div>
+      <div class="step-title-block">
+        <div class="step-title">🚀 أول تشغيل للتطبيق</div>
+        <div class="step-subtitle">املأ بياناتك الأساسية</div>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <p>أول ما تفتح التطبيق، املأ البيانات دي:</p>
+
+      <ol>
+        <li>
+          <strong>بياناتك الشخصية:</strong>
+          <ul>
+            <li>الاسم (مثلاً: أحمد)</li>
+            <li>العمر (الافتراضي 13)</li>
+            <li>الجنس (ولد / بنت)</li>
+            <li>الطول والوزن (اختياري — لحساب السعرات)</li>
+          </ul>
+        </li>
+
+        <li>
+          <strong>أوقاتك اليومية:</strong>
+          <ul>
+            <li>🕐 وقت الاستيقاظ (مثلاً: 6:00 ص)</li>
+            <li>🏫 وقت الذهاب للمدرسة (7:00 ص)</li>
+            <li>🏠 وقت العودة من المدرسة (2:30 م)</li>
+          </ul>
+        </li>
+
+        <li>
+          <strong>طاقتك اليومية:</strong> اختر أحد 3 مستويات:
+          <ul>
+            <li>💪 <strong>عالية</strong> — يوم مكثف</li>
+            <li>🙂 <strong>متوسطة</strong> — يوم عادي</li>
+            <li>😴 <strong>منخفضة</strong> — يوم خفيف</li>
+          </ul>
+        </li>
+      </ol>
+
+      <div class="tip-box">
+        <span class="tip-box-icon">✨</span>
+        <div class="tip-box-content">
+          <strong>مهم:</strong> البيانات تُحفظ تلقائياً. مش محتاج تعمل Save يدوي.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 3: SCHEDULE ============ -->
+  <div class="step-section" id="schedule" style="--step-color: #43a047; --step-color-light: #66bb6a;">
+    <div class="step-header">
+      <div class="step-number">3</div>
+      <div class="step-title-block">
+        <div class="step-title">📅 توليد الجدول اليومي</div>
+        <div class="step-subtitle">السحر كله هنا ✨</div>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <p>بعد ما تملأ البيانات، اضغط الزر الأخضر <strong>"🎯 ولّد جدولي الآن"</strong>.</p>
+
+      <p>هيتم توليد جدول كامل لك يشمل:</p>
+
+      <ul>
+        <li>🌅 <strong>الاستيقاظ والفجر</strong> — 15 دقيقة</li>
+        <li>📖 <strong>الحفظ القرآني</strong> — حسب عدد الصفحات</li>
+        <li>🍳 <strong>الفطور والاستعداد</strong></li>
+        <li>🏫 <strong>المدرسة</strong> — حسب أوقاتك</li>
+        <li>🍽️ <strong>الغداء والراحة</strong> — 45 دقيقة</li>
+        <li>📝 <strong>الواجبات</strong> — واحدة واحدة حسب الأولوية</li>
+        <li>📖 <strong>مراجعة قرآن</strong> — 15 دقيقة</li>
+        <li>⚽ <strong>التدريب الرياضي</strong> — حسب مدتك</li>
+        <li>💪 <strong>تمارين منزلية</strong> — 20 دقيقة</li>
+        <li>🍽️ <strong>العشاء</strong> — 45 دقيقة</li>
+        <li>🎮 <strong>وقت حر</strong> — 30 دقيقة</li>
+        <li>📖 <strong>مراجعة قبل النوم</strong></li>
+        <li>😴 <strong>النوم</strong> — 9 ساعات كاملة</li>
+      </ul>
+
+      <div class="screenshot-demo">
+        <span class="screenshot-demo-icon">📅</span>
+        <div class="screenshot-demo-text">الجدول يظهر بشكل Timeline جميل مع ألوان لكل نوع مهمة</div>
+      </div>
+
+      <div class="tip-box">
+        <span class="tip-box-icon">🎨</span>
+        <div class="tip-box-content">
+          <strong>ألوان المهام:</strong> 
+          🟢 دراسة · 🟡 قرآن · 🟠 رياضة · 🔵 مدرسة · 🟣 نوم
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 4: TASKS ============ -->
+  <div class="step-section" id="tasks" style="--step-color: #29b6f6; --step-color-light: #4fc3f7;">
+    <div class="step-header">
+      <div class="step-number">4</div>
+      <div class="step-title-block">
+        <div class="step-title">✅ إتمام المهام</div>
+        <div class="step-subtitle">علّم على كل مهمة لما تخلصها</div>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <p>كل مهمة في الجدول عندها دائرة <strong>✓</strong> على اليمين. لما تخلص المهمة:</p>
+
+      <ol>
+        <li>دوس على الدائرة</li>
+        <li>هتتحول لـ <strong>✓ خضراء</strong></li>
+        <li>المهمة يتخطى عليها خط (تصبح مكتملة)</li>
+        <li>هتاخد <strong>+10 نقاط</strong> ⭐</li>
+        <li>شريط التقدم يزيد تلقائياً</li>
+      </ol>
+
+      <p><strong>المهام الحالية:</strong> لو الوقت الحقيقي داخل في وقت مهمة، 
+      هتظهر بإطار أخضر وحركة <strong>نبض</strong>.</p>
+
+      <p><strong>المهمة الحالية:</strong> في الأعلى، هتلاقي بانر أخضر 
+      يبيّن المهمة الحالية + عدّاد تنازلي.</p>
+
+      <div class="tip-box">
+        <span class="tip-box-icon">🏆</span>
+        <div class="tip-box-content">
+          <strong>جرب ده:</strong> لما تكمّل كل مهام اليوم، هتظهر Confetti 🎉 
+          ورسالة تهنئة!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 5: POMODORO ============ -->
+  <div class="step-section" id="pomodoro" style="--step-color: #e53935; --step-color-light: #ef5350;">
+    <div class="step-header">
+      <div class="step-number">5</div>
+      <div class="step-title-block">
+        <div class="step-title">🍅 Pomodoro Timer</div>
+        <div class="step-subtitle">للتركيز العميق أثناء المذاكرة</div>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <p>على أي مهمة <strong>دراسة</strong> أو <strong>قرآن</strong>، هتلاقي زر صغير <strong>🍅 ابدأ Pomodoro</strong>.</p>
+
+      <p>لما تدوس عليه:</p>
+
+      <ol>
+        <li>يفتح شاشة كاملة بالمؤقت</li>
+        <li>يبدأ عد 25 دقيقة <strong>تركيز</strong></li>
+        <li>وبعدها 5 دقائق <strong>راحة</strong></li>
+        <li>ثم يكرر تلقائياً</li>
+      </ol>
+
+      <p><strong>أصوات هادئة للتركيز:</strong></p>
+
+      <ul>
+        <li>🔇 <strong>صامت</strong> — بدون صوت</li>
+        <li>🌧️ <strong>مطر</strong> — صوت مطر خفيف</li>
+        <li>🌲 <strong>غابة</strong> — أصوات طبيعة</li>
+        <li>🌊 <strong>أمواج</strong> — صوت البحر</li>
+      </ul>
+
+      <div class="tip-box">
+        <span class="tip-box-icon">🧠</span>
+        <div class="tip-box-content">
+          <strong>حقيقة علمية:</strong> Pomodoro يساعد المخ على التركيز لمدة أطول، 
+          لأن المخ يعرف إن الراحة جاية بعد 25 دقيقة.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 6: WORKOUTS ============ -->
+  <div class="step-section" id="workouts" style="--step-color: #fb8c00; --step-color-light: #ffa726;">
+    <div class="step-header">
+      <div class="step-number">6</div>
+      <div class="step-title-block">
+        <div class="step-title">⚽ مكتبة التمارين</div>
+        <div class="step-subtitle">18 تمرين مخصص للمدافع</div>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <p>من التبويب السفلي، اضغط <strong>"⚽ التمارين"</strong>.</p>
+
+      <p>هتلاقي 3 فئات:</p>
+
+      <ul>
+        <li>🏃 <strong>الرشاقة (6 تمارين)</strong> — سلّم الرشاقة، Zig-Zag</li>
+        <li>💪 <strong>القوة العضلية (6 تمارين)</strong> — قرفصاء، بلانك</li>
+        <li>🫀 <strong>التحمل (6 تمارين)</strong> — جري، قفز الحبل</li>
+      </ul>
+
+      <p>اضغط على أي تمرين لتشوف:</p>
+
+      <ul>
+        <li>📝 خطوات التمرين</li>
+        <li>💡 الفوائد</li>
+        <li>💪 العضلات المستهدفة</li>
+        <li>🎒 الأدوات المطلوبة</li>
+        <li>⏱️ <strong>مؤقت مدمج</strong> للتمرين</li>
+      </ul>
+
+      <p><strong>المؤقت السريع:</strong> في الأعلى، هتلاقي 6 مؤقتات جاهزة:
+      30 ثانية، 1، 2، 3، 5، 10 دقائق.</p>
+    </div>
+  </div>
+
+  <!-- ============ STEP 7: QURAN ============ -->
+  <div class="step-section" id="quran" style="--step-color: #fbc02d; --step-color-light: #fdd835;">
+    <div class="step-header">
+      <div class="step-number">7</div>
+      <div class="step-title-block">
+        <div class="step-title">📖 القرآن الكريم</div>
+        <div class="step-subtitle">114 سورة + 10 قراء</div>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <p>من التبويب السفلي، اضغط <strong>"📖 القرآن"</strong>.</p>
+
+      <p><strong>اللي تقدر تعمله:</strong></p>
+
+      <ul>
+        <li>🔍 <strong>تبحث</strong> عن أي سورة بالاسم</li>
+        <li>🎯 <strong>تفلتر</strong> السور (الكل / مكية / مدنية / قصيرة)</li>
+        <li>📖 <strong>تفتح أي سورة</strong> وتقرأها</li>
+        <li>🔊 <strong>تسمع آية بآية</strong> — اضغط على أيقونة السماعة</li>
+        <li>🎙️ <strong>تسمع السورة كاملة</strong> — اضغط "استماع للسورة كاملة"</li>
+        <li>🎤 <strong>تختار القارئ</strong> من 10 قراء</li>
+      </ul>
+
+      <p><strong>القراء المتاحون:</strong></p>
+
+      <ul>
+        <li>مشاري العفاسي</li>
+        <li>عبدالرحمن السديس</li>
+        <li>سعود الشريم</li>
+        <li>ماهر المعيقلي</li>
+        <li>محمود الحصري</li>
+        <li>محمد المنشاوي</li>
+        <li>عبدالباسط عبدالصمد</li>
+        <li>سعد الغامدي</li>
+        <li>عبدالله الجهني</li>
+        <li>ياسر الدوسري</li>
+      </ul>
+
+      <div class="tip-box">
+        <span class="tip-box-icon">📖</span>
+        <div class="tip-box-content">
+          <strong>نصيحة:</strong> استخدم الحفظ بعد الفجر — 
+          الذاكرة في أفضل حال، والمكان هادئ.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 8: BADGES ============ -->
+  <div class="step-section" id="badges" style="--step-color: #43a047; --step-color-light: #66bb6a;">
+    <div class="step-header">
+      <div class="step-number">8</div>
+      <div class="step-title-block">
+        <div class="step-title">🏆 الشارات والنقاط</div>
+        <div class="step-subtitle">27 شارة في 5 فئات</div>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <p>من التبويب السفلي، اضغط <strong>"📊 إحصائيات"</strong>.</p>
+
+      <p><strong>نظام النقاط:</strong></p>
+      <ul>
+        <li>+10 نقاط لكل مهمة مكتملة</li>
+        <li>النقاط تتراكم لإنجاز مكافآت</li>
+      </ul>
+
+      <p><strong>فئات الشارات (27):</strong></p>
+
+      <ul>
+        <li>🔥 <strong>الاستمرارية (6)</strong> — Streak</li>
+        <li>⭐ <strong>النقاط (5)</strong> — حسب مجموع النقاط</li>
+        <li>📖 <strong>القرآن (5)</strong> — حسب صفحات الحفظ</li>
+        <li>⚽ <strong>الرياضة (6)</strong> — حسب التمارين</li>
+        <li>🎯 <strong>خاصة (5)</strong> — إنجازات مميزة</li>
+      </ul>
+
+      <p><strong>المكافآت الأسرية:</strong></p>
+      <ul>
+        <li>🎮 500 نقطة = ساعة ألعاب إضافية</li>
+        <li>🍕 1000 نقطة = رحلة مطعم</li>
+        <li>⚽ 2000 نقطة = كرة قدم جديدة</li>
+      </ul>
+
+      <p><strong>تقدر تضيف مكافآت مخصصة</strong> بالاتفاق مع أهلك.</p>
+    </div>
+  </div>
+
+  <!-- ============ STEP 9: TIPS ============ -->
+  <div class="step-section" id="tips" style="--step-color: #8e24aa; --step-color-light: #ab47bc;">
+    <div class="step-header">
+      <div class="step-number">9</div>
+      <div class="step-title-block">
+        <div class="step-title">💡 نصائح للاستخدام الأمثل</div>
+        <div class="step-subtitle">من تجارب حقيقية</div>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <p><strong>الصباح:</strong></p>
+      <ul>
+        <li>☀️ افتح التطبيق أول ما تصحى</li>
+        <li>📖 احفظ القرآن فوراً بعد الفجر</li>
+        <li>🥣 اقرأ الجدول وأنت بتفطر</li>
+      </ul>
+
+      <p><strong>المذاكرة:</strong></p>
+      <ul>
+        <li>🍅 استخدم Pomodoro في كل جلسة</li>
+        <li>✅ علّم على المهمة فوراً بعد إتمامها</li>
+        <li>☕ خد راحاتك بين المهام</li>
+      </ul>
+
+      <p><strong>الرياضة:</strong></p>
+      <ul>
+        <li>⚽ سخّن كويس قبل التمارين</li>
+        <li>💧 اشرب ماء كل 15 دقيقة</li>
+        <li>🧘 تمدد بعد التمرين</li>
+      </ul>
+
+      <p><strong>العصر والمساء:</strong></p>
+      <ul>
+        <li>📖 راجع اللي حفظته في الصباح</li>
+        <li>🏆 تابع شاراتك وتقدمك</li>
+        <li>📊 راجع إحصائياتك الأسبوعية</li>
+      </ul>
+
+      <p><strong>قبل النوم:</strong></p>
+      <ul>
+        <li>📖 راجع قرآن خفيف</li>
+        <li>📱 ابعد عن الموبايل ساعة قبل النوم</li>
+        <li>😴 نم على 9 ساعات كاملة</li>
+      </ul>
+
+      <div class="tip-box">
+        <span class="tip-box-icon">🎯</span>
+        <div class="tip-box-content">
+          <strong>قاعدة ذهبية:</strong> مش لازم تكمّل 100% كل يوم. 
+          المهم <strong>الاستمرارية</strong> — حتى 50% كل يوم أحسن من 100% لمدة أسبوع وبعدين توقف.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FAQ ============ -->
+  <div class="step-section" id="faq" style="--step-color: #1a237e; --step-color-light: #3949ab;">
+    <div class="step-header">
+      <div class="step-number">❓</div>
+      <div class="step-title-block">
+        <div class="step-title">أسئلة شائعة</div>
+        <div class="step-subtitle">الإجابات على أكتر الأسئلة</div>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <div class="faq-grid">
+
+        <div class="faq-card">
+          <div class="faq-question">
+            <span class="faq-question-icon">❓</span>
+            هل التطبيق مجاني؟
+          </div>
+          <div class="faq-answer">
+            أيوه 100% مجاني، بدون إعلانات، مفتوح المصدر. مش هتدفع أي حاجة.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question">
+            <span class="faq-question-icon">❓</span>
+            هل يشتغل بدون إنترنت؟
+          </div>
+          <div class="faq-answer">
+            أيوه، بعد أول تحميل. الاستثناء الوحيد هو الطقس والقرآن (لأول تحميل لكل سورة).
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question">
+            <span class="faq-question-icon">❓</span>
+            هل بياناتي محفوظة؟
+          </div>
+          <div class="faq-answer">
+            كل بياناتك على جهازك فقط. مفيش رفع للسيرفر. تقدر تصدّرها كنسخة احتياطية.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question">
+            <span class="faq-question-icon">❓</span>
+            إزاي أصدّر بياناتي؟
+          </div>
+          <div class="faq-answer">
+            من تبويب الإحصائيات → زر "تصدير البيانات". 
+            يتحمل ملف JSON تقدر تسترجع منه.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question">
+            <span class="faq-question-icon">❓</span>
+            إزاي أضيف واجب معين؟
+          </div>
+          <div class="faq-answer">
+            في تبويب الإدخال → قسم "الواجبات" → "➕ إضافة واجب جديد".
+            اكتب اسم المادة واختر موعد التسليم.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question">
+            <span class="faq-question-icon">❓</span>
+            إيه الفرق بين Weekend Mode؟
+          </div>
+          <div class="faq-answer">
+            يلغي المدرسة تلقائياً، ويزيد وقت الرياضة والترفيه والحفظ. 
+            مثالي للجمعة والسبت.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question">
+            <span class="faq-question-icon">❓</span>
+            إزاي أسترجع Streak لو فاتني يوم؟
+          </div>
+          <div class="faq-answer">
+            للأسف ما ينفعش. Streak بيتصفّر لو فاتك يوم. 
+            ده بيساعدك تلتزم يوم بيوم.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question">
+            <span class="faq-question-icon">❓</span>
+            إزاي ألغي اشتراك أو حسابي؟
+          </div>
+          <div class="faq-answer">
+            مفيش اشتراكات ولا حسابات. كل حاجة محلية. 
+            لو عايز تمسح كل حاجة: إحصائيات → "حذف كل البيانات".
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FINAL CTA ============ -->
+  <div class="final-cta">
+    <div class="final-cta-content">
+      <div class="final-cta-icon">🎯</div>
+      <h2>جاهز تبدأ؟</h2>
+      <p>
+        دلوقتي إنت عارف كل حاجة عن التطبيق. 
+        الوقت مناسب إنك تبدأ تنظّم يومك وتشوف الفرق بنفسك!
+      </p>
+
+      <div class="cta-buttons">
+        <a href="app.html" class="btn btn-primary btn-large">
+          🚀 افتح التطبيق
+        </a>
+        <a href="features.html" class="btn btn-secondary btn-large">
+          ✨ شوف المميزات
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-icon">⚽</span>
+        <span class="brand-text">يومي</span>
+      </div>
+      <p class="footer-desc">منظّم الطالب الرياضي الذكي</p>
+    </div>
+    <div class="footer-col">
+      <h4>التطبيق</h4>
+      <ul>
+        <li><a href="app.html">افتح التطبيق</a></li>
+        <li><a href="features.html">المميزات</a></li>
+        <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+        <li><a href="../index.html#download">التحميل</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>المصادر</h4>
+      <ul>
+        <li><a href="github.html">GitHub</a></li>
+        <li><a href="api.html">API</a></li>
+        <li><a href="table_creator.html">صانع الجداول</a></li>
+        <li><a href="test.html">اختبار</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>عن التطبيق</h4>
+      <ul>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="about.html#privacy">سياسة الخصوصية</a></li>
+        <li><a href="about.html#terms">شروط الاستخدام</a></li>
+        <li><a href="about.html#license">الترخيص</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 يومي — MIT License</p>
+    <p>صُنع بحب للطلاب الرياضيين ⚽📚</p>
+  </div>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script>
+function toggleNavMenu() {
+  const links = document.getElementById('navLinks');
+  const toggle = document.querySelector('.nav-toggle');
+  links.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  });
+});
+
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  if (window.pageYOffset > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+// Smooth scroll for quick nav
+document.querySelectorAll('.quick-nav-list a, a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href && href.startsWith('#') && href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        const offset = 90;
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      }
+    }
+  });
+});
+
+// Dark mode
+try {
+  const saved = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+  if (saved.darkMode) {
+    document.body.classList.add('dark');
+  }
+} catch (e) {}
+
+console.log('📚 How To Use Page Loaded');
+</script>
+
+</body>
+</html>

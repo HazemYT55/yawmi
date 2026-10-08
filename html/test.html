@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#1a237e">
+<meta name="description" content="صفحة اختبار التطبيق - تحقق من أن كل حاجة شغالة">
+<meta name="author" content="Hazem">
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="manifest" href="../assets/site.webmanifest">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/index.css">
+
+<title>🧪 صفحة الاختبار - يومي</title>
+
+<style>
+  /* ============ Test Page Specific ============ */
+  .page-hero {
+    background: linear-gradient(135deg, #2e7d32, #43a047);
+    color: white;
+    padding: 130px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.1) 0%, transparent 50%);
+  }
+
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-hero-icon {
+    font-size: 72px;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 15px;
+    color: white;
+    font-weight: 900;
+  }
+
+  .page-hero p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    color: white;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .breadcrumb span:not(:last-child)::after {
+    content: '›';
+    margin-right: 8px;
+    opacity: 0.6;
+  }
+
+  /* ============ Container ============ */
+  .test-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ============ Overall Status Card ============ */
+  .overall-card {
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    color: white;
+    border-radius: 22px;
+    padding: 30px;
+    margin-bottom: 25px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(26,35,126,0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+  }
+
+  .overall-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  }
+
+  .overall-card.all-pass {
+    background: linear-gradient(135deg, #2e7d32, #43a047);
+    box-shadow: 0 10px 30px rgba(67,160,71,0.4);
+  }
+
+  .overall-card.some-fail {
+    background: linear-gradient(135deg, #c62828, #e53935);
+    box-shadow: 0 10px 30px rgba(229,57,53,0.4);
+  }
+
+  .overall-card.running {
+    background: linear-gradient(135deg, #fb8c00, #ef6c00);
+    box-shadow: 0 10px 30px rgba(251,140,0,0.4);
+  }
+
+  .overall-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .overall-icon {
+    font-size: 72px;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+
+  .overall-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .overall-subtitle {
+    font-size: 14px;
+    color: white;
+    opacity: 0.95;
+    margin-bottom: 20px;
+  }
+
+  .overall-stats {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .overall-stat {
+    background: rgba(255,255,255,0.2);
+    padding: 12px 20px;
+    border-radius: 14px;
+    min-width: 100px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .overall-stat-value {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .overall-stat-label {
+    font-size: 11px;
+    color: white;
+    opacity: 0.9;
+    font-weight: 700;
+  }
+
+  /* ============ Progress Bar ============ */
+  .progress-wrapper {
+    margin-top: 20px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 4px;
+    overflow: hidden;
+  }
+
+  .progress-inner {
+    background: rgba(255,255,255,0.9);
+    height: 10px;
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  /* ============ Test Cards ============ */
+  .test-section {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+  }
+
+  .test-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-bottom: 20px;
+    font-weight: 800;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-light);
+    justify-content: space-between;
+  }
+
+  .test-section-title-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .test-section-title-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .test-section-count {
+    background: var(--bg);
+    color: var(--text-light);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  /* ============ Test Row ============ */
+  .test-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--bg);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    border-right: 4px solid var(--border);
+    position: relative;
+  }
+
+  .test-row:hover {
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+    transform: translateX(-3px);
+  }
+
+  .test-row.pass {
+    border-right-color: #43a047;
+    background: rgba(67,160,71,0.06);
+  }
+
+  .test-row.fail {
+    border-right-color: #e53935;
+    background: rgba(229,57,53,0.06);
+  }
+
+  .test-row.warning {
+    border-right-color: #fb8c00;
+    background: rgba(251,140,0,0.06);
+  }
+
+  .test-row.running {
+    border-right-color: #29b6f6;
+    background: rgba(41,182,246,0.06);
+  }
+
+  .test-status-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    background: var(--card);
+    color: var(--text-light);
+    border: 2px solid var(--border);
+  }
+
+  .test-row.pass .test-status-icon {
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+    color: white;
+    border-color: #2e7d32;
+  }
+
+  .test-row.fail .test-status-icon {
+    background: linear-gradient(135deg, #e53935, #c62828);
+    color: white;
+    border-color: #c62828;
+  }
+
+  .test-row.warning .test-status-icon {
+    background: linear-gradient(135deg, #fb8c00, #ef6c00);
+    color: white;
+    border-color: #ef6c00;
+  }
+
+  .test-row.running .test-status-icon {
+    background: linear-gradient(135deg, #29b6f6, #0288d1);
+    color: white;
+    border-color: #0288d1;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .test-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .test-name {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .test-desc {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  .test-result {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--text-light);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    white-space: nowrap;
+    direction: ltr;
+    font-family: 'Courier New', monospace;
+  }
+
+  .test-row.pass .test-result {
+    background: rgba(67,160,71,0.15);
+    color: #2e7d32;
+    border-color: rgba(67,160,71,0.3);
+  }
+
+  .test-row.fail .test-result {
+    background: rgba(229,57,53,0.15);
+    color: #c62828;
+    border-color: rgba(229,57,53,0.3);
+  }
+
+  .test-row.warning .test-result {
+    background: rgba(251,140,0,0.15);
+    color: #e65100;
+    border-color: rgba(251,140,0,0.3);
+  }
+
+  body.dark .test-row.pass .test-result {
+    color: #81c784;
+  }
+
+  body.dark .test-row.fail .test-result {
+    color: #ef5350;
+  }
+
+  body.dark .test-row.warning .test-result {
+    color: #ffb74d;
+  }
+
+  /* ============ Controls ============ */
+  .controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: var(--card);
+    border-radius: 18px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .control-btn {
+    padding: 14px 22px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+    color: white;
+    border: none;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(67,160,71,0.3);
+    flex: 1;
+    min-width: 160px;
+  }
+
+  .control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(67,160,71,0.4);
+  }
+
+  .control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .control-btn.secondary {
+    background: var(--card);
+    color: var(--text);
+    border: 2px solid var(--border);
+    box-shadow: none;
+  }
+
+  .control-btn.secondary:hover {
+    border-color: #43a047;
+    color: #43a047;
+    box-shadow: 0 4px 12px rgba(67,160,71,0.2);
+  }
+
+  .control-btn.danger {
+    background: linear-gradient(135deg, #e53935, #c62828);
+    box-shadow: 0 4px 12px rgba(229,57,53,0.3);
+  }
+
+  .control-btn.danger:hover {
+    box-shadow: 0 6px 20px rgba(229,57,53,0.4);
+  }
+
+  /* ============ Summary Table ============ */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    font-size: 13px;
+  }
+
+  .summary-table thead {
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    color: white;
+  }
+
+  .summary-table th {
+    padding: 12px 10px;
+    text-align: right;
+    font-weight: 800;
+    font-size: 12px;
+  }
+
+  .summary-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text);
+  }
+
+  .summary-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .summary-table .badge-mini {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .badge-mini.pass {
+    background: rgba(67,160,71,0.15);
+    color: #2e7d32;
+  }
+
+  .badge-mini.fail {
+    background: rgba(229,57,53,0.15);
+    color: #c62828;
+  }
+
+  /* ============ Log Console ============ */
+  .log-console {
+    background: #0d1117;
+    border-radius: 14px;
+    padding: 15px;
+    color: #c9d1d9;
+    font-family: 'Courier New', Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    max-height: 300px;
+    overflow-y: auto;
+    direction: ltr;
+    text-align: left;
+    border: 1px solid #30363d;
+  }
+
+  .log-line {
+    padding: 2px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .log-line:last-child {
+    border-bottom: none;
+  }
+
+  .log-time {
+    color: #8b949e;
+    margin-left: 8px;
+  }
+
+  .log-info { color: #58a6ff; }
+  .log-success { color: #7ee787; }
+  .log-error { color: #ff7b72; }
+  .log-warn { color: #ffa657; }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 110px 15px 50px;
+    }
+
+    .page-hero-icon {
+      font-size: 55px;
+    }
+
+    .test-container {
+      padding: 0 12px 60px;
+    }
+
+    .overall-card {
+      padding: 25px 20px;
+    }
+
+    .overall-icon {
+      font-size: 60px;
+    }
+
+    .overall-title {
+      font-size: 1.3rem;
+    }
+
+    .overall-stats {
+      gap: 10px;
+    }
+
+    .overall-stat {
+      padding: 10px 14px;
+      min-width: 80px;
+    }
+
+    .test-section {
+      padding: 22px 18px;
+    }
+
+    .test-section-title {
+      font-size: 1.1rem;
+    }
+
+    .test-row {
+      padding: 12px 14px;
+    }
+
+    .test-status-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 18px;
+    }
+
+    .test-name {
+      font-size: 13px;
+    }
+
+    .test-desc {
+      font-size: 11px;
+    }
+
+    .test-result {
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+
+    .control-btn {
+      min-width: 100%;
+    }
+
+    .summary-table {
+      font-size: 12px;
+    }
+
+    .summary-table th,
+    .summary-table td {
+      padding: 10px 8px;
+    }
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">يومي</span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNavMenu()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="features.html">المميزات</a></li>
+      <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+      <li><a href="quran.html">القرآن</a></li>
+      <li><a href="workouts.html">التمارين</a></li>
+      <li><a href="about.html">عن التطبيق</a></li>
+      <li class="nav-cta"><a href="app.html">🚀 افتح التطبيق</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="../index.html">الرئيسية</a>
+      <span>اختبار</span>
+    </div>
+    <div class="page-hero-icon">🧪</div>
+    <h1>صفحة الاختبار</h1>
+    <p>تحقق من أن كل حاجة شغالة صح — ملفات، APIs، متصفح</p>
+  </div>
+</section>
+
+<!-- ============ CONTENT ============ -->
+<div class="test-container">
+
+  <!-- ============ OVERALL STATUS ============ -->
+  <div class="overall-card" id="overallCard">
+    <div class="overall-content">
+      <div class="overall-icon" id="overallIcon">⏸️</div>
+      <div class="overall-title" id="overallTitle">جاهز للاختبار</div>
+      <div class="overall-subtitle" id="overallSubtitle">اضغط "تشغيل كل الاختبارات" للبدء</div>
+
+      <div class="overall-stats">
+        <div class="overall-stat">
+          <div class="overall-stat-value" id="statPassed">0</div>
+          <div class="overall-stat-label">✅ نجح</div>
+        </div>
+        <div class="overall-stat">
+          <div class="overall-stat-value" id="statFailed">0</div>
+          <div class="overall-stat-label">❌ فشل</div>
+        </div>
+        <div class="overall-stat">
+          <div class="overall-stat-value" id="statWarnings">0</div>
+          <div class="overall-stat-label">⚠️ تحذير</div>
+        </div>
+        <div class="overall-stat">
+          <div class="overall-stat-value" id="statTotal">0</div>
+          <div class="overall-stat-label">📊 الإجمالي</div>
+        </div>
+      </div>
+
+      <div class="progress-wrapper">
+        <div class="progress-inner" id="overallProgress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONTROLS ============ -->
+  <div class="controls">
+    <button class="control-btn" onclick="runAllTests()" id="runAllBtn">
+      <span>▶️</span> تشغيل كل الاختبارات
+    </button>
+    <button class="control-btn secondary" onclick="clearResults()">
+      <span>🔄</span> إعادة تعيين
+    </button>
+    <button class="control-btn danger" onclick="downloadReport()" id="downloadBtn">
+      <span>📥</span> تحميل التقرير
+    </button>
+  </div>
+
+  <!-- ============ SECTION 1: ENVIRONMENT ============ -->
+  <div class="test-section">
+    <div class="test-section-title">
+      <div class="test-section-title-left">
+        <span class="test-section-title-icon">🌐</span>
+        <span>البيئة والمتصفح</span>
+      </div>
+      <span class="test-section-count" id="count-env">0/0</span>
+    </div>
+
+    <div id="tests-env">
+      <!-- اختبارات البيئة ستُضاف تلقائياً -->
+    </div>
+  </div>
+
+  <!-- ============ SECTION 2: FILES ============ -->
+  <div class="test-section">
+    <div class="test-section-title">
+      <div class="test-section-title-left">
+        <span class="test-section-title-icon">📁</span>
+        <span>الملفات والموارد</span>
+      </div>
+      <span class="test-section-count" id="count-files">0/0</span>
+    </div>
+
+    <div id="tests-files">
+      <!-- اختبارات الملفات ستُضاف تلقائياً -->
+    </div>
+  </div>
+
+  <!-- ============ SECTION 3: APIS ============ -->
+  <div class="test-section">
+    <div class="test-section-title">
+      <div class="test-section-title-left">
+        <span class="test-section-title-icon">🔌</span>
+        <span>APIs الخارجية</span>
+      </div>
+      <span class="test-section-count" id="count-apis">0/0</span>
+    </div>
+
+    <div id="tests-apis">
+      <!-- اختبارات APIs ستُضاف تلقائياً -->
+    </div>
+  </div>
+
+  <!-- ============ SECTION 4: FEATURES ============ -->
+  <div class="test-section">
+    <div class="test-section-title">
+      <div class="test-section-title-left">
+        <span class="test-section-title-icon">⚙️</span>
+        <span>المميزات</span>
+      </div>
+      <span class="test-section-count" id="count-features">0/0</span>
+    </div>
+
+    <div id="tests-features">
+      <!-- اختبارات المميزات ستُضاف تلقائياً -->
+    </div>
+  </div>
+
+  <!-- ============ LOG CONSOLE ============ -->
+  <div class="test-section">
+    <div class="test-section-title">
+      <div class="test-section-title-left">
+        <span class="test-section-title-icon">📋</span>
+        <span>سجل الاختبار</span>
+      </div>
+      <button class="control-btn secondary" onclick="clearLog()" style="padding: 6px 12px; font-size: 12px; flex: 0;">
+        🗑️ مسح
+      </button>
+    </div>
+
+    <div class="log-console" id="logConsole">
+      <div class="log-line">
+        <span class="log-info">[جاهز]</span> اضغط "تشغيل كل الاختبارات" للبدء
+        <span class="log-time">--:--:--</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SUMMARY TABLE ============ -->
+  <div class="test-section">
+    <div class="test-section-title">
+      <div class="test-section-title-left">
+        <span class="test-section-title-icon">📊</span>
+        <span>ملخص النتائج</span>
+      </div>
+    </div>
+
+    <table class="summary-table" id="summaryTable">
+      <thead>
+        <tr>
+          <th>الفئة</th>
+          <th>نجح</th>
+          <th>فشل</th>
+          <th>تحذير</th>
+          <th>الحالة</th>
+        </tr>
+      </thead>
+      <tbody id="summaryBody">
+        <tr>
+          <td>🌐 البيئة</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="badge-mini">لم يُختبر</span></td>
+        </tr>
+        <tr>
+          <td>📁 الملفات</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="badge-mini">لم يُختبر</span></td>
+        </tr>
+        <tr>
+          <td>🔌 APIs</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="badge-mini">لم يُختبر</span></td>
+        </tr>
+        <tr>
+          <td>⚙️ المميزات</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="badge-mini">لم يُختبر</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-icon">⚽</span>
+        <span class="brand-text">يومي</span>
+      </div>
+      <p class="footer-desc">منظّم الطالب الرياضي الذكي</p>
+    </div>
+    <div class="footer-col">
+      <h4>التطبيق</h4>
+      <ul>
+        <li><a href="app.html">افتح التطبيق</a></li>
+        <li><a href="features.html">المميزات</a></li>
+        <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+        <li><a href="../index.html#download">التحميل</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>المصادر</h4>
+      <ul>
+        <li><a href="github.html">GitHub</a></li>
+        <li><a href="api.html">API</a></li>
+        <li><a href="table_creator.html">صانع الجداول</a></li>
+        <li><a href="test.html">اختبار</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>عن التطبيق</h4>
+      <ul>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="about.html#privacy">سياسة الخصوصية</a></li>
+        <li><a href="about.html#terms">شروط الاستخدام</a></li>
+        <li><a href="about.html#license">الترخيص</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 يومي — MIT License</p>
+    <p>صُنع بحب للطلاب الرياضيين ⚽📚</p>
+  </div>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script>
+/* ============================================
+   TEST PAGE - MAIN LOGIC
+   ============================================ */
+
+const testState = {
+  running: false,
+  results: {
+    env: [],
+    files: [],
+    apis: [],
+    features: []
+  },
+  totals: {
+    passed: 0,
+    failed: 0,
+    warnings: 0,
+    total: 0
+  }
+};
+
+/* ============================================
+   TEST DEFINITIONS
+============================================ */
+
+const TESTS = {
+  env: [
+    {
+      id: 'browser',
+      name: 'نوع المتصفح',
+      desc: 'التعرف على المتصفح المستخدم',
+      run: () => {
+        const ua = navigator.userAgent;
+        let browser = 'Unknown';
+        if (ua.includes('Firefox')) browser = 'Firefox';
+        else if (ua.includes('Edg')) browser = 'Edge';
+        else if (ua.includes('Chrome')) browser = 'Chrome';
+        else if (ua.includes('Safari')) browser = 'Safari';
+        return { status: 'pass', value: browser };
+      }
+    },
+    {
+      id: 'platform',
+      name: 'نظام التشغيل',
+      desc: 'التعرف على نظام التشغيل',
+      run: () => {
+        const ua = navigator.userAgent;
+        let os = 'Unknown';
+        if (ua.includes('Win')) os = 'Windows';
+        else if (ua.includes('Mac')) os = 'macOS';
+        else if (ua.includes('Linux')) os = 'Linux';
+        else if (ua.includes('Android')) os = 'Android';
+        else if (ua.includes('iPhone') || ua.includes('iPad')) os = 'iOS';
+        return { status: 'pass', value: os };
+      }
+    },
+    {
+      id: 'localStorage',
+      name: 'LocalStorage',
+      desc: 'التخزين المحلي متاح؟',
+      run: () => {
+        try {
+          localStorage.setItem('__test__', '1');
+          localStorage.removeItem('__test__');
+          return { status: 'pass', value: 'متاح' };
+        } catch (e) {
+          return { status: 'fail', value: 'غير متاح' };
+        }
+      }
+    },
+    {
+      id: 'sessionStorage',
+      name: 'SessionStorage',
+      desc: 'تخزين الجلسة متاح؟',
+      run: () => {
+        try {
+          sessionStorage.setItem('__test__', '1');
+          sessionStorage.removeItem('__test__');
+          return { status: 'pass', value: 'متاح' };
+        } catch (e) {
+          return { status: 'warning', value: 'غير متاح' };
+        }
+      }
+    },
+    {
+      id: 'indexedDB',
+      name: 'IndexedDB',
+      desc: 'قاعدة بيانات المتصفح متاحة؟',
+      run: () => {
+        if (window.indexedDB) {
+          return { status: 'pass', value: 'متاح' };
+        }
+        return { status: 'warning', value: 'غير متاح' };
+      }
+    },
+    {
+      id: 'webAudio',
+      name: 'Web Audio API',
+      desc: 'الأصوات مدعومة؟',
+      run: () => {
+        if (window.AudioContext || window.webkitAudioContext) {
+          return { status: 'pass', value: 'مدعوم' };
+        }
+        return { status: 'warning', value: 'غير مدعوم' };
+      }
+    },
+    {
+      id: 'geolocation',
+      name: 'Geolocation',
+      desc: 'خدمة الموقع متاحة؟',
+      run: () => {
+        if (navigator.geolocation) {
+          return { status: 'pass', value: 'متاح' };
+        }
+        return { status: 'warning', value: 'غير متاح' };
+      }
+    },
+    {
+      id: 'notifications',
+      name: 'Notifications API',
+      desc: 'الإشعارات مدعومة؟',
+      run: () => {
+        if ('Notification' in window) {
+          const perm = Notification.permission;
+          return { status: 'pass', value: perm };
+        }
+        return { status: 'warning', value: 'غير مدعوم' };
+      }
+    },
+    {
+      id: 'serviceWorker',
+      name: 'Service Worker',
+      desc: 'PWA support',
+      run: () => {
+        if ('serviceWorker' in navigator) {
+          return { status: 'pass', value: 'مدعوم' };
+        }
+        return { status: 'warning', value: 'غير مدعوم' };
+      }
+    },
+    {
+      id: 'fetch',
+      name: 'Fetch API',
+      desc: 'طلبات الشبكة متاحة؟',
+      run: () => {
+        if (typeof fetch === 'function') {
+          return { status: 'pass', value: 'متاح' };
+        }
+        return { status: 'fail', value: 'غير متاح' };
+      }
+    },
+    {
+      id: 'screenSize',
+      name: 'حجم الشاشة',
+      desc: 'أبعاد نافذة المتصفح',
+      run: () => {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const status = w >= 320 ? 'pass' : 'warning';
+        return { status, value: `${w}×${h}` };
+      }
+    },
+    {
+      id: 'online',
+      name: 'حالة الاتصال',
+      desc: 'متصل بالإنترنت؟',
+      run: () => {
+        const online = navigator.onLine;
+        return {
+          status: online ? 'pass' : 'warning',
+          value: online ? 'متصل' : 'غير متصل'
+        };
+      }
+    },
+    {
+      id: 'language',
+      name: 'لغة المتصفح',
+      desc: 'اللغة المُعرّفة',
+      run: () => {
+        return { status: 'pass', value: navigator.language || 'غير معروف' };
+      }
+    },
+    {
+      id: 'timezone',
+      name: 'المنطقة الزمنية',
+      desc: 'التوقيت المحلي',
+      run: () => {
+        try {
+          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          return { status: 'pass', value: tz };
+        } catch (e) {
+          return { status: 'warning', value: 'غير معروف' };
+        }
+      }
+    }
+  ],
+
+  files: [
+    {
+      id: 'css-styles',
+      name: 'css/styles.css',
+      desc: 'ملف التنسيقات العام',
+      type: 'fetch',
+      url: '../css/styles.css'
+    },
+    {
+      id: 'css-index',
+      name: 'css/index.css',
+      desc: 'تنسيقات الصفحة الرئيسية',
+      type: 'fetch',
+      url: '../css/index.css'
+    },
+    {
+      id: 'js-app',
+      name: 'js/app.js',
+      desc: 'منطق التطبيق الرئيسي',
+      type: 'fetch',
+      url: '../js/app.js'
+    },
+    {
+      id: 'js-local',
+      name: 'js/local.js',
+      desc: 'مدير التخزين المحلي',
+      type: 'fetch',
+      url: '../js/local.js'
+    },
+    {
+      id: 'js-exercises',
+      name: 'js/exercises.js',
+      desc: 'مكتبة التمارين',
+      type: 'fetch',
+      url: '../js/exercises.js'
+    },
+    {
+      id: 'js-quran',
+      name: 'js/quran.js',
+      desc: 'وحدة القرآن',
+      type: 'fetch',
+      url: '../js/quran.js'
+    },
+    {
+      id: 'json-info',
+      name: 'json/information_local.json',
+      desc: 'بيانات المستخدم',
+      type: 'fetch',
+      url: '../json/information_local.json'
+    },
+    {
+      id: 'assets-icon',
+      name: 'assets/icon.svg',
+      desc: 'أيقونة التطبيق',
+      type: 'fetch',
+      url: '../assets/icon.svg'
+    },
+    {
+      id: 'assets-favicon',
+      name: 'assets/favicon.ico',
+      desc: 'الأيقونة المفضلة',
+      type: 'fetch',
+      url: '../assets/favicon.ico'
+    },
+    {
+      id: 'html-app',
+      name: 'html/app.html',
+      desc: 'صفحة التطبيق',
+      type: 'fetch',
+      url: 'app.html'
+    },
+    {
+      id: 'readme',
+      name: 'README.md',
+      desc: 'ملف التوثيق',
+      type: 'fetch',
+      url: '../README.md'
+    }
+  ],
+
+  apis: [
+    {
+      id: 'api-quran-index',
+      name: 'Quran Index CDN',
+      desc: 'جلب قائمة السور',
+      type: 'fetch',
+      url: 'https://cdn.jsdelivr.net/gh/risan/quran-json@main/dist/chapters/index.json',
+      validate: (data) => Array.isArray(data) && data.length === 114
+    },
+    {
+      id: 'api-quran-surah',
+      name: 'Quran Surah 1',
+      desc: 'جلب سورة الفاتحة',
+      type: 'fetch',
+      url: 'https://cdn.jsdelivr.net/gh/risan/quran-json@main/dist/chapters/1.json',
+      validate: (data) => data.verses && data.verses.length === 7
+    },
+    {
+      id: 'api-weather',
+      name: 'Open-Meteo API',
+      desc: 'جلب حالة الطقس',
+      type: 'fetch',
+      url: 'https://api.open-meteo.com/v1/forecast?latitude=24.7&longitude=46.7&current_weather=true',
+      validate: (data) => data.current_weather !== undefined
+    },
+    {
+      id: 'api-github',
+      name: 'GitHub API',
+      desc: 'جلب معلومات المشروع',
+      type: 'fetch',
+      url: 'https://api.github.com/repos/HazemYT55/yawmi',
+      validate: (data) => data.name === 'yawmi'
+    },
+    {
+      id: 'api-mp3quran',
+      name: 'MP3Quran Audio',
+      desc: 'فحص توفر الصوتيات',
+      type: 'fetch-nocors',
+      url: 'https://server8.mp3quran.net/afs/001.mp3',
+      method: 'HEAD'
+    }
+  ],
+
+  features: [
+    {
+      id: 'darkMode',
+      name: 'الوضع الليلي',
+      desc: 'تبديل الوضع الليلي',
+      run: () => {
+        const body = document.body;
+        const wasDark = body.classList.contains('dark');
+        body.classList.toggle('dark');
+        const isDark = body.classList.contains('dark');
+        body.classList.toggle('dark', wasDark);
+        return {
+          status: isDark !== wasDark || true ? 'pass' : 'fail',
+          value: 'يشتغل'
+        };
+      }
+    },
+    {
+      id: 'smoothScroll',
+      name: 'Smooth Scroll',
+      desc: 'التمرير الناعم مدعوم؟',
+      run: () => {
+        const supports = 'scrollBehavior' in document.documentElement.style;
+        return {
+          status: supports ? 'pass' : 'warning',
+          value: supports ? 'مدعوم' : 'غير مدعوم'
+        };
+      }
+    },
+    {
+      id: 'cssVars',
+      name: 'CSS Variables',
+      desc: 'متغيرات CSS مدعومة؟',
+      run: () => {
+        const supports = window.CSS && window.CSS.supports && window.CSS.supports('--test', '0');
+        return {
+          status: supports ? 'pass' : 'warning',
+          value: supports ? 'مدعوم' : 'غير مدعوم'
+        };
+      }
+    },
+    {
+      id: 'flexbox',
+      name: 'CSS Flexbox',
+      desc: 'Flexbox مدعوم؟',
+      run: () => {
+        const supports = window.CSS && window.CSS.supports && window.CSS.supports('display', 'flex');
+        return {
+          status: supports ? 'pass' : 'warning',
+          value: supports ? 'مدعوم' : 'غير مدعوم'
+        };
+      }
+    },
+    {
+      id: 'grid',
+      name: 'CSS Grid',
+      desc: 'CSS Grid مدعوم؟',
+      run: () => {
+        const supports = window.CSS && window.CSS.supports && window.CSS.supports('display', 'grid');
+        return {
+          status: supports ? 'pass' : 'warning',
+          value: supports ? 'مدعوم' : 'غير مدعوم'
+        };
+      }
+    },
+    {
+      id: 'storageQuota',
+      name: 'مساحة التخزين',
+      desc: 'فحص المساحة المتاحة',
+      run: async () => {
+        if (navigator.storage && navigator.storage.estimate) {
+          try {
+            const estimate = await navigator.storage.estimate();
+            const usedMB = (estimate.usage / 1024 / 1024).toFixed(1);
+            const totalMB = (estimate.quota / 1024 / 1024).toFixed(0);
+            return {
+              status: 'pass',
+              value: `${usedMB}/${totalMB} MB`
+            };
+          } catch (e) {
+            return { status: 'warning', value: 'غير متاح' };
+          }
+        }
+        return { status: 'warning', value: 'غير مدعوم' };
+      }
+    }
+  ]
+};
+
+/* ============================================
+   RENDER TEST ROWS
+============================================ */
+
+function renderTestRows() {
+  ['env', 'files', 'apis', 'features'].forEach(cat => {
+    const container = document.getElementById('tests-' + cat);
+    const tests = TESTS[cat];
+    container.innerHTML = tests.map(t => `
+      <div class="test-row" id="test-${t.id}">
+        <div class="test-status-icon" id="icon-${t.id}">○</div>
+        <div class="test-info">
+          <div class="test-name">${t.name}</div>
+          <div class="test-desc">${t.desc}</div>
+        </div>
+        <div class="test-result" id="result-${t.id}">—</div>
+      </div>
+    `).join('');
+
+    document.getElementById('count-' + cat).textContent = `0/${tests.length}`;
+  });
+}
+
+/* ============================================
+   UPDATE TEST ROW
+============================================ */
+
+function updateTestRow(id, status, value = '') {
+  const row = document.getElementById('test-' + id);
+  const icon = document.getElementById('icon-' + id);
+  const result = document.getElementById('result-' + id);
+
+  if (!row) return;
+
+  row.classList.remove('pass', 'fail', 'warning', 'running');
+  row.classList.add(status);
+
+  const icons = {
+    pass: '✓',
+    fail: '✗',
+    warning: '⚠',
+    running: '⏳'
+  };
+
+  icon.textContent = icons[status] || '○';
+  result.textContent = value || status;
+}
+
+/* ============================================
+   RUN TESTS
+============================================ */
+
+async function runTest(test, category) {
+  const startTime = performance.now();
+
+  try {
+    updateTestRow(test.id, 'running', 'جاري...');
+
+    let result;
+
+    if (test.type === 'fetch') {
+      // Fetch test
+      const res = await fetch(test.url, { method: test.method || 'GET' });
+      const elapsed = Math.round(performance.now() - startTime);
+
+      if (!res.ok) {
+        result = { status: 'fail', value: `HTTP ${res.status}` };
+      } else if (test.validate) {
+        const data = await res.json();
+        const valid = test.validate(data);
+        result = {
+          status: valid ? 'pass' : 'fail',
+          value: valid ? `OK ${elapsed}ms` : 'بيانات غير صحيحة'
+        };
+      } else {
+        result = { status: 'pass', value: `OK ${elapsed}ms` };
+      }
+    } else if (test.type === 'fetch-nocors') {
+      // Fetch with no-cors (just check existence)
+      try {
+        await fetch(test.url, { method: 'HEAD', mode: 'no-cors' });
+        const elapsed = Math.round(performance.now() - startTime);
+        result = { status: 'pass', value: `OK ${elapsed}ms` };
+      } catch (e) {
+        result = { status: 'warning', value: 'CORS محدود' };
+      }
+    } else if (test.run) {
+      // Direct run test
+      result = await test.run();
+    } else {
+      result = { status: 'warning', value: 'غير معرف' };
+    }
+
+    updateTestRow(test.id, result.status, result.value);
+
+    // Add to results
+    testState.results[category].push({
+      id: test.id,
+      name: test.name,
+      status: result.status,
+      value: result.value
+    });
+
+    logResult(test.name, result.status, result.value);
+
+  } catch (err) {
+    updateTestRow(test.id, 'fail', 'خطأ');
+    testState.results[category].push({
+      id: test.id,
+      name: test.name,
+      status: 'fail',
+      value: err.message
+    });
+    logResult(test.name, 'fail', err.message);
+  }
+}
+
+async function runCategory(category) {
+  const tests = TESTS[category];
+
+  for (const test of tests) {
+    await runTest(test, category);
+    // Small delay for visual feedback
+    await new Promise(r => setTimeout(r, 100));
+  }
+
+  // Update count
+  const passed = testState.results[category].filter(r => r.status === 'pass').length;
+  document.getElementById('count-' + category).textContent = `${passed}/${tests.length}`;
+
+  // Update summary
+  updateSummary(category);
+}
+
+async function runAllTests() {
+  if (testState.running) return;
+
+  testState.running = true;
+  clearResults(false);
+
+  document.getElementById('runAllBtn').disabled = true;
+  document.getElementById('runAllBtn').innerHTML = '<span>⏳</span> جاري...';
+
+  // Update overall card
+  const card = document.getElementById('overallCard');
+  card.classList.remove('all-pass', 'some-fail');
+  card.classList.add('running');
+
+  document.getElementById('overallIcon').textContent = '⏳';
+  document.getElementById('overallTitle').textContent = 'جاري الاختبار...';
+  document.getElementById('overallSubtitle').textContent = 'الرجاء الانتظار';
+
+  // Add total tests count
+  const totalTests = TESTS.env.length + TESTS.files.length + TESTS.apis.length + TESTS.features.length;
+  testState.totals.total = totalTests;
+
+  log('▶️ بدء الاختبار الشامل...', 'info');
+  log(`📊 إجمالي الاختبارات: ${totalTests}`, 'info');
+
+  // Run all categories
+  await runCategory('env');
+  await runCategory('files');
+  await runCategory('apis');
+  await runCategory('features');
+
+  // Calculate totals
+  let passed = 0, failed = 0, warnings = 0;
+  ['env', 'files', 'apis', 'features'].forEach(cat => {
+    testState.results[cat].forEach(r => {
+      if (r.status === 'pass') passed++;
+      else if (r.status === 'fail') failed++;
+      else if (r.status === 'warning') warnings++;
+    });
+  });
+
+  testState.totals.passed = passed;
+  testState.totals.failed = failed;
+  testState.totals.warnings = warnings;
+
+  // Update UI
+  document.getElementById('statPassed').textContent = passed;
+  document.getElementById('statFailed').textContent = failed;
+  document.getElementById('statWarnings').textContent = warnings;
+  document.getElementById('statTotal').textContent = totalTests;
+
+  const progress = Math.round(((passed + failed + warnings) / totalTests) * 100);
+  document.getElementById('overallProgress').style.width = progress + '%';
+
+  // Update overall status
+  card.classList.remove('running');
+
+  if (failed === 0 && warnings === 0) {
+    card.classList.add('all-pass');
+    document.getElementById('overallIcon').textContent = '🎉';
+    document.getElementById('overallTitle').textContent = 'كل حاجة تمام!';
+    document.getElementById('overallSubtitle').textContent = `${passed} اختبار نجح بدون أي مشاكل`;
+    log(`🎉 كل الاختبارات نجحت! (${passed}/${totalTests})`, 'success');
+  } else if (failed === 0) {
+    card.classList.add('all-pass');
+    document.getElementById('overallIcon').textContent = '✅';
+    document.getElementById('overallTitle').textContent = 'ممتاز!';
+    document.getElementById('overallSubtitle').textContent = `${passed} نجح • ${warnings} تحذير`;
+    log(`✅ الاختبار اكتمل: ${passed} نجح، ${warnings} تحذير`, 'success');
+  } else {
+    card.classList.add('some-fail');
+    document.getElementById('overallIcon').textContent = '⚠️';
+    document.getElementById('overallTitle').textContent = 'فيه مشاكل';
+    document.getElementById('overallSubtitle').textContent = `${failed} اختبار فشل — راجع التفاصيل`;
+    log(`⚠️ الاختبار اكتمل: ${passed} نجح، ${failed} فشل، ${warnings} تحذير`, 'warn');
+  }
+
+  document.getElementById('runAllBtn').disabled = false;
+  document.getElementById('runAllBtn').innerHTML = '<span>🔄</span> أعد التشغيل';
+  testState.running = false;
+}
+
+/* ============================================
+   LOGGING
+============================================ */
+
+function log(message, type = 'info') {
+  const console = document.getElementById('logConsole');
+  const time = new Date().toLocaleTimeString('en-GB');
+
+  const line = document.createElement('div');
+  line.className = 'log-line';
+  line.innerHTML = `
+    <span class="log-${type}">[${type.toUpperCase()}]</span> ${message}
+    <span class="log-time">${time}</span>
+  `;
+
+  console.appendChild(line);
+  console.scrollTop = console.scrollHeight;
+}
+
+function logResult(name, status, value) {
+  const statusMap = {
+    pass: 'success',
+    fail: 'error',
+    warning: 'warn'
+  };
+  const icon = { pass: '✓', fail: '✗', warning: '⚠' }[status];
+  log(`${icon} ${name}: ${value}`, statusMap[status] || 'info');
+}
+
+function clearLog() {
+  document.getElementById('logConsole').innerHTML = `
+    <div class="log-line">
+      <span class="log-info">[جاهز]</span> السجل فارغ
+      <span class="log-time">--:--:--</span>
+    </div>
+  `;
+}
+
+/* ============================================
+   SUMMARY
+============================================ */
+
+function updateSummary(category) {
+  const results = testState.results[category];
+  const passed = results.filter(r => r.status === 'pass').length;
+  const failed = results.filter(r => r.status === 'fail').length;
+  const warnings = results.filter(r => r.status === 'warning').length;
+
+  const rowIndex = { env: 0, files: 1, apis: 2, features: 3 }[category];
+  const row = document.getElementById('summaryBody').rows[rowIndex];
+
+  row.cells[1].textContent = passed;
+  row.cells[2].textContent = failed;
+  row.cells[3].textContent = warnings;
+
+  let statusBadge;
+  if (failed === 0 && warnings === 0) {
+    statusBadge = '<span class="badge-mini pass">✓ كل حاجة تمام</span>';
+  } else if (failed === 0) {
+    statusBadge = '<span class="badge-mini pass">✓ مع تحذيرات</span>';
+  } else {
+    statusBadge = '<span class="badge-mini fail">✗ فيه مشاكل</span>';
+  }
+  row.cells[4].innerHTML = statusBadge;
+}
+
+/* ============================================
+   CLEAR RESULTS
+============================================ */
+
+function clearResults(clearLogs = true) {
+  testState.results = { env: [], files: [], apis: [], features: [] };
+
+  // Reset all rows
+  ['env', 'files', 'apis', 'features'].forEach(cat => {
+    TESTS[cat].forEach(t => {
+      updateTestRow(t.id, '', '—');
+      const row = document.getElementById('test-' + t.id);
+      if (row) row.classList.remove('pass', 'fail', 'warning', 'running');
+    });
+    document.getElementById('count-' + cat).textContent = `0/${TESTS[cat].length}`;
+  });
+
+  // Reset overall card
+  const card = document.getElementById('overallCard');
+  card.classList.remove('all-pass', 'some-fail', 'running');
+  document.getElementById('overallIcon').textContent = '⏸️';
+  document.getElementById('overallTitle').textContent = 'جاهز للاختبار';
+  document.getElementById('overallSubtitle').textContent = 'اضغط "تشغيل كل الاختبارات" للبدء';
+
+  document.getElementById('statPassed').textContent = '0';
+  document.getElementById('statFailed').textContent = '0';
+  document.getElementById('statWarnings').textContent = '0';
+  document.getElementById('statTotal').textContent = '0';
+  document.getElementById('overallProgress').style.width = '0%';
+
+  // Reset summary table
+  const rows = document.getElementById('summaryBody').rows;
+  for (let i = 0; i < 4; i++) {
+    rows[i].cells[1].textContent = '—';
+    rows[i].cells[2].textContent = '—';
+    rows[i].cells[3].textContent = '—';
+    rows[i].cells[4].innerHTML = '<span class="badge-mini">لم يُختبر</span>';
+  }
+
+  // Reset buttons
+  document.getElementById('runAllBtn').disabled = false;
+  document.getElementById('runAllBtn').innerHTML = '<span>▶️</span> تشغيل كل الاختبارات';
+
+  testState.running = false;
+
+  if (clearLogs) {
+    clearLog();
+    log('🔄 تم إعادة التعيين', 'info');
+  }
+}
+
+/* ============================================
+   DOWNLOAD REPORT
+============================================ */
+
+function downloadReport() {
+  if (testState.totals.total === 0) {
+    alert('⚠️ مفيش نتائج لتحميلها. شغّل الاختبارات أولاً.');
+    return;
+  }
+
+  const now = new Date();
+  const report = {
+    app: 'yawmi',
+    version: '4.0.0',
+    testReport: true,
+    generatedAt: now.toISOString(),
+    summary: {
+      total: testState.totals.total,
+      passed: testState.totals.passed,
+      failed: testState.totals.failed,
+      warnings: testState.totals.warnings,
+      successRate: Math.round((testState.totals.passed / testState.totals.total) * 100) + '%'
+    },
+    environment: {
+      userAgent: navigator.userAgent,
+      platform: navigator.platform,
+      language: navigator.language,
+      online: navigator.onLine,
+      screen: `${window.innerWidth}×${window.innerHeight}`
+    },
+    results: testState.results
+  };
+
+  const json = JSON.stringify(report, null, 2);
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+
+  const date = now.toISOString().split('T')[0];
+  const filename = `yawmi-test-report-${date}.json`;
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  log(`📥 تم تحميل التقرير: ${filename}`, 'success');
+}
+
+/* ============================================
+   NAV
+============================================ */
+
+function toggleNavMenu() {
+  const links = document.getElementById('navLinks');
+  const toggle = document.querySelector('.nav-toggle');
+  links.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  });
+});
+
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  if (window.pageYOffset > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+/* ============================================
+   INITIALIZATION
+============================================ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderTestRows();
+  console.log('🧪 Test Page Loaded');
+  log('✅ صفحة الاختبار جاهزة', 'success');
+  log(`📊 إجمالي الاختبارات المتاحة: ${TESTS.env.length + TESTS.files.length + TESTS.apis.length + TESTS.features.length}`, 'info');
+  log('💡 اضغط "تشغيل كل الاختبارات" للبدء', 'info');
+
+  // Dark mode
+  try {
+    const saved = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+    if (saved.darkMode) {
+      document.body.classList.add('dark');
+    }
+  } catch (e) {}
+});
+</script>
+
+</body>
+</html>

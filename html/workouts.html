@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#e65100">
+<meta name="description" content="مكتبة التمارين الرياضية - 18 تمرين مخصص لمدافعي كرة القدم">
+<meta name="author" content="Hazem">
+
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="manifest" href="../assets/site.webmanifest">
+
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/index.css">
+
+<title>⚽ مكتبة التمارين - يومي</title>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #e65100, #fb8c00);
+    color: white;
+    padding: 130px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.12) 0%, transparent 50%);
+  }
+
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-hero-icon {
+    font-size: 72px;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 15px;
+    color: white;
+    font-weight: 900;
+  }
+
+  .page-hero p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    color: white;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(255,255,255,0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  .breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .breadcrumb span:not(:last-child)::after {
+    content: '›';
+    margin-right: 8px;
+    opacity: 0.7;
+  }
+
+  .workouts-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  .stats-banner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .stat-box {
+    background: linear-gradient(135deg, #ffe0b2, #ffb74d);
+    border-radius: 18px;
+    padding: 20px 15px;
+    text-align: center;
+    color: #333;
+    box-shadow: 0 4px 15px rgba(255,183,77,0.3);
+    transition: all 0.3s ease;
+  }
+
+  .stat-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255,183,77,0.4);
+  }
+
+  .stat-box-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .stat-box-value {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #333;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-box-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #555;
+  }
+
+  .category-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .category-tab {
+    padding: 14px 22px;
+    background: #fff;
+    color: #666;
+    border: 2px solid #e0e0e0;
+    border-radius: 18px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  body.dark .category-tab {
+    background: #1e1e1e;
+    color: #aaa;
+    border-color: #333;
+  }
+
+  .category-tab:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  }
+
+  .category-tab.active {
+    background: linear-gradient(135deg, #e65100, #fb8c00);
+    color: white;
+    border-color: #f57c00;
+    box-shadow: 0 6px 20px rgba(230,81,0,0.35);
+  }
+
+  .category-tab-icon {
+    font-size: 22px;
+  }
+
+  .category-tab-count {
+    background: rgba(0,0,0,0.1);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .category-tab.active .category-tab-count {
+    background: rgba(255,255,255,0.3);
+  }
+
+  .category-desc {
+    background: #fff;
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-right: 5px solid #fb8c00;
+    animation: slideUp 0.4s ease;
+  }
+
+  body.dark .category-desc {
+    background: #1e1e1e;
+  }
+
+  .category-desc-icon {
+    font-size: 42px;
+    flex-shrink: 0;
+  }
+
+  .category-desc-text h3 {
+    font-size: 1.15rem;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: 800;
+  }
+
+  body.dark .category-desc-text h3 {
+    color: #e0e0e0;
+  }
+
+  .category-desc-text p {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .workouts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+  }
+
+  .workout-item {
+    background: #fff;
+    border-radius: 18px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  body.dark .workout-item {
+    background: #1e1e1e;
+  }
+
+  .workout-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    border-color: #fb8c00;
+  }
+
+  .workout-item-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ffe0b2, #ffb74d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(255,183,77,0.3);
+  }
+
+  .workout-item-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .workout-item-name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  body.dark .workout-item-name {
+    color: #e0e0e0;
+  }
+
+  .workout-item-desc {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .workout-item-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+
+  .meta-badge {
+    background: #f0f2f5;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    color: #666;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  body.dark .meta-badge {
+    background: #2a2a2a;
+    color: #aaa;
+  }
+
+  .meta-badge.difficulty {
+    background: rgba(67,160,71,0.15);
+    color: #2e7d32;
+  }
+
+  .meta-badge.difficulty.medium {
+    background: rgba(251,140,0,0.15);
+    color: #e65100;
+  }
+
+  .meta-badge.difficulty.hard {
+    background: rgba(229,57,53,0.15);
+    color: #c62828;
+  }
+
+  /* Modal */
+  .workout-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .workout-modal.show {
+    display: flex;
+    opacity: 1;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .workout-modal-content {
+    max-width: 600px;
+    width: 100%;
+    background: #fff;
+    border-radius: 25px;
+    padding: 30px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.4s ease;
+  }
+
+  body.dark .workout-modal-content {
+    background: #1e1e1e;
+  }
+
+  .workout-modal-close {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e53935;
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    font-weight: bold;
+    z-index: 10;
+  }
+
+  .workout-modal-close:hover {
+    transform: rotate(90deg) scale(1.1);
+    background: #c62828;
+  }
+
+  .workout-modal-header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+
+  body.dark .workout-modal-header {
+    border-bottom-color: #333;
+  }
+
+  .workout-modal-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #ffe0b2, #ffb74d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+    margin: 0 auto 15px;
+    box-shadow: 0 8px 25px rgba(255,183,77,0.35);
+    animation: bounce 2s infinite;
+  }
+
+  .workout-modal-name {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #333;
+    margin-bottom: 8px;
+  }
+
+  body.dark .workout-modal-name {
+    color: #e0e0e0;
+  }
+
+  .workout-modal-name-en {
+    font-size: 13px;
+    color: #999;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  .workout-modal-badges {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .instructions-section {
+    margin-bottom: 25px;
+  }
+
+  .instructions-section h3 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+  }
+
+  body.dark .instructions-section h3 {
+    color: #e0e0e0;
+  }
+
+  .instructions-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: inst-counter;
+  }
+
+  .instructions-list li {
+    counter-increment: inst-counter;
+    padding: 14px 14px 14px 55px;
+    margin-bottom: 10px;
+    background: #f8f9fa;
+    border-radius: 14px;
+    position: relative;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.7;
+    transition: all 0.25s ease;
+  }
+
+  body.dark .instructions-list li {
+    background: #2a2a2a;
+    color: #e0e0e0;
+  }
+
+  .instructions-list li:hover {
+    transform: translateX(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  }
+
+  .instructions-list li::before {
+    content: counter(inst-counter);
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #e65100, #fb8c00);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 13px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    margin-bottom: 25px;
+  }
+
+  .info-box {
+    background: #f8f9fa;
+    border-radius: 14px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.25s ease;
+  }
+
+  body.dark .info-box {
+    background: #2a2a2a;
+  }
+
+  .info-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+
+  .info-box-icon {
+    font-size: 24px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .info-box-label {
+    font-size: 11px;
+    color: #999;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .info-box-value {
+    font-size: 14px;
+    color: #333;
+    font-weight: 800;
+  }
+
+  body.dark .info-box-value {
+    color: #e0e0e0;
+  }
+
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .tag {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .tag.benefit {
+    background: rgba(67,160,71,0.15);
+    color: #2e7d32;
+  }
+
+  .tag.muscle {
+    background: rgba(229,57,53,0.15);
+    color: #c62828;
+  }
+
+  .tag.equipment {
+    background: rgba(41,182,246,0.15);
+    color: #0277bd;
+  }
+
+  /* Timer */
+  .timer-section {
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    color: white;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .timer-display {
+    font-size: 3rem;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+  }
+
+  .timer-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .timer-btn {
+    padding: 12px 24px;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .timer-btn:hover {
+    background: rgba(255,255,255,0.35);
+    transform: translateY(-2px);
+  }
+
+  .timer-btn.primary {
+    background: rgba(255,255,255,0.9);
+    color: #1a237e;
+    border-color: white;
+  }
+
+  .timer-btn.primary:hover {
+    background: white;
+  }
+
+  .loading-box {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+  }
+
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #e0e0e0;
+    border-top-color: #fb8c00;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 110px 15px 50px;
+    }
+
+    .page-hero-icon {
+      font-size: 55px;
+    }
+
+    .workouts-container {
+      padding: 0 12px 60px;
+    }
+
+    .workouts-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .workout-item {
+      padding: 16px;
+    }
+
+    .workout-item-icon {
+      width: 50px;
+      height: 50px;
+      font-size: 26px;
+    }
+
+    .category-tab {
+      padding: 12px 16px;
+      font-size: 13px;
+    }
+
+    .workout-modal-content {
+      padding: 20px 18px;
+      border-radius: 20px;
+    }
+
+    .workout-modal-icon {
+      width: 80px;
+      height: 80px;
+      font-size: 44px;
+    }
+
+    .workout-modal-name {
+      font-size: 1.3rem;
+    }
+
+    .timer-display {
+      font-size: 2.2rem;
+    }
+
+    .instructions-list li {
+      padding: 12px 12px 12px 48px;
+      font-size: 13px;
+    }
+
+    .instructions-list li::before {
+      width: 26px;
+      height: 26px;
+      font-size: 12px;
+      right: 12px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">يومي</span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNavMenu()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="features.html">المميزات</a></li>
+      <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+      <li><a href="quran.html">القرآن</a></li>
+      <li><a href="workouts.html" class="active">التمارين</a></li>
+      <li><a href="about.html">عن التطبيق</a></li>
+      <li class="nav-cta"><a href="information.html">🚀 ابدأ الآن</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="../index.html">الرئيسية</a>
+      <span>التمارين</span>
+    </div>
+    <div class="page-hero-icon">⚽</div>
+    <h1>مكتبة التمارين</h1>
+    <p>18 تمرين مخصص لمدافعي كرة القدم — رشاقة، قوة، وتحمل</p>
+  </div>
+</section>
+
+<div class="workouts-container">
+
+  <!-- Stats -->
+  <div class="stats-banner">
+    <div class="stat-box">
+      <span class="stat-box-icon">⚽</span>
+      <div class="stat-box-value">18</div>
+      <div class="stat-box-label">تمرين</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-box-icon">🏃</span>
+      <div class="stat-box-value">6</div>
+      <div class="stat-box-label">رشاقة</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-box-icon">💪</span>
+      <div class="stat-box-value">6</div>
+      <div class="stat-box-label">قوة</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-box-icon">🫀</span>
+      <div class="stat-box-value">6</div>
+      <div class="stat-box-label">تحمل</div>
+    </div>
+  </div>
+
+  <!-- Category Tabs -->
+  <div class="category-tabs" id="categoryTabs">
+    <button class="category-tab active" data-cat="agility" onclick="selectCategory('agility')">
+      <span class="category-tab-icon">🏃</span>
+      <span>الرشاقة</span>
+      <span class="category-tab-count">6</span>
+    </button>
+    <button class="category-tab" data-cat="strength" onclick="selectCategory('strength')">
+      <span class="category-tab-icon">💪</span>
+      <span>القوة العضلية</span>
+      <span class="category-tab-count">6</span>
+    </button>
+    <button class="category-tab" data-cat="endurance" onclick="selectCategory('endurance')">
+      <span class="category-tab-icon">🫀</span>
+      <span>التحمل</span>
+      <span class="category-tab-count">6</span>
+    </button>
+  </div>
+
+  <!-- Category Description -->
+  <div id="categoryDesc"></div>
+
+  <!-- Workouts Grid -->
+  <div class="workouts-grid" id="workoutsGrid">
+    <div class="loading-box" style="grid-column: 1 / -1;">
+      <div class="spinner"></div>
+      <p>جاري تحميل التمارين...</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Workout Modal -->
+<div class="workout-modal" id="workoutModal">
+  <div class="workout-modal-content">
+    <button class="workout-modal-close" onclick="closeWorkoutModal()">×</button>
+
+    <div class="workout-modal-header">
+      <div class="workout-modal-icon" id="modalIcon">⚽</div>
+      <h2 class="workout-modal-name" id="modalName">—</h2>
+      <p class="workout-modal-name-en" id="modalNameEn"></p>
+      <div class="workout-modal-badges" id="modalBadges"></div>
+    </div>
+
+    <div class="workout-modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-icon">⚽</span>
+        <span class="brand-text">يومي</span>
+      </div>
+      <p class="footer-desc">منظّم الطالب الرياضي الذكي</p>
+    </div>
+    <div class="footer-col">
+      <h4>التطبيق</h4>
+      <ul>
+        <li><a href="app.html">افتح التطبيق</a></li>
+        <li><a href="features.html">المميزات</a></li>
+        <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+        <li><a href="../index.html#download">التحميل</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>المصادر</h4>
+      <ul>
+        <li><a href="github.html">GitHub</a></li>
+        <li><a href="api.html">API</a></li>
+        <li><a href="table_creator.html">صانع الجداول</a></li>
+        <li><a href="test.html">اختبار</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>عن التطبيق</h4>
+      <ul>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="about.html#privacy">سياسة الخصوصية</a></li>
+        <li><a href="about.html#terms">شروط الاستخدام</a></li>
+        <li><a href="about.html#license">الترخيص</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 يومي — MIT License</p>
+    <p>صُنع بحب للطلاب الرياضيين ⚽📚</p>
+  </div>
+</footer>
+
+<script src="../js/exercises.js"></script>
+<script>
+/* ============================================
+   WORKOUTS PAGE - MAIN LOGIC
+============================================ */
+
+var state = {
+  currentCategory: 'agility',
+  workoutTimer: null,
+  timerSeconds: 0,
+  timerRunning: false
+};
+
+/* ============ INIT ============ */
+function initWorkoutsPage() {
+  console.log('⚽ Workouts Page initializing...');
+
+  if (typeof YawmiExercises === 'undefined') {
+    console.error('❌ Exercises module not loaded');
+    document.getElementById('workoutsGrid').innerHTML =
+      '<div class="loading-box" style="grid-column: 1 / -1;">' +
+        '<div class="empty-state-icon">❌</div>' +
+        '<p>فشل تحميل مكتبة التمارين</p>' +
+      '</div>';
+    return;
+  }
+
+  renderCategory('agility');
+}
+
+/* ============ CATEGORY ============ */
+function selectCategory(cat) {
+  state.currentCategory = cat;
+
+  document.querySelectorAll('.category-tab').forEach(function(tab) {
+    tab.classList.toggle('active', tab.dataset.cat === cat);
+  });
+
+  renderCategory(cat);
+}
+
+function renderCategory(cat) {
+  var catData = YawmiExercises.library[cat];
+  if (!catData) return;
+
+  // Description
+  var descEl = document.getElementById('categoryDesc');
+  descEl.innerHTML =
+    '<div class="category-desc">' +
+      '<div class="category-desc-icon">' + catData.icon + '</div>' +
+      '<div class="category-desc-text">' +
+        '<h3>' + catData.name + '</h3>' +
+        '<p>' + catData.description + '</p>' +
+      '</div>' +
+    '</div>';
+
+  // Workouts
+  var grid = document.getElementById('workoutsGrid');
+  var html = '';
+
+  for (var i = 0; i < catData.workouts.length; i++) {
+    var w = catData.workouts[i];
+    var difficultyClass = w.difficulty === 'متوسط' ? 'medium'
+      : w.difficulty === 'متقدم' ? 'hard' : '';
+
+    html += '<div class="workout-item" onclick="openWorkout(\'' + w.id + '\')">';
+    html += '<div class="workout-item-icon">' + w.icon + '</div>';
+    html += '<div class="workout-item-content">';
+    html += '<div class="workout-item-name">' + w.name + '</div>';
+    html += '<div class="workout-item-desc">' + w.desc + '</div>';
+    html += '<div class="workout-item-meta">';
+    html += '<span class="meta-badge">⏱️ ' + w.duration + '</span>';
+    html += '<span class="meta-badge difficulty ' + difficultyClass + '">📊 ' + w.difficulty + '</span>';
+    html += '<span class="meta-badge">🔥 ' + w.calories + ' سعرة</span>';
+    html += '</div></div></div>';
+  }
+
+  grid.innerHTML = html;
+}
+
+/* ============ WORKOUT MODAL ============ */
+function openWorkout(workoutId) {
+  var workout = YawmiExercises.getById(workoutId);
+  if (!workout) {
+    console.error('Workout not found:', workoutId);
+    return;
+  }
+
+  var modal = document.getElementById('workoutModal');
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  document.getElementById('modalIcon').textContent = workout.icon;
+  document.getElementById('modalName').textContent = workout.name;
+  document.getElementById('modalNameEn').textContent = workout.nameEn || '';
+
+  var difficultyClass = workout.difficulty === 'متوسط' ? 'medium'
+    : workout.difficulty === 'متقدم' ? 'hard' : '';
+
+  document.getElementById('modalBadges').innerHTML =
+    '<span class="meta-badge">⏱️ ' + workout.duration + '</span>' +
+    '<span class="meta-badge difficulty ' + difficultyClass + '">📊 ' + workout.difficulty + '</span>' +
+    '<span class="meta-badge">🔥 ' + workout.calories + ' سعرة</span>' +
+    '<span class="meta-badge">⭐ مستوى ' + workout.level + '</span>';
+
+  var body = document.getElementById('modalBody');
+  var html = '';
+
+  // Info
+  html += '<div class="info-grid">';
+  html += '<div class="info-box"><span class="info-box-icon">⏱️</span><div class="info-box-label">المدة</div><div class="info-box-value">' + workout.duration + '</div></div>';
+  html += '<div class="info-box"><span class="info-box-icon">🔁</span><div class="info-box-label">المجموعات</div><div class="info-box-value">' + workout.sets + '</div></div>';
+  html += '<div class="info-box"><span class="info-box-icon">🎯</span><div class="info-box-label">العدات</div><div class="info-box-value">' + workout.reps + '</div></div>';
+  html += '<div class="info-box"><span class="info-box-icon">🔥</span><div class="info-box-label">السعرات</div><div class="info-box-value">' + workout.calories + '</div></div>';
+  html += '</div>';
+
+  // Instructions
+  html += '<div class="instructions-section">';
+  html += '<h3>📝 خطوات التمرين</h3>';
+  html += '<ol class="instructions-list">';
+  workout.instructions.forEach(function(i) {
+    html += '<li>' + i + '</li>';
+  });
+  html += '</ol></div>';
+
+  // Benefits
+  html += '<div class="instructions-section">';
+  html += '<h3>💡 الفوائد</h3>';
+  html += '<div class="tags-container">';
+  workout.benefits.forEach(function(b) {
+    html += '<span class="tag benefit">✅ ' + b + '</span>';
+  });
+  html += '</div></div>';
+
+  // Muscles
+  html += '<div class="instructions-section">';
+  html += '<h3>💪 العضلات المستهدفة</h3>';
+  html += '<div class="tags-container">';
+  workout.muscles.forEach(function(m) {
+    html += '<span class="tag muscle">🎯 ' + m + '</span>';
+  });
+  html += '</div></div>';
+
+  // Equipment
+  if (workout.equipment && workout.equipment.length > 0) {
+    html += '<div class="instructions-section">';
+    html += '<h3>🎒 الأدوات المطلوبة</h3>';
+    html += '<div class="tags-container">';
+    workout.equipment.forEach(function(e) {
+      html += '<span class="tag equipment">🔧 ' + e + '</span>';
+    });
+    html += '</div></div>';
+  }
+
+  // Timer
+  html += '<div class="timer-section">';
+  html += '<div class="timer-display" id="timerDisplay">00:00</div>';
+  html += '<div class="timer-controls">';
+  html += '<button class="timer-btn primary" onclick="toggleWorkoutTimer()" id="timerToggleBtn"><span>▶️</span> ابدأ</button>';
+  html += '<button class="timer-btn" onclick="resetWorkoutTimer()"><span>🔄</span> إعادة</button>';
+  html += '</div></div>';
+
+  body.innerHTML = html;
+}
+
+function closeWorkoutModal() {
+  document.getElementById('workoutModal').classList.remove('show');
+  document.body.style.overflow = '';
+
+  if (state.workoutTimer) {
+    clearInterval(state.workoutTimer);
+    state.workoutTimer = null;
+    state.timerRunning = false;
+    state.timerSeconds = 0;
+  }
+}
+
+/* ============ TIMER ============ */
+function toggleWorkoutTimer() {
+  var display = document.getElementById('timerDisplay');
+  var btn = document.getElementById('timerToggleBtn');
+
+  if (state.timerRunning) {
+    clearInterval(state.workoutTimer);
+    state.timerRunning = false;
+    btn.innerHTML = '<span>▶️</span> استئناف';
+  } else {
+    state.timerRunning = true;
+    btn.innerHTML = '<span>⏸️</span> إيقاف';
+
+    state.workoutTimer = setInterval(function() {
+      state.timerSeconds++;
+      var m = Math.floor(state.timerSeconds / 60);
+      var s = state.timerSeconds % 60;
+      display.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    }, 1000);
+  }
+}
+
+function resetWorkoutTimer() {
+  if (state.workoutTimer) clearInterval(state.workoutTimer);
+  state.timerRunning = false;
+  state.timerSeconds = 0;
+
+  var display = document.getElementById('timerDisplay');
+  if (display) display.textContent = '00:00';
+
+  var btn = document.getElementById('timerToggleBtn');
+  if (btn) btn.innerHTML = '<span>▶️</span> ابدأ';
+}
+
+/* ============ NAV ============ */
+function toggleNavMenu() {
+  var links = document.getElementById('navLinks');
+  var toggle = document.querySelector('.nav-toggle');
+  links.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  });
+});
+
+window.addEventListener('scroll', function() {
+  var navbar = document.getElementById('navbar');
+  if (window.pageYOffset > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeWorkoutModal();
+});
+
+/* ============ Dark mode ============ */
+try {
+  var saved = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+  if (saved.darkMode) {
+    document.body.classList.add('dark');
+  }
+} catch (e) {}
+
+/* ============ START ============ */
+document.addEventListener('DOMContentLoaded', initWorkoutsPage);
+
+console.log('⚽ Workouts Page Loaded');
+</script>
+
+</body>
+</html>

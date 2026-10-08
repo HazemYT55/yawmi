@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#1a237e">
+<meta name="description" content="عن تطبيق يومي - المطور، الرؤية، الخصوصية، والترخيص">
+<meta name="author" content="Hazem">
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="manifest" href="../assets/site.webmanifest">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/index.css">
+
+<title>ℹ️ عن التطبيق - يومي</title>
+
+<style>
+  /* ============ About Page Specific ============ */
+  .page-hero {
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    color: white;
+    padding: 130px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  }
+
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-hero-icon {
+    font-size: 72px;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 15px;
+    color: white;
+    font-weight: 900;
+  }
+
+  .page-hero p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    color: white;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .breadcrumb span:not(:last-child)::after {
+    content: '›';
+    margin-right: 8px;
+    opacity: 0.6;
+  }
+
+  /* ============ Container ============ */
+  .about-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ============ Content Sections ============ */
+  .content-section {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 35px 30px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-sm);
+    scroll-margin-top: 100px;
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+  }
+
+  .content-section:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-weight: 800;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-light);
+  }
+
+  body.dark .section-title {
+    color: var(--primary-lighter);
+  }
+
+  .section-title-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .section-text {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.9;
+  }
+
+  .section-text p {
+    margin-bottom: 15px;
+    color: var(--text-light);
+  }
+
+  .section-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-text strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  /* ============ Story Section ============ */
+  .story-box {
+    background: linear-gradient(135deg, #fff9c4, #ffeb3b);
+    border-radius: 18px;
+    padding: 25px;
+    margin: 20px 0;
+    color: #333;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .story-box::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    right: 15px;
+    font-size: 150px;
+    font-family: Georgia, serif;
+    color: rgba(0,0,0,0.08);
+    line-height: 1;
+  }
+
+  .story-box p {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #333;
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+  }
+
+  .story-box .author {
+    margin-top: 15px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    color: #555;
+    text-align: left;
+  }
+
+  /* ============ Developer Card ============ */
+  .developer-card {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    color: white;
+    border-radius: 22px;
+    padding: 30px;
+    margin: 20px 0;
+    box-shadow: 0 10px 30px rgba(26,35,126,0.3);
+    flex-wrap: wrap;
+  }
+
+  .developer-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    flex-shrink: 0;
+    border: 3px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+  }
+
+  .developer-info {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .developer-name {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: white;
+  }
+
+  .developer-role {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 15px;
+    color: white;
+  }
+
+  .developer-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .dev-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(10px);
+    font-weight: 600;
+  }
+
+  .dev-link:hover {
+    background: rgba(255,255,255,0.35);
+    transform: translateY(-2px);
+  }
+
+  /* ============ Privacy Grid ============ */
+  .privacy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .privacy-item {
+    display: flex;
+    gap: 12px;
+    padding: 15px;
+    background: var(--bg);
+    border-radius: 14px;
+    transition: all 0.25s ease;
+    border: 2px solid transparent;
+  }
+
+  .privacy-item:hover {
+    border-color: var(--success);
+    transform: translateY(-3px);
+  }
+
+  .privacy-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .privacy-text {
+    flex: 1;
+  }
+
+  .privacy-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .privacy-desc {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  /* ============ Terms List ============ */
+  .terms-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: term-counter;
+  }
+
+  .terms-list li {
+    counter-increment: term-counter;
+    padding: 15px 15px 15px 60px;
+    margin-bottom: 12px;
+    background: var(--bg);
+    border-radius: 14px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+    transition: all 0.25s ease;
+  }
+
+  .terms-list li:hover {
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .terms-list li::before {
+    content: counter(term-counter);
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+  }
+
+  /* ============ License Box ============ */
+  .license-box {
+    background: #1a1a1a;
+    color: #e0e0e0;
+    border-radius: 14px;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #333;
+  }
+
+  /* ============ Vision Card ============ */
+  .vision-card {
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+    color: white;
+    border-radius: 22px;
+    padding: 35px 25px;
+    text-align: center;
+    margin: 30px 0;
+    box-shadow: 0 10px 30px rgba(67,160,71,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vision-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%);
+  }
+
+  .vision-card-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .vision-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+    display: inline-block;
+  }
+
+  .vision-card h3 {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 12px;
+    font-weight: 800;
+  }
+
+  .vision-card p {
+    color: white;
+    opacity: 0.95;
+    font-size: 15px;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ============ Tech Stack ============ */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .tech-item {
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 20px 12px;
+    text-align: center;
+    transition: all 0.25s ease;
+    border: 2px solid transparent;
+  }
+
+  .tech-item:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-lighter);
+    background: var(--card);
+  }
+
+  .tech-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .tech-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .tech-desc {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 4px;
+  }
+
+  /* ============ Timeline ============ */
+  .timeline-box {
+    position: relative;
+    padding-right: 35px;
+    margin-top: 20px;
+  }
+
+  .timeline-box::before {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--primary), var(--primary-lighter));
+    border-radius: 3px;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 25px;
+    padding-right: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    right: -29px;
+    top: 5px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: 3px solid var(--card);
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+
+  .timeline-item.active::before {
+    background: var(--success);
+    box-shadow: 0 0 0 2px var(--success);
+    animation: pulse 2s infinite;
+  }
+
+  .timeline-date {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  body.dark .timeline-date {
+    color: var(--primary-lighter);
+  }
+
+  .timeline-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* ============ Contact Grid ============ */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .contact-card {
+    background: var(--bg);
+    border-radius: 18px;
+    padding: 25px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .contact-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary-lighter);
+    background: var(--card);
+    box-shadow: var(--shadow-md);
+  }
+
+  .contact-icon {
+    font-size: 44px;
+  }
+
+  .contact-name {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .contact-desc {
+    font-size: 12px;
+    color: var(--text-light);
+  }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 110px 15px 50px;
+    }
+
+    .page-hero-icon {
+      font-size: 55px;
+    }
+
+    .about-container {
+      padding: 0 15px 60px;
+    }
+
+    .content-section {
+      padding: 25px 20px;
+      border-radius: 18px;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      gap: 10px;
+    }
+
+    .section-title-icon {
+      font-size: 26px;
+    }
+
+    .section-text {
+      font-size: 14px;
+    }
+
+    .developer-card {
+      flex-direction: column;
+      text-align: center;
+      padding: 25px 20px;
+      gap: 15px;
+    }
+
+    .developer-avatar {
+      width: 80px;
+      height: 80px;
+      font-size: 40px;
+    }
+
+    .developer-name {
+      font-size: 1.25rem;
+    }
+
+    .developer-links {
+      justify-content: center;
+    }
+
+    .terms-list li {
+      padding: 12px 12px 12px 50px;
+      font-size: 13px;
+    }
+
+    .terms-list li::before {
+      width: 26px;
+      height: 26px;
+      font-size: 12px;
+      right: 12px;
+    }
+
+    .vision-card {
+      padding: 25px 20px;
+    }
+
+    .vision-icon {
+      font-size: 48px;
+    }
+
+    .vision-card h3 {
+      font-size: 1.25rem;
+    }
+
+    .story-box {
+      padding: 20px 18px;
+    }
+
+    .story-box p {
+      font-size: 14px;
+    }
+
+    .tech-icon {
+      font-size: 30px;
+    }
+  }
+
+  /* ============ Back to Top Button ============ */
+  .back-to-top {
+    position: fixed;
+    bottom: 100px;
+    left: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(26,35,126,0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 90;
+  }
+
+  .back-to-top.show {
+    display: flex;
+  }
+
+  .back-to-top:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(26,35,126,0.4);
+  }
+
+  /* ============ Table of Contents ============ */
+  .toc {
+    background: var(--bg);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 25px;
+  }
+
+  .toc h4 {
+    font-size: 14px;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .toc-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc-list a {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--card);
+    border-radius: 20px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 1px solid var(--border);
+  }
+
+  .toc-list a:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">يومي</span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNavMenu()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="features.html">المميزات</a></li>
+      <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+      <li><a href="quran.html">القرآن</a></li>
+      <li><a href="workouts.html">التمارين</a></li>
+      <li><a href="about.html" class="active">عن التطبيق</a></li>
+      <li class="nav-cta"><a href="app.html">🚀 افتح التطبيق</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="../index.html">الرئيسية</a>
+      <span>عن التطبيق</span>
+    </div>
+    <div class="page-hero-icon">ℹ️</div>
+    <h1>عن التطبيق</h1>
+    <p>تعرف على يومي — القصة، الرؤية، المطوّر، الخصوصية، والترخيص</p>
+  </div>
+</section>
+
+<!-- ============ CONTENT ============ -->
+<div class="about-container">
+
+  <!-- ============ TABLE OF CONTENTS ============ -->
+  <div class="toc">
+    <h4>📑 محتويات الصفحة</h4>
+    <ul class="toc-list">
+      <li><a href="#story">القصة</a></li>
+      <li><a href="#vision">الرؤية</a></li>
+      <li><a href="#developer">المطور</a></li>
+      <li><a href="#tech">التقنيات</a></li>
+      <li><a href="#timeline">التطوير</a></li>
+      <li><a href="#privacy">الخصوصية</a></li>
+      <li><a href="#terms">الشروط</a></li>
+      <li><a href="#license">الترخيص</a></li>
+      <li><a href="#contact">التواصل</a></li>
+    </ul>
+  </div>
+
+  <!-- ============ STORY ============ -->
+  <div class="content-section" id="story">
+    <h2 class="section-title">
+      <span class="section-title-icon">📖</span>
+      قصة يومي
+    </h2>
+
+    <div class="section-text">
+      <p>
+        كل حاجة بدأت من مشكلة حقيقية. <strong>طالب في 13 سنة، مدافع في فريق كرة قدم، وحافظ للقرآن</strong> — 
+        بس اليوم مكنش كفاية. المدرسة، الواجبات، التدريب، الحفظ، والراحة...
+        اليوم بيجري وبيخلص من غير ما تحقق أي حاجة حقيقية.
+      </p>
+
+      <div class="story-box">
+        <p>
+          كنت بصحى الصبح وأقعد أفكر: "أبدأ بإيه؟ المذاكرة؟ التمرين؟ ولا الحفظ؟" 
+          وبعدين أكتشف إن اليوم خلص وأنا ضيعت الوقت في التفكير نفسه!
+          كان محتاج حد ينظملي اليوم تلقائياً — فقررت أعمل التطبيق بنفسي.
+        </p>
+        <div class="author">— حازم، مطوّر التطبيق</div>
+      </div>
+
+      <p>
+        <strong>يومي</strong> مش مجرد تطبيق تنظيم وقت. هو حل عملي لمشكلة حقيقية بيعيشها كل 
+        طالب رياضي في سن المراهقة. تطبيق بيفهم طبيعة حياتك، 
+        بيولّد جدول متوازن، وبيساعدك تكمّل على المدى الطويل.
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ VISION ============ -->
+  <div class="vision-card" id="vision">
+    <div class="vision-card-content">
+      <div class="vision-icon">🎯</div>
+      <h3>رؤيتنا</h3>
+      <p>
+        نساعد كل طالب رياضي في العالم العربي ينظم يومه بذكاء، 
+        ويوازن بين الدراسة والرياضة والقرآن والحياة — 
+        عشان يبقى بطل في كل حاجة، مش في حاجة واحدة بس.
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ DEVELOPER ============ -->
+  <div class="content-section" id="developer">
+    <h2 class="section-title">
+      <span class="section-title-icon">👨‍💻</span>
+      عن المطوّر
+    </h2>
+
+    <div class="developer-card">
+      <div class="developer-avatar">👦</div>
+      <div class="developer-info">
+        <div class="developer-name">حازم (Hazem)</div>
+        <div class="developer-role">
+          13 سنة · مدافع كرة قدم · طالب · مبرمج ناشئ 💪
+        </div>
+        <div class="developer-links">
+          <a href="https://github.com/HazemYT55" target="_blank" rel="noopener" class="dev-link">
+            <span>🐙</span> GitHub
+          </a>
+          <a href="https://hazemyt55.itch.io/yawmi" target="_blank" rel="noopener" class="dev-link">
+            <span>🎮</span> itch.io
+          </a>
+          <a href="github.html" class="dev-link">
+            <span>⚽</span> المشروع
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-text" style="margin-top: 20px;">
+      <p>
+        أنا طالب في الثالثة عشر، بلعب كرة قدم في مركز الدفاع، وحابب البرمجة. 
+        بدأت أتعلم HTML و CSS و JavaScript من سن 11، وده أول مشروع كامل بحس بيه بالفخر.
+      </p>
+      <p>
+        عملت التطبيق ده عشان أساعد نفسي أولاً، وبعدين كل زمايلي وأصحابي في المدرسة 
+        والنادي. حلمي إن كل طالب رياضي عربي يلاقي تطبيق يفهمه ويخدمه.
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ TECH ============ -->
+  <div class="content-section" id="tech">
+    <h2 class="section-title">
+      <span class="section-title-icon">🛠️</span>
+      التقنيات المستخدمة
+    </h2>
+
+    <div class="section-text">
+      <p>
+        التطبيق مبني بالكامل بتقنيات <strong>الويب الحديثة</strong> — 
+        بدون أي مكتبات خارجية ثقيلة، وبدون تعقيد. 
+        هدفنا الأداء والسرعة والبساطة.
+      </p>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-item">
+        <span class="tech-icon">📄</span>
+        <div class="tech-name">HTML5</div>
+        <div class="tech-desc">هيكل التطبيق</div>
+      </div>
+      <div class="tech-item">
+        <span class="tech-icon">🎨</span>
+        <div class="tech-name">CSS3</div>
+        <div class="tech-desc">التصميم والحركات</div>
+      </div>
+      <div class="tech-item">
+        <span class="tech-icon">⚡</span>
+        <div class="tech-name">JavaScript</div>
+        <div class="tech-desc">المنطق والتفاعل</div>
+      </div>
+      <div class="tech-item">
+        <span class="tech-icon">🐍</span>
+        <div class="tech-name">Python</div>
+        <div class="tech-desc">API Server</div>
+      </div>
+      <div class="tech-item">
+        <span class="tech-icon">🔊</span>
+        <div class="tech-name">Web Audio</div>
+        <div class="tech-desc">الأصوات</div>
+      </div>
+      <div class="tech-item">
+        <span class="tech-icon">💾</span>
+        <div class="tech-name">LocalStorage</div>
+        <div class="tech-desc">حفظ البيانات</div>
+      </div>
+      <div class="tech-item">
+        <span class="tech-icon">📖</span>
+        <div class="tech-name">quran-json</div>
+        <div class="tech-desc">نصوص القرآن</div>
+      </div>
+      <div class="tech-item">
+        <span class="tech-icon">🌤️</span>
+        <div class="tech-name">Open-Meteo</div>
+        <div class="tech-desc">حالة الطقس</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TIMELINE ============ -->
+  <div class="content-section" id="timeline">
+    <h2 class="section-title">
+      <span class="section-title-icon">📅</span>
+      رحلة التطوير
+    </h2>
+
+    <div class="timeline-box">
+      <div class="timeline-item">
+        <div class="timeline-date">البداية</div>
+        <div class="timeline-title">الفكرة 💡</div>
+        <div class="timeline-desc">
+          بدأت الفكرة من الاحتياج الشخصي لتنظيم اليوم بين المدرسة والرياضة والقرآن.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">النسخة 1.0</div>
+        <div class="timeline-title">أول نموذج 🎯</div>
+        <div class="timeline-desc">
+          تطبيق بسيط يولّد جدول يومي تلقائياً بمدخلات أساسية.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">النسخة 2.0</div>
+        <div class="timeline-title">إضافة النقاط والشارات 🏆</div>
+        <div class="timeline-desc">
+          نظام تحفيز كامل مع 9 شارات، نقاط، و Streak.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">النسخة 3.0</div>
+        <div class="timeline-title">Pomodoro والطقس 🌤️</div>
+        <div class="timeline-desc">
+          إضافة Pomodoro Timer، حالة الطقس، Weekend Mode، والطاقة والمزاج.
+        </div>
+      </div>
+
+      <div class="timeline-item active">
+        <div class="timeline-date">النسخة 4.0 (الحالية)</div>
+        <div class="timeline-title">التطبيق الكامل 🚀</div>
+        <div class="timeline-desc">
+          18 تمرين رياضي، 27 شارة، القرآن كامل، AI Adjust، وتصميم احترافي.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">النسخة 5.0 (قريباً)</div>
+        <div class="timeline-title">المزامنة السحابية ☁️</div>
+        <div class="timeline-desc">
+          حساب مستخدم، مزامنة سحابية، إشعارات Push، ومدرب 3D.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PRIVACY ============ -->
+  <div class="content-section" id="privacy">
+    <h2 class="section-title">
+      <span class="section-title-icon">🔒</span>
+      سياسة الخصوصية
+    </h2>
+
+    <div class="section-text">
+      <p>
+        <strong>خصوصيتك أولويتنا.</strong> التطبيق مصمم بحيث تكون كل بياناتك محفوظة على جهازك فقط، 
+        بدون أي رفع للسيرفر أو تتبع أو إعلانات.
+      </p>
+    </div>
+
+    <div class="privacy-grid">
+      <div class="privacy-item">
+        <span class="privacy-icon">💾</span>
+        <div class="privacy-text">
+          <div class="privacy-title">حفظ محلي 100%</div>
+          <div class="privacy-desc">كل بياناتك على جهازك فقط</div>
+        </div>
+      </div>
+
+      <div class="privacy-item">
+        <span class="privacy-icon">🚫</span>
+        <div class="privacy-text">
+          <div class="privacy-title">بدون تتبع</div>
+          <div class="privacy-desc">لا Google Analytics ولا غيره</div>
+        </div>
+      </div>
+
+      <div class="privacy-item">
+        <span class="privacy-icon">📢</span>
+        <div class="privacy-text">
+          <div class="privacy-title">بدون إعلانات</div>
+          <div class="privacy-desc">تجربة نظيفة تماماً</div>
+        </div>
+      </div>
+
+      <div class="privacy-item">
+        <span class="privacy-icon">📍</span>
+        <div class="privacy-text">
+          <div class="privacy-title">الموقع اختياري</div>
+          <div class="privacy-desc">لجلب الطقس فقط</div>
+        </div>
+      </div>
+
+      <div class="privacy-item">
+        <span class="privacy-icon">🔓</span>
+        <div class="privacy-text">
+          <div class="privacy-title">مفتوح المصدر</div>
+          <div class="privacy-desc">راجع الكود بنفسك</div>
+        </div>
+      </div>
+
+      <div class="privacy-item">
+        <span class="privacy-icon">🗑️</span>
+        <div class="privacy-text">
+          <div class="privacy-title">تحكم كامل</div>
+          <div class="privacy-desc">امسح بياناتك في أي وقت</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-text" style="margin-top: 25px;">
+      <p>
+        <strong>الاستثناءات البسيطة:</strong>
+      </p>
+      <p>
+        • <strong>الطقس:</strong> نرسل موقعك التقريبي لـ Open-Meteo API لجلب حالة الجو.
+        الموقع اختياري وتقدر ترفضه.
+      </p>
+      <p>
+        • <strong>القرآن:</strong> لما تفتح سورة، يتم تحميلها من CDN.
+        بعد أول تحميل، بتحفظ في الكاش لمدة 30 يوم.
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ TERMS ============ -->
+  <div class="content-section" id="terms">
+    <h2 class="section-title">
+      <span class="section-title-icon">📜</span>
+      شروط الاستخدام
+    </h2>
+
+    <div class="section-text">
+      <p>
+        باستخدامك لتطبيق <strong>يومي</strong>، أنت توافق على الشروط التالية:
+      </p>
+    </div>
+
+    <ol class="terms-list">
+      <li>
+        <strong>الاستخدام الشخصي:</strong> التطبيق مخصص للاستخدام الشخصي غير التجاري.
+        ممنوع بيعه أو إعادة نشره بشكل تجاري.
+      </li>
+      <li>
+        <strong>المسؤولية:</strong> التطبيق أداة تنظيم فقط. لست مسؤولاً عن أي قرارات 
+        تتخذها بناءً على الجدول المقترح.
+      </li>
+      <li>
+        <strong>الدقة:</strong> نعمل على تقديم معلومات دقيقة، لكن لا نضمن خلو التطبيق من 
+        الأخطاء. لو لقيت خطأ، أبلغنا.
+      </li>
+      <li>
+        <strong>التعديلات:</strong> نحتفظ بالحق في تعديل التطبيق أو هذه الشروط في أي وقت 
+        بدون إشعار مسبق.
+      </li>
+      <li>
+        <strong>السن:</strong> التطبيق مناسب للمستخدمين من عمر 10 سنين وما فوق.
+      </li>
+      <li>
+        <strong>الاستخدام العادل:</strong> ممنوع استخدام التطبيق لأي غرض غير قانوني أو 
+        ضار.
+      </li>
+    </ol>
+  </div>
+
+  <!-- ============ LICENSE ============ -->
+  <div class="content-section" id="license">
+    <h2 class="section-title">
+      <span class="section-title-icon">⚖️</span>
+      الترخيص — MIT License
+    </h2>
+
+    <div class="section-text">
+      <p>
+        التطبيق مرخص تحت <strong>MIT License</strong> — يعني تقدر تستخدمه، 
+        تعدّله، وتشاركه بحرية، بشرط ذكر المصدر.
+      </p>
+    </div>
+
+    <div class="license-box">MIT License
+
+Copyright (c) 2025 Hazem
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</div>
+  </div>
+
+  <!-- ============ CONTACT ============ -->
+  <div class="content-section" id="contact">
+    <h2 class="section-title">
+      <span class="section-title-icon">📞</span>
+      تواصل معنا
+    </h2>
+
+    <div class="section-text">
+      <p>
+        عندك سؤال؟ اقتراح؟ لقيت مشكلة؟ <strong>تواصل معنا في أي وقت.</strong>
+      </p>
+    </div>
+
+    <div class="contact-grid">
+      <a href="https://github.com/HazemYT55/yawmi/issues" target="_blank" rel="noopener" class="contact-card">
+        <span class="contact-icon">🐛</span>
+        <div class="contact-name">الإبلاغ عن مشكلة</div>
+        <div class="contact-desc">فتح Issue على GitHub</div>
+      </a>
+
+      <a href="https://github.com/HazemYT55/yawmi" target="_blank" rel="noopener" class="contact-card">
+        <span class="contact-icon">🐙</span>
+        <div class="contact-name">GitHub</div>
+        <div class="contact-desc">تابع المشروع</div>
+      </a>
+
+      <a href="https://hazemyt55.itch.io/yawmi" target="_blank" rel="noopener" class="contact-card">
+        <span class="contact-icon">🎮</span>
+        <div class="contact-name">itch.io</div>
+        <div class="contact-desc">حمّل وقيّم</div>
+      </a>
+
+      <a href="github.html" class="contact-card">
+        <span class="contact-icon">📚</span>
+        <div class="contact-name">توثيق المشروع</div>
+        <div class="contact-desc">اقرأ كل التفاصيل</div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ BACK TO TOP ============ -->
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" id="backToTop" aria-label="العودة للأعلى">↑</button>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-icon">⚽</span>
+        <span class="brand-text">يومي</span>
+      </div>
+      <p class="footer-desc">منظّم الطالب الرياضي الذكي</p>
+    </div>
+    <div class="footer-col">
+      <h4>التطبيق</h4>
+      <ul>
+        <li><a href="app.html">افتح التطبيق</a></li>
+        <li><a href="features.html">المميزات</a></li>
+        <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+        <li><a href="../index.html#download">التحميل</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>المصادر</h4>
+      <ul>
+        <li><a href="github.html">GitHub</a></li>
+        <li><a href="api.html">API</a></li>
+        <li><a href="table_creator.html">صانع الجداول</a></li>
+        <li><a href="test.html">اختبار</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>عن التطبيق</h4>
+      <ul>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="#privacy">سياسة الخصوصية</a></li>
+        <li><a href="#terms">شروط الاستخدام</a></li>
+        <li><a href="#license">الترخيص</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 يومي — MIT License</p>
+    <p>صُنع بحب للطلاب الرياضيين ⚽📚</p>
+  </div>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script>
+// Toggle Mobile Nav
+function toggleNavMenu() {
+  const links = document.getElementById('navLinks');
+  const toggle = document.querySelector('.nav-toggle');
+  links.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+// Close nav on link click
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  });
+});
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  const backToTop = document.getElementById('backToTop');
+
+  if (window.pageYOffset > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+
+  if (window.pageYOffset > 400) {
+    backToTop.classList.add('show');
+  } else {
+    backToTop.classList.remove('show');
+  }
+});
+
+// Smooth scroll for TOC
+document.querySelectorAll('.toc-list a, a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href && href.startsWith('#') && href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        const offset = 100;
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  });
+});
+
+// Dark mode from localStorage
+try {
+  const state = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+  if (state.darkMode) {
+    document.body.classList.add('dark');
+  }
+} catch (e) {}
+
+console.log('ℹ️ About Page Loaded');
+</script>
+
+</body>
+</html>

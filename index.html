@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#1a237e">
+<meta name="description" content="يومي - تطبيق ذكي لتنظيم الوقت اليومي للطالب الرياضي. 114 سورة قرآنية، 18 تمرين، 27 شارة.">
+<meta name="keywords" content="تنظيم وقت, طالب, رياضة, قرآن, كرة قدم, يومي">
+<meta name="author" content="Hazem">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:title" content="⚽ يومي - منظّم الطالب الرياضي الذكي">
+<meta property="og:description" content="تطبيق ذكي لتنظيم الوقت اليومي - 114 سورة قرآنية، 18 تمرين، 27 شارة">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/icon-192.png">
+<meta property="og:url" content="https://hazemyt55.github.io/yawmi/">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="⚽ يومي - منظّم الطالب الرياضي">
+<meta name="twitter:description" content="تطبيق ذكي لتنظيم الوقت اليومي">
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+
+<!-- Manifest -->
+<link rel="manifest" href="assets/site.webmanifest">
+
+<!-- Apple Mobile -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="يومي">
+
+<!-- Microsoft -->
+<meta name="msapplication-TileColor" content="#1a237e">
+<meta name="msapplication-TileImage" content="assets/android-chrome-192x192.png">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/index.css">
+
+<title>⚽ يومي - منظّم الطالب الرياضي الذكي</title>
+</head>
+<body>
+
+<!-- ============================================
+     NAVBAR
+============================================ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">يومي</span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNavMenu()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#features">المميزات</a></li>
+      <li><a href="html/quran.html">📖 القرآن</a></li>
+      <li><a href="html/workouts.html">⚽ التمارين</a></li>
+      <li><a href="html/how_to_use.html">طريقة الاستخدام</a></li>
+      <li><a href="html/about.html">عن التطبيق</a></li>
+      <li class="nav-cta"><a href="html/information.html">🚀 ابدأ الآن</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============================================
+     HERO SECTION
+============================================ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-logo">⚽</div>
+    <h1 class="hero-title">
+      يومي
+      <span class="version-badge">v4.0</span>
+    </h1>
+    <p class="hero-tagline">منظّم الطالب الرياضي الذكي</p>
+    <p class="hero-subtitle">
+      تطبيق يولّد جدولك اليومي تلقائياً في ثواني — يجمع بين الدراسة، 
+      الرياضة، حفظ القرآن، والنوم الكافي.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="html/information.html" class="btn btn-primary btn-large">
+        🚀 ابدأ الآن مجاناً
+      </a>
+      <a href="#download" class="btn btn-secondary btn-large">
+        ⬇️ حمّل التطبيق
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-value">114</div>
+        <div class="hero-stat-label">سورة قرآنية</div>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">18</div>
+        <div class="hero-stat-label">تمرين رياضي</div>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">27</div>
+        <div class="hero-stat-label">شارة إنجاز</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <a href="#features">⬇️</a>
+  </div>
+</section>
+
+<!-- ============================================
+     FEATURES SECTION
+============================================ -->
+<section class="features" id="features">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">✨ المميزات</span>
+      <h2>إيه اللي في التطبيق؟</h2>
+      <p class="section-desc">كل اللي محتاجه الطالب الرياضي في تطبيق واحد</p>
+    </div>
+
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>توليد جدول ذكي</h3>
+        <p>التطبيق يولّد جدولك اليومي تلقائياً في ثواني — يراعي أوقاتك وواجباتك ورياضتك.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📖</div>
+        <h3>القرآن الكريم</h3>
+        <p>114 سورة كاملة مع 10 قراء مشهورين. استمع لكل سورة أو آية على حدة.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚽</div>
+        <h3>18 تمرين رياضي</h3>
+        <p>مكتبة كاملة من التمارين — رشاقة، قوة عضلية، وتحمل. مخصصة للمدافعين.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🍅</div>
+        <h3>Pomodoro Timer</h3>
+        <p>مؤقت تركيز 25 دقيقة + راحة 5 دقائق مع أصوات هادئة (مطر، غابة، أمواج).</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <h3>27 شارة إنجاز</h3>
+        <p>نظام تحفيز كامل — نقاط، شارات، Streak، ومكافآت أسرية قابلة للتخصيص.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>إحصائيات مفصلة</h3>
+        <p>تتبع تقدمك مع رسوم بيانية أسبوعية وتقارير شاملة عن أدائك.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌤️</div>
+        <h3>الطقس الذكي</h3>
+        <p>يقرأ حالة الجو ويقترح تمارين منزلية لو الجو مش مناسب للتمرين الخارجي.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">😊</div>
+        <h3>الطاقة والمزاج</h3>
+        <p>اختر طاقتك اليومية والتطبيق يعدّل صعوبة اليوم تلقائياً.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📴</div>
+        <h3>يعمل بدون إنترنت</h3>
+        <p>كل البيانات محفوظة على جهازك — لا يُرفع أي شيء للسيرفر.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     QURAN PREVIEW SECTION
+============================================ -->
+<section class="quran-preview" id="quran">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">📖 القرآن الكريم</span>
+      <h2>114 سورة كاملة</h2>
+      <p class="section-desc">استمع للقرآن بصوت 10 قراء مشهورين</p>
+    </div>
+
+    <div class="quran-preview-grid" id="quranPreviewGrid">
+      <!-- ستُملأ بـ JavaScript -->
+    </div>
+
+    <div class="section-cta">
+      <a href="html/quran.html" class="btn btn-primary btn-large">
+        📖 افتح القرآن كامل
+      </a>
+    </div>
+
+    <div class="quran-stats-row">
+      <div class="quran-stat">
+        <div class="quran-stat-value">114</div>
+        <div class="quran-stat-label">سورة</div>
+      </div>
+      <div class="quran-stat">
+        <div class="quran-stat-value">6,236</div>
+        <div class="quran-stat-label">آية</div>
+      </div>
+      <div class="quran-stat">
+        <div class="quran-stat-value">10</div>
+        <div class="quran-stat-label">قراء</div>
+      </div>
+      <div class="quran-stat">
+        <div class="quran-stat-value">30</div>
+        <div class="quran-stat-label">جزء</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     WORKOUTS PREVIEW SECTION
+============================================ -->
+<section class="workouts-preview" id="workouts">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">⚽ مكتبة التمارين</span>
+      <h2>18 تمرين رياضي</h2>
+      <p class="section-desc">مخصصة لمدافعي كرة القدم — رشاقة، قوة، وتحمل</p>
+    </div>
+
+    <div class="workouts-preview-grid">
+      <div class="workout-cat-card" style="--cat-color: #fb8c00;">
+        <div class="workout-cat-icon">🏃</div>
+        <h3>الرشاقة</h3>
+        <p>6 تمارين</p>
+        <ul>
+          <li>سلّم الرشاقة</li>
+          <li>تغيير الاتجاه 180°</li>
+          <li>Zig-Zag</li>
+        </ul>
+      </div>
+
+      <div class="workout-cat-card" style="--cat-color: #43a047;">
+        <div class="workout-cat-icon">💪</div>
+        <h3>القوة العضلية</h3>
+        <p>6 تمارين</p>
+        <ul>
+          <li>قرفصاء</li>
+          <li>بلانك</li>
+          <li>ضغط</li>
+        </ul>
+      </div>
+
+      <div class="workout-cat-card" style="--cat-color: #e53935;">
+        <div class="workout-cat-icon">🫀</div>
+        <h3>التحمل</h3>
+        <p>6 تمارين</p>
+        <ul>
+          <li>جري خفيف</li>
+          <li>قفز الحبل</li>
+          <li>جري متقطع</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-cta">
+      <a href="html/workouts.html" class="btn btn-primary btn-large">
+        ⚽ افتح مكتبة التمارين
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     BADGES PREVIEW SECTION
+============================================ -->
+<section class="badges-preview">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">🏆 نظام التحفيز</span>
+      <h2>27 شارة إنجاز</h2>
+      <p class="section-desc">في 5 فئات مختلفة</p>
+    </div>
+
+    <div class="badges-preview-grid">
+      <div class="badge-cat-preview" style="--cat-color: #e53935;">
+        <div class="badge-cat-preview-icon">🔥</div>
+        <h4>الاستمرارية</h4>
+        <p>6 شارات — Streak</p>
+      </div>
+
+      <div class="badge-cat-preview" style="--cat-color: #ffa000;">
+        <div class="badge-cat-preview-icon">⭐</div>
+        <h4>النقاط</h4>
+        <p>5 شارات — Total Points</p>
+      </div>
+
+      <div class="badge-cat-preview" style="--cat-color: #fbc02d;">
+        <div class="badge-cat-preview-icon">📖</div>
+        <h4>القرآن</h4>
+        <p>5 شارات — Pages</p>
+      </div>
+
+      <div class="badge-cat-preview" style="--cat-color: #fb8c00;">
+        <div class="badge-cat-preview-icon">⚽</div>
+        <h4>الرياضة</h4>
+        <p>6 شارات — Workouts</p>
+      </div>
+
+      <div class="badge-cat-preview" style="--cat-color: #7e57c2;">
+        <div class="badge-cat-preview-icon">🎯</div>
+        <h4>خاصة</h4>
+        <p>5 شارات — Special</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     DOWNLOAD SECTION
+============================================ -->
+<section class="download" id="download">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">⬇️ التحميل</span>
+      <h2>حمّل التطبيق</h2>
+      <p class="section-desc">اختار النظام اللي بتستخدمه</p>
+    </div>
+
+    <div class="download-grid">
+
+      <div class="download-card">
+        <div class="os-icon">🤖</div>
+        <h3>Android</h3>
+        <p class="os-desc">كل أجهزة أندرويد</p>
+        <a href="download/Android/yawmi.apk" download class="btn btn-android">
+          ⬇️ تحميل APK
+        </a>
+        <p class="file-size">~5 MB</p>
+      </div>
+
+      <div class="download-card">
+        <div class="os-icon">🍎</div>
+        <h3>iOS</h3>
+        <p class="os-desc">iPhone و iPad</p>
+        <a href="html/information.html" class="btn btn-ios">
+          🌐 افتح في Safari
+        </a>
+        <p class="file-size">ثم: مشاركة → إضافة للشاشة</p>
+      </div>
+
+      <div class="download-card">
+        <div class="os-icon">🪟</div>
+        <h3>Windows</h3>
+        <p class="os-desc">Windows 10/11</p>
+        <a href="download/pc/app/app.hta" download class="btn btn-windows">
+          ⬇️ تحميل HTA
+        </a>
+        <p class="file-size">حجم صغير جداً</p>
+      </div>
+
+      <div class="download-card">
+        <div class="os-icon">🍏</div>
+        <h3>macOS</h3>
+        <p class="os-desc">macOS 10.15+</p>
+        <a href="html/information.html" class="btn btn-macos">
+          🌐 افتح في Safari
+        </a>
+        <p class="file-size">ثم: إضافة للـ Dock</p>
+      </div>
+
+      <div class="download-card">
+        <div class="os-icon">🐧</div>
+        <h3>Linux</h3>
+        <p class="os-desc">Ubuntu, Fedora, إلخ</p>
+        <a href="html/information.html" class="btn btn-linux">
+          🌐 افتح في المتصفح
+        </a>
+        <p class="file-size">يشتغل مباشرة</p>
+      </div>
+
+      <div class="download-card featured">
+        <div class="os-icon">🌐</div>
+        <h3>Web</h3>
+        <p class="os-desc">أي متصفح حديث</p>
+        <a href="html/information.html" class="btn btn-web">
+          🚀 افتح التطبيق
+        </a>
+        <p class="file-size">بدون تثبيت</p>
+      </div>
+
+    </div>
+
+    <div class="download-note">
+      💡 <strong>ملاحظة:</strong> كل النسخ تعمل بدون إنترنت بعد أول تحميل.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FAQ SECTION
+============================================ -->
+<section class="faq" id="faq">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">❓ أسئلة شائعة</span>
+      <h2>عندك سؤال؟</h2>
+    </div>
+
+    <div class="faq-list">
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>هل التطبيق مجاني؟</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>أيوة، التطبيق مجاني بالكامل ومفتوح المصدر. مفيش إعلانات ومفيش اشتراكات.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>هل بياناتي محفوظة؟</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>كل بياناتك محفوظة على جهازك فقط (localStorage). مفيش أي رفع للسيرفر.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>هل يشتغل بدون إنترنت؟</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>أيوة، بعد أول تحميل التطبيق يشتغل offline بالكامل. الاستثناء الوحيد هو الطقس والقرآن (أول تحميل).</p>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>هل يدعم القرآن الكريم؟</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>أيوة، 114 سورة كاملة مع 10 قراء مشهورين. استمع لكل سورة أو آية على حدة.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>إزاي أبلّغ عن مشكلة؟</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>من صفحة <a href="html/github.html">GitHub</a> تقدر تفتح Issue أو Pull Request.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FINAL CTA
+============================================ -->
+<section class="final-cta">
+  <div class="section-container">
+    <h2>جاهز تبدأ؟</h2>
+    <p>انضم لمئات الطلاب اللي بينظموا وقتهم مع يومي</p>
+    <a href="html/information.html" class="btn btn-primary btn-large">
+      🚀 ابدأ الآن مجاناً
+    </a>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+============================================ -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-icon">⚽</span>
+        <span class="brand-text">يومي</span>
+      </div>
+      <p class="footer-desc">منظّم الطالب الرياضي الذكي</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>التطبيق</h4>
+      <ul>
+        <li><a href="html/information.html">ابدأ الآن</a></li>
+        <li><a href="html/app.html">افتح التطبيق</a></li>
+        <li><a href="html/features.html">المميزات</a></li>
+        <li><a href="html/how_to_use.html">طريقة الاستخدام</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>المحتوى</h4>
+      <ul>
+        <li><a href="html/quran.html">📖 القرآن</a></li>
+        <li><a href="html/workouts.html">⚽ التمارين</a></li>
+        <li><a href="html/table_creator.html">🎨 صانع الجداول</a></li>
+        <li><a href="html/test.html">🧪 اختبار</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>عن التطبيق</h4>
+      <ul>
+        <li><a href="html/about.html">من نحن</a></li>
+        <li><a href="html/github.html">GitHub</a></li>
+        <li><a href="html/api.html">API</a></li>
+        <li><a href="html/about.html#license">الترخيص</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 يومي — MIT License</p>
+    <p>صُنع بحب للطلاب الرياضيين ⚽📚</p>
+  </div>
+</footer>
+
+<!-- ============================================
+     SCRIPTS
+============================================ -->
+<script src="js/quran.js"></script>
+<script>
+/* ============================================
+   INDEX PAGE - INLINE SCRIPTS
+============================================ */
+
+/* ============ NAV ============ */
+function toggleNavMenu() {
+  const links = document.getElementById('navLinks');
+  const toggle = document.querySelector('.nav-toggle');
+  links.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  });
+});
+
+/* ============ FAQ ============ */
+function toggleFaq(el) {
+  const wasActive = el.classList.contains('active');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+  if (!wasActive) el.classList.add('active');
+}
+
+/* ============ NAVBAR SCROLL ============ */
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  const currentScroll = window.pageYOffset;
+
+  if (currentScroll > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+
+  lastScroll = currentScroll;
+});
+
+/* ============ SMOOTH SCROLL ============ */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const offset = 80;
+      const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+/* ============ INTERSECTION OBSERVER ============ */
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feature-card, .download-card, .workout-cat-card, .badge-cat-preview').forEach(el => {
+    observer.observe(el);
+  });
+}
+
+/* ============ DETECT OS ============ */
+window.addEventListener('DOMContentLoaded', () => {
+  const ua = navigator.userAgent.toLowerCase();
+  let osClass = '';
+
+  if (ua.includes('android')) osClass = 'highlight-android';
+  else if (ua.includes('iphone') || ua.includes('ipad')) osClass = 'highlight-ios';
+  else if (ua.includes('win')) osClass = 'highlight-windows';
+  else if (ua.includes('mac')) osClass = 'highlight-macos';
+  else if (ua.includes('linux')) osClass = 'highlight-linux';
+
+  if (osClass) {
+    const cards = document.querySelectorAll('.download-card');
+    cards.forEach(card => {
+      if (card.innerHTML.includes('Android') && osClass === 'highlight-android') card.classList.add('highlighted');
+      if (card.innerHTML.includes('iOS') && osClass === 'highlight-ios') card.classList.add('highlighted');
+      if (card.innerHTML.includes('Windows') && osClass === 'highlight-windows') card.classList.add('highlighted');
+      if (card.innerHTML.includes('macOS') && osClass === 'highlight-macos') card.classList.add('highlighted');
+      if (card.innerHTML.includes('Linux') && osClass === 'highlight-linux') card.classList.add('highlighted');
+    });
+  }
+});
+
+/* ============ QURAN PREVIEW ============ */
+async function loadQuranPreview() {
+  if (typeof QuranModule === 'undefined') {
+    console.warn('⚠️ QuranModule not loaded');
+    return;
+  }
+
+  const grid = document.getElementById('quranPreviewGrid');
+  if (!grid) return;
+
+  // السور المميزة
+  const featuredSurahs = [1, 18, 36, 55, 67, 112];
+
+  try {
+    const list = await QuranModule.loadSurahsList();
+    if (!list || !list.length) throw new Error('فشل التحميل');
+
+    const featured = featuredSurahs
+      .map(id => list.find(s => s.id === id))
+      .filter(Boolean);
+
+    grid.innerHTML = featured.map(s => {
+      const typeText = s.type === 'meccan' ? '🕋 مكية' : '🕌 مدنية';
+      return `
+        <a href="html/quran.html" class="quran-preview-card">
+          <div class="quran-preview-number">${s.id}</div>
+          <div class="quran-preview-info">
+            <div class="quran-preview-name">${s.name}</div>
+            <div class="quran-preview-meta">
+              <span>${s.transliteration || ''}</span>
+              <span>📄 ${s.total_verses} آية</span>
+              <span>${typeText}</span>
+            </div>
+          </div>
+        </a>
+      `;
+    }).join('');
+
+    console.log('✅ Quran preview loaded');
+  } catch (e) {
+    console.error('❌ Quran preview error:', e);
+    grid.innerHTML = '<p style="text-align: center; color: #999;">فشل تحميل المعاينة</p>';
+  }
+}
+
+/* ============ KEYBOARD ============ */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  }
+});
+
+/* ============ DARK MODE ============ */
+try {
+  const state = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+  if (state.darkMode) {
+    document.body.classList.add('dark');
+  }
+} catch (e) {}
+
+/* ============ START ============ */
+document.addEventListener('DOMContentLoaded', loadQuranPreview);
+
+console.log('⚽ يومي v4.0 - Landing Page Loaded');
+</script>
+
+</body>
+</html>

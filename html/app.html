@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="theme-color" content="#1a237e">
+<meta name="description" content="يومي - تطبيق تنظيم الوقت للطالب الرياضي">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="يومي">
+
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="manifest" href="../assets/site.webmanifest">
+
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/app.css">
+
+<title>⚽ يومي - التطبيق</title>
+</head>
+<body class="app-mode">
+
+<!-- ============================================
+     APP HEADER
+============================================ -->
+<header class="app-header">
+  <div class="header-top">
+    <div>
+      <h1>⚽ يومي <span style="font-size:11px; opacity:0.7;">v4.0</span></h1>
+      <p>منظّم الطالب الرياضي الذكي</p>
+    </div>
+    <div class="header-actions">
+      <a href="../index.html" class="icon-btn" title="الرئيسية">🏠</a>
+      <button class="icon-btn" onclick="toggleSound()" id="soundBtn" title="الصوت">🔊</button>
+      <button class="icon-btn" onclick="toggleDarkMode()" id="darkBtn" title="الوضع الليلي">🌙</button>
+      <button class="icon-btn" onclick="showSettings()" title="الإعدادات">⚙️</button>
+    </div>
+  </div>
+  <div class="info-bar">
+    <div class="info-chip" id="streakBadge">🔥 <span id="streakDays">0</span> يوم</div>
+    <div class="info-chip" id="pointsBadge">⭐ <span id="pointsValue">0</span> نقطة</div>
+    <div class="info-chip hidden" id="weekendBadge">🏖️ يوم إجازة</div>
+    <div class="info-chip hidden" id="weatherChip">🌤️ جاري التحميل...</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ============================================
+       SCREEN 1: INPUT
+  ============================================ -->
+  <div id="inputScreen">
+
+    <!-- User Profile Summary -->
+    <div class="user-profile" id="userProfileCard" style="display: none;">
+      <div class="user-avatar">👦</div>
+      <div class="user-info">
+        <div class="user-name">أهلاً بطل!</div>
+        <div class="user-details">13 سنة</div>
+      </div>
+      <a href="information.html" style="color: white; text-decoration: none; font-size: 20px;" title="تعديل البيانات">✏️</a>
+    </div>
+
+    <!-- Weekend Mode -->
+    <div class="card">
+      <h2><div class="title-text">🏖️ وضع اليوم</div></h2>
+      <div class="toggle-row">
+        <div class="toggle-label">🏖️ يوم إجازة (بدون مدرسة)</div>
+        <div class="toggle" id="weekendToggle" onclick="toggleWeekend()"></div>
+      </div>
+      <p style="font-size: 12px; color: var(--text-light); margin-top: 5px;">
+        عند تفعيله: يُلغى وقت المدرسة، ويزيد وقت الرياضة والترفيه والحفظ.
+      </p>
+    </div>
+
+    <!-- Mood -->
+    <div class="card">
+      <h2><div class="title-text">😊 طاقتك اليوم</div></h2>
+      <p style="font-size: 12px; color: var(--text-light); margin-bottom: 12px;">
+        التطبيق سيعدّل صعوبة اليوم حسب طاقتك.
+      </p>
+      <div class="mood-selector">
+        <div class="mood-option" data-mood="high" onclick="selectMood('high')">
+          <span class="mood-emoji">💪</span>
+          <div class="mood-text">عالية</div>
+        </div>
+        <div class="mood-option selected" data-mood="medium" onclick="selectMood('medium')">
+          <span class="mood-emoji">🙂</span>
+          <div class="mood-text">متوسطة</div>
+        </div>
+        <div class="mood-option" data-mood="low" onclick="selectMood('low')">
+          <span class="mood-emoji">😴</span>
+          <div class="mood-text">منخفضة</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Times -->
+    <div class="card">
+      <h2><div class="title-text">🌅 أوقاتك اليومية</div></h2>
+      <label>وقت الاستيقاظ</label>
+      <input type="time" id="wakeUp" value="06:00">
+
+      <div id="schoolFields">
+        <label>وقت الذهاب للمدرسة</label>
+        <input type="time" id="schoolStart" value="07:00">
+
+        <label>وقت العودة من المدرسة</label>
+        <input type="time" id="schoolEnd" value="14:30">
+      </div>
+    </div>
+
+    <!-- Homework -->
+    <div class="card">
+      <h2><div class="title-text">📚 الواجبات المدرسية</div></h2>
+      <div id="homeworkList"></div>
+      <button class="add-hw" onclick="addHomework()">➕ إضافة واجب جديد</button>
+    </div>
+
+    <!-- Quran -->
+    <div class="card">
+      <h2><div class="title-text">📖 الحفظ القرآني</div></h2>
+
+      <div class="quran-section">
+        <h4>📌 مراجعة قريبة</h4>
+        <input type="number" id="quranRecent" value="2" min="0" max="20">
+      </div>
+
+      <div class="quran-section" style="background: linear-gradient(135deg, #c5e1a5, #aed581);">
+        <h4>📖 مراجعة قديمة</h4>
+        <input type="number" id="quranOld" value="1" min="0" max="20">
+      </div>
+
+      <div class="quran-section" style="background: linear-gradient(135deg, #fff59d, #ffee58);">
+        <h4>🆕 حفظ جديد</h4>
+        <input type="number" id="quranNew" value="1" min="0" max="10">
+      </div>
+
+      <a href="quran.html" class="btn btn-secondary" style="margin-top: 10px; text-decoration: none; display: block; text-align: center;">
+        📖 افتح القرآن الكريم
+      </a>
+    </div>
+
+    <!-- Sports -->
+    <div class="card">
+      <h2><div class="title-text">⚽ الرياضة والتدريب</div></h2>
+
+      <label>وقت التدريب الرياضي</label>
+      <input type="time" id="trainingTime" value="17:00">
+
+      <label>مدة التدريب (دقائق)</label>
+      <input type="number" id="trainingDuration" value="90" min="30" max="180">
+
+      <label>نوع التمرين اليومي</label>
+      <select id="trainingType">
+        <option value="agility">🏃 رشاقة وتغيير اتجاه</option>
+        <option value="jump">🦘 قفز ورأسيات</option>
+        <option value="fitness">💪 لياقة بدنية</option>
+        <option value="defense">🛡️ تمركز دفاعي</option>
+        <option value="rest">😌 راحة واستشفاء</option>
+      </select>
+
+      <a href="workouts.html" class="btn btn-secondary" style="margin-top: 10px; text-decoration: none; display: block; text-align: center;">
+        ⚽ افتح مكتبة التمارين
+      </a>
+    </div>
+
+    <!-- Generate Button -->
+    <button class="btn btn-large" onclick="generateSchedule()">
+      🎯 ولّد جدولي الآن
+    </button>
+
+  </div>
+
+  <!-- ============================================
+       SCREEN 2: SCHEDULE
+  ============================================ -->
+  <div id="scheduleScreen" class="hidden">
+
+    <!-- Weather -->
+    <div id="weatherCard"></div>
+
+    <!-- Weekend Badge -->
+    <div id="weekendScheduleBadge"></div>
+
+    <!-- Tactical Tip -->
+    <div id="tacticalTip"></div>
+
+    <!-- Current Task -->
+    <div id="currentTaskBanner"></div>
+
+    <!-- Progress -->
+    <div class="progress-container">
+      <div class="progress-header">
+        <span class="progress-label">📊 تقدم اليوم</span>
+        <span class="progress-percent" id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+      <div style="font-size: 11px; color: var(--text-light); margin-top: 8px; text-align: center;">
+        <span id="completedCount">0</span> من <span id="totalCount">0</span> مهمة مكتملة
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline" id="timeline"></div>
+
+    <!-- Actions -->
+    <button class="ai-btn" onclick="emergencyAdjust()">
+      🤖 تعديل طارئ (تأخرت / ظرف مفاجئ)
+    </button>
+    <button class="btn btn-secondary" onclick="backToInput()" style="margin-top: 10px;">
+      🔄 تعديل البيانات
+    </button>
+    <button class="btn" onclick="resetDay()" style="margin-top: 10px;">
+      🌅 بداية يوم جديد
+    </button>
+
+  </div>
+
+  <!-- ============================================
+       SCREEN 3: STATS
+  ============================================ -->
+  <div id="statsScreen" class="hidden">
+
+    <!-- Quick Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="statStreak">0</div>
+        <div class="stat-label">🔥 أيام متتالية</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statPoints">0</div>
+        <div class="stat-label">⭐ نقاط</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statTasks">0</div>
+        <div class="stat-label">✅ مهام مكتملة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statQuran">0</div>
+        <div class="stat-label">📖 صفحات قرآن</div>
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="card">
+      <h2><div class="title-text">🏆 الإنجازات</div></h2>
+      <div id="badgesContainer"></div>
+    </div>
+
+    <!-- Rewards -->
+    <div class="card">
+      <h2><div class="title-text">🎁 مكافآت عائلية</div></h2>
+      <div id="rewardsList"></div>
+      <button class="add-hw" onclick="addReward()" style="margin-top: 10px;">
+        ➕ إضافة مكافأة
+      </button>
+    </div>
+
+    <!-- Weekly Chart -->
+    <div class="card">
+      <h2><div class="title-text">📈 آخر 7 أيام</div></h2>
+      <div id="weeklyChart" style="display: flex; align-items: flex-end; gap: 6px; height: 120px; padding: 10px 0;"></div>
+    </div>
+
+    <!-- Actions -->
+    <button class="btn" onclick="shareProgress()" style="margin-bottom: 10px;">
+      📤 مشاركة إنجازي
+    </button>
+    <button class="btn btn-danger" onclick="resetAllData()">
+      🗑️ حذف كل البيانات
+    </button>
+
+  </div>
+
+  <!-- ============================================
+       SCREEN 4: DOWNLOAD
+  ============================================ -->
+  <div id="downloadScreen" class="hidden">
+
+    <div class="card" style="text-align: center;">
+      <div style="font-size: 60px; margin-bottom: 10px;">📱</div>
+      <h2 style="justify-content: center;"><div class="title-text">تحميل التطبيق</div></h2>
+      <p style="font-size: 14px; color: var(--text-light); margin-bottom: 20px; line-height: 1.6;">
+        حمّل نسخة من التطبيق تشتغل على تليفونك أو كمبيوترك.
+      </p>
+    </div>
+
+    <!-- Android -->
+    <div class="card">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="font-size: 40px;">🤖</div>
+        <div style="flex: 1;">
+          <div style="font-size: 16px; font-weight: bold; color: var(--primary);">Android</div>
+          <div style="font-size: 12px; color: var(--text-light);">يعمل على كل أجهزة أندرويد</div>
+        </div>
+      </div>
+      <a href="../download/Android/yawmi.apk" download="yawmi.apk" class="btn btn-success" style="text-decoration: none; display: block; text-align: center;">
+        ⬇️ تحميل APK
+      </a>
+      <p style="font-size: 12px; color: var(--text-light); margin-top: 10px; text-align: center;">
+        الحجم: ~5 MB · بدون إعلانات
+      </p>
+    </div>
+
+    <!-- Windows -->
+    <div class="card">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="font-size: 40px;">💻</div>
+        <div style="flex: 1;">
+          <div style="font-size: 16px; font-weight: bold; color: var(--primary);">Windows</div>
+          <div style="font-size: 12px; color: var(--text-light);">Windows 10/11</div>
+        </div>
+      </div>
+      <a href="../download/pc/app/app.hta" download="app.hta" class="btn" style="text-decoration: none; display: block; text-align: center;">
+        ⬇️ تحميل HTA
+      </a>
+    </div>
+
+    <!-- Instructions -->
+    <div class="card">
+      <h2><div class="title-text">📖 طريقة التثبيت</div></h2>
+
+      <div style="margin-bottom: 15px;">
+        <div style="font-size: 14px; font-weight: bold; color: var(--primary); margin-bottom: 8px;">
+          🤖 على أندرويد:
+        </div>
+        <ol style="font-size: 13px; color: var(--text-light); line-height: 1.8; padding-right: 25px;">
+          <li>حمّل ملف <strong>yawmi.apk</strong></li>
+          <li>افتح الملف من <strong>مدير الملفات</strong></li>
+          <li>اسمح بـ <strong>"تثبيت من مصادر غير معروفة"</strong></li>
+          <li>اضغط <strong>تثبيت</strong></li>
+          <li>افتح التطبيق واستمتع 🎉</li>
+        </ol>
+      </div>
+
+      <div>
+        <div style="font-size: 14px; font-weight: bold; color: var(--primary); margin-bottom: 8px;">
+          💻 على ويندوز:
+        </div>
+        <ol style="font-size: 13px; color: var(--text-light); line-height: 1.8; padding-right: 25px;">
+          <li>حمّل ملف <strong>app.hta</strong></li>
+          <li>دوس عليه مرتين</li>
+          <li>هيفتح كتطبيق عادي 🎉</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ============================================
+     BOTTOM NAV
+============================================ -->
+<nav class="bottom-nav">
+  <div class="nav-item active" onclick="switchTab('input')" id="navInput">
+    <span class="nav-icon">✏️</span><span>الإدخال</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('schedule')" id="navSchedule">
+    <span class="nav-icon">📅</span><span>الجدول</span>
+  </div>
+  <div class="nav-item" onclick="goTo('workouts.html')" id="navWorkout">
+    <span class="nav-icon">⚽</span><span>التمارين</span>
+  </div>
+  <div class="nav-item" onclick="goTo('quran.html')" id="navQuran">
+    <span class="nav-icon">📖</span><span>القرآن</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('stats')" id="navStats">
+    <span class="nav-icon">📊</span><span>إحصائيات</span>
+  </div>
+</nav>
+
+<!-- ============================================
+     POMODORO OVERLAY
+============================================ -->
+<div class="pomodoro-overlay" id="pomodoroOverlay">
+  <div class="pomodoro-box">
+    <div class="pomodoro-mode" id="pomodoroMode">🍅 وقت التركيز</div>
+    <div class="pomodoro-ring">
+      <svg width="220" height="220">
+        <circle class="bg-circle" cx="110" cy="110" r="100"></circle>
+        <circle class="progress-circle" cx="110" cy="110" r="100" id="pomodoroCircle"></circle>
+      </svg>
+      <div class="pomodoro-time-inner" id="pomodoroTime">25:00</div>
+    </div>
+    <div class="pomodoro-controls">
+      <button class="btn btn-small" onclick="togglePomodoro()" id="pomodoroToggleBtn">⏸️ إيقاف</button>
+      <button class="btn btn-small btn-danger" onclick="closePomodoro()">✖️ إغلاق</button>
+    </div>
+    <div class="sound-selector">
+      <button class="sound-btn active" onclick="selectSound('none', this)">🔇 صامت</button>
+      <button class="sound-btn" onclick="selectSound('rain', this)">🌧️ مطر</button>
+      <button class="sound-btn" onclick="selectSound('forest', this)">🌲 غابة</button>
+      <button class="sound-btn" onclick="selectSound('waves', this)">🌊 أمواج</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     MODAL
+============================================ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-icon" id="modalIcon">🎉</div>
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <div id="modalContent"></div>
+    <button class="btn" onclick="closeModal()">حسناً</button>
+  </div>
+</div>
+
+<!-- ============================================
+     NOTIFICATION BANNER
+============================================ -->
+<div class="notif-banner" id="notifBanner">
+  <div class="notif-title" id="notifTitle"></div>
+  <div class="notif-body" id="notifBody"></div>
+</div>
+
+<!-- ============================================
+     TOAST
+============================================ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============================================
+     SCRIPTS
+============================================ -->
+<script src="../js/local.js"></script>
+<script src="../js/app.js"></script>
+<script>
+/* ============================================
+   APP PAGE INIT - EXTRA
+============================================ */
+
+// دالة التحويل بين الصفحات
+function goTo(url) {
+  console.log('🔗 فتح:', url);
+  window.location.href = url;
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('⚽ يومي v4.0 - App Page Loaded');
+  console.log('📍 Current page:', window.location.pathname);
+});
+
+console.log('✅ App Page Ready');
+</script>
+
+</body>
+</html>

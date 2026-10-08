@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#0078d4">
+<meta name="description" content="تحميل تطبيق يومي على Windows">
+<meta name="author" content="Hazem">
+
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/index.css">
+
+<title>🪟 تحميل لويندوز - يومي</title>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #0078d4, #005a9e);
+    color: white;
+    padding: 130px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.1) 0%, transparent 50%);
+  }
+
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-hero-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: white;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+
+  .page-hero p {
+    color: white;
+    opacity: 0.95;
+    font-size: 1.05rem;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.85;
+  }
+
+  .breadcrumb span:not(:last-child)::after {
+    content: '›';
+    margin-right: 8px;
+    opacity: 0.6;
+  }
+
+  .container-download {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  .download-big-btn {
+    display: block;
+    background: linear-gradient(135deg, #0078d4, #005a9e);
+    color: white;
+    padding: 25px 30px;
+    border-radius: 22px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,120,212,0.4);
+    transition: all 0.3s ease;
+  }
+
+  .download-big-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,120,212,0.5);
+  }
+
+  .file-info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    font-size: 13px;
+    color: var(--text-light);
+  }
+
+  .file-info span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--card);
+    padding: 8px 15px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .steps-card {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .steps-card h2 {
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  body.dark .steps-card h2 {
+    color: var(--primary-lighter);
+  }
+
+  .steps-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: step-counter;
+  }
+
+  .steps-list li {
+    counter-increment: step-counter;
+    padding: 18px 18px 18px 70px;
+    margin-bottom: 12px;
+    background: var(--bg);
+    border-radius: 16px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+    border-right: 4px solid #0078d4;
+  }
+
+  .steps-list li::before {
+    content: counter(step-counter);
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #0078d4, #005a9e);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 16px;
+  }
+
+  .steps-list li strong {
+    color: var(--primary);
+    display: block;
+    margin-bottom: 5px;
+    font-size: 15px;
+  }
+
+  body.dark .steps-list li strong {
+    color: var(--primary-lighter);
+  }
+
+  .warning-box {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    border-right: 5px solid #fb8c00;
+    color: #333;
+  }
+
+  body.dark .warning-box {
+    background: linear-gradient(135deg, #4a2800, #2a1800);
+    color: #ffcc80;
+  }
+
+  .warning-box-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .warning-box-content h3 {
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    color: #e65100;
+  }
+
+  .warning-box-content p {
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 110px 15px 50px;
+    }
+
+    .container-download {
+      padding: 0 12px 60px;
+    }
+
+    .download-big-btn {
+      font-size: 1.1rem;
+      padding: 20px;
+    }
+
+    .steps-card {
+      padding: 22px 18px;
+    }
+
+    .steps-list li {
+      padding: 14px 14px 14px 60px;
+      font-size: 13px;
+    }
+
+    .steps-list li::before {
+      width: 32px;
+      height: 32px;
+      font-size: 14px;
+      right: 14px;
+      top: 14px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">يومي</span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNavMenu()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="features.html">المميزات</a></li>
+      <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+      <li><a href="quran.html">القرآن</a></li>
+      <li><a href="workouts.html">التمارين</a></li>
+      <li><a href="about.html">عن التطبيق</a></li>
+      <li class="nav-cta"><a href="information.html">🚀 ابدأ الآن</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="../index.html">الرئيسية</a>
+      <a href="download.html">التحميل</a>
+      <span>Windows</span>
+    </div>
+    <div class="page-hero-icon">🪟</div>
+    <h1>تحميل لويندوز</h1>
+    <p>Windows 10 / 11 — بدون تثبيت</p>
+  </div>
+</section>
+
+<div class="container-download">
+
+  <a href="../download/pc/app/app.hta" download="app.hta" class="download-big-btn" id="downloadBtn">
+    ⬇️ حمّل HTA الآن
+  </a>
+
+  <div class="file-info">
+    <span>📦 الحجم: صغير جداً</span>
+    <span>🔒 آمن 100%</span>
+    <span>🚫 بدون تثبيت</span>
+  </div>
+
+  <div class="steps-card">
+    <h2>📖 خطوات التشغيل</h2>
+
+    <ol class="steps-list">
+      <li>
+        <strong>حمّل ملف HTA</strong>
+        اضغط على الزر الأزرق فوق.
+      </li>
+
+      <li>
+        <strong>افتح الملف</strong>
+        روح للمكان اللي حمّلت فيه الملف، واضغط عليه <strong>مرتين</strong>.
+      </li>
+
+      <li>
+        <strong>هيفتح التطبيق</strong>
+        هتلاقي التطبيق فتح في نافذة خاصة — زي تطبيق عادي.
+      </li>
+
+      <li>
+        <strong>اختصار على الـ Desktop</strong>
+        كليك يمين على الملف → <strong>"Send to"</strong> → <strong>"Desktop (create shortcut)"</strong>
+      </li>
+    </ol>
+  </div>
+
+  <div class="warning-box">
+    <span class="warning-box-icon">⚠️</span>
+    <div class="warning-box-content">
+      <h3>لو ظهرلك تحذير Windows</h3>
+      <p>
+        Windows Defender ممكن يحذرك من الملف لأنه "من مصدر غير معروف". 
+        اضغط <strong>"More info"</strong> → <strong>"Run anyway"</strong>.
+        الملف آمن تماماً.
+      </p>
+    </div>
+  </div>
+
+  <div class="steps-card" style="background: linear-gradient(135deg, #e3f2fd, #bbdefb); color: #333; border-right: 4px solid #1976d2;">
+    <h2 style="color: #0d47a1;">💡 نصيحة</h2>
+    <p style="font-size: 14px; line-height: 1.8; color: #333; margin: 0;">
+      الـ HTA بيشتغل باستخدام متصفح Internet Explorer المدمج في ويندوز. 
+      لو مفيش IE عندك، استخدم نسخة الويب من التطبيق مباشرة في المتصفح.
+    </p>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-icon">⚽</span>
+        <span class="brand-text">يومي</span>
+      </div>
+      <p class="footer-desc">منظّم الطالب الرياضي الذكي</p>
+    </div>
+    <div class="footer-col">
+      <h4>التطبيق</h4>
+      <ul>
+        <li><a href="app.html">افتح التطبيق</a></li>
+        <li><a href="download.html">التحميل</a></li>
+        <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+        <li><a href="features.html">المميزات</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>أنظمة تانية</h4>
+      <ul>
+        <li><a href="download-android.html">🤖 Android</a></li>
+        <li><a href="download-ios.html">🍎 iOS</a></li>
+        <li><a href="download.html">⬅️ الرجوع</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>عن التطبيق</h4>
+      <ul>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="github.html">GitHub</a></li>
+        <li><a href="about.html#license">الترخيص</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 يومي — MIT License</p>
+    <p>صُنع بحب للطلاب الرياضيين ⚽📚</p>
+  </div>
+</footer>
+
+<script>
+function toggleNavMenu() {
+  var links = document.getElementById('navLinks');
+  var toggle = document.querySelector('.nav-toggle');
+  links.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  });
+});
+
+window.addEventListener('scroll', function() {
+  var navbar = document.getElementById('navbar');
+  if (window.pageYOffset > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+try {
+  var saved = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+  if (saved.darkMode) {
+    document.body.classList.add('dark');
+  }
+} catch (e) {}
+
+console.log('🪟 Windows Download Page Loaded');
+</script>
+
+</body>
+</html>

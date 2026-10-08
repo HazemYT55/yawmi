@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#1a237e">
+<meta name="description" content="توثيق API تطبيق يومي - كل الـ endpoints والطرق">
+<meta name="author" content="Hazem">
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="manifest" href="../assets/site.webmanifest">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/index.css">
+
+<title>🔌 API - يومي</title>
+
+<style>
+  /* ============ API Page Specific ============ */
+  .page-hero {
+    background: linear-gradient(135deg, #0d47a1, #1976d2);
+    color: white;
+    padding: 130px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.1) 0%, transparent 50%);
+  }
+
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-hero-icon {
+    font-size: 72px;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 15px;
+    color: white;
+    font-weight: 900;
+  }
+
+  .page-hero p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    color: white;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .breadcrumb span:not(:last-child)::after {
+    content: '›';
+    margin-right: 8px;
+    opacity: 0.6;
+  }
+
+  /* ============ Container ============ */
+  .api-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ============ Info Banner ============ */
+  .info-banner {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    border-right: 5px solid #1976d2;
+    color: #333;
+  }
+
+  .info-banner-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .info-banner-content {
+    flex: 1;
+  }
+
+  .info-banner-title {
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    color: #0d47a1;
+  }
+
+  .info-banner-text {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  body.dark .info-banner {
+    background: linear-gradient(135deg, #0d47a1, #0a3d7a);
+    color: white;
+    border-right-color: #42a5f5;
+  }
+
+  body.dark .info-banner-title {
+    color: #42a5f5;
+  }
+
+  body.dark .info-banner-text {
+    color: #e3f2fd;
+  }
+
+  /* ============ Base URL ============ */
+  .base-url {
+    background: #0d1117;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 1px solid #30363d;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .base-url-label {
+    color: #8b949e;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .base-url-value {
+    color: #7ee787;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    background: rgba(126,231,135,0.1);
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(126,231,135,0.3);
+    flex: 1;
+    min-width: 200px;
+    direction: ltr;
+    text-align: left;
+  }
+
+  /* ============ Quick Nav ============ */
+  .api-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    padding: 15px;
+    background: var(--card);
+    border-radius: 18px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .api-nav a {
+    padding: 8px 16px;
+    background: var(--bg);
+    border-radius: 20px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.25s ease;
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .api-nav a:hover {
+    background: #1976d2;
+    color: white;
+    border-color: #1976d2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(25,118,210,0.3);
+  }
+
+  /* ============ Section ============ */
+  .api-section {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    scroll-margin-top: 100px;
+    transition: all 0.3s ease;
+  }
+
+  .api-section:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .api-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.35rem;
+    color: var(--text);
+    margin-bottom: 8px;
+    font-weight: 800;
+  }
+
+  .api-section-title-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .api-section-desc {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border-light);
+  }
+
+  /* ============ Endpoint Card ============ */
+  .endpoint {
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 15px;
+    border-right: 4px solid #1976d2;
+    transition: all 0.25s ease;
+  }
+
+  .endpoint:hover {
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+    transform: translateX(-3px);
+  }
+
+  .endpoint:last-child {
+    margin-bottom: 0;
+  }
+
+  .endpoint-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .method-badge {
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 0.5px;
+    font-family: 'Courier New', monospace;
+  }
+
+  .method-badge.get { background: #43a047; }
+  .method-badge.post { background: #fb8c00; }
+  .method-badge.put { background: #1976d2; }
+  .method-badge.delete { background: #e53935; }
+
+  .endpoint-path {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    background: var(--card);
+    padding: 4px 12px;
+    border-radius: 8px;
+    direction: ltr;
+    flex: 1;
+    min-width: 200px;
+    border: 1px solid var(--border);
+  }
+
+  .endpoint-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  /* ============ Code Block ============ */
+  .code-block {
+    background: #0d1117;
+    border-radius: 12px;
+    padding: 15px 18px;
+    color: #c9d1d9;
+    font-family: 'Courier New', Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-x: auto;
+    border: 1px solid #30363d;
+    direction: ltr;
+    text-align: left;
+    position: relative;
+  }
+
+  .code-block .json-key { color: #7ee787; }
+  .code-block .json-string { color: #a5d6ff; }
+  .code-block .json-number { color: #ffa657; }
+  .code-block .json-bool { color: #ff7b72; }
+  .code-block .json-null { color: #ff7b72; }
+
+  .code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #30363d;
+    font-size: 11px;
+    color: #8b949e;
+    font-weight: 700;
+  }
+
+  .copy-btn {
+    background: #21262d;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+
+  .copy-btn:hover {
+    background: #30363d;
+    border-color: #58a6ff;
+    color: #58a6ff;
+  }
+
+  .copy-btn.copied {
+    background: #238636;
+    color: white;
+    border-color: #2ea043;
+  }
+
+  /* ============ Response Status ============ */
+  .status-codes {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .status-code {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    font-family: 'Courier New', monospace;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .status-code.success {
+    background: rgba(67,160,71,0.15);
+    color: #2e7d32;
+    border: 1px solid rgba(67,160,71,0.3);
+  }
+
+  .status-code.error {
+    background: rgba(229,57,53,0.15);
+    color: #c62828;
+    border: 1px solid rgba(229,57,53,0.3);
+  }
+
+  body.dark .status-code.success {
+    background: rgba(67,160,71,0.25);
+    color: #81c784;
+  }
+
+  body.dark .status-code.error {
+    background: rgba(229,57,53,0.25);
+    color: #ef5350;
+  }
+
+  /* ============ Try It Section ============ */
+  .try-section {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border-radius: 18px;
+    padding: 25px;
+    margin-top: 25px;
+    border-right: 5px solid #43a047;
+    color: #333;
+  }
+
+  .try-section h4 {
+    font-size: 15px;
+    color: #1b5e20;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+  }
+
+  .try-section input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #43a047;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    background: white;
+    color: #333;
+    margin-bottom: 12px;
+    direction: ltr;
+    text-align: left;
+  }
+
+  .try-section input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(67,160,71,0.2);
+  }
+
+  .try-btn {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .try-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(67,160,71,0.4);
+  }
+
+  .try-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .try-result {
+    margin-top: 15px;
+    background: #1e1e1e;
+    color: #c9d1d9;
+    padding: 15px;
+    border-radius: 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    direction: ltr;
+    text-align: left;
+    white-space: pre-wrap;
+  }
+
+  body.dark .try-section {
+    background: linear-gradient(135deg, #1b5e20, #0d3d10);
+    color: #c8e6c9;
+  }
+
+  body.dark .try-section h4 {
+    color: #81c784;
+  }
+
+  body.dark .try-section input {
+    background: #0d1117;
+    color: #e0e0e0;
+    border-color: #81c784;
+  }
+
+  /* ============ Endpoint Count ============ */
+  .endpoint-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(25,118,210,0.1);
+    color: #1976d2;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 800;
+    margin-right: 10px;
+  }
+
+  body.dark .endpoint-count {
+    background: rgba(66,165,245,0.15);
+    color: #42a5f5;
+  }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 110px 15px 50px;
+    }
+
+    .page-hero-icon {
+      font-size: 55px;
+    }
+
+    .api-container {
+      padding: 0 12px 60px;
+    }
+
+    .api-section {
+      padding: 20px;
+    }
+
+    .api-section-title {
+      font-size: 1.15rem;
+    }
+
+    .endpoint {
+      padding: 15px;
+    }
+
+    .endpoint-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .endpoint-path {
+      width: 100%;
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+
+    .method-badge {
+      font-size: 10px;
+      padding: 3px 10px;
+    }
+
+    .code-block {
+      font-size: 11px;
+      padding: 12px;
+    }
+
+    .base-url {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .base-url-value {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .api-nav {
+      padding: 12px;
+    }
+
+    .api-nav a {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+  }
+
+  .hidden { display: none !important; }
+
+  /* ============ Animations ============ */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">يومي</span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNavMenu()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="features.html">المميزات</a></li>
+      <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+      <li><a href="quran.html">القرآن</a></li>
+      <li><a href="workouts.html">التمارين</a></li>
+      <li><a href="about.html">عن التطبيق</a></li>
+      <li class="nav-cta"><a href="app.html">🚀 افتح التطبيق</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="../index.html">الرئيسية</a>
+      <span>API</span>
+    </div>
+    <div class="page-hero-icon">🔌</div>
+    <h1>توثيق API</h1>
+    <p>كل الـ endpoints المتاحة في تطبيق يومي — Flask REST API</p>
+  </div>
+</section>
+
+<!-- ============ CONTENT ============ -->
+<div class="api-container">
+
+  <!-- ============ INFO ============ -->
+  <div class="info-banner">
+    <span class="info-banner-icon">💡</span>
+    <div class="info-banner-content">
+      <div class="info-banner-title">عن الـ API</div>
+      <div class="info-banner-text">
+        تطبيق يومي بيوفّر <strong>Flask REST API</strong> كامل يقدر يشتغل بشكل مستقل
+        أو بالتوازي مع الواجهة. كل الردود بصيغة JSON، وموحّدة، ومش محتاجة توثيق.
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASE URL ============ -->
+  <div class="base-url">
+    <span class="base-url-label">🌐 Base URL</span>
+    <div class="base-url-value" id="baseUrl">http://localhost:5000/api</div>
+    <button class="copy-btn" onclick="copyBaseUrl()">📋 نسخ</button>
+  </div>
+
+  <!-- ============ NAV ============ -->
+  <div class="api-nav">
+    <a href="#health">❤️ Health</a>
+    <a href="#user">👤 User</a>
+    <a href="#schedule">📅 Schedule</a>
+    <a href="#workouts">⚽ Workouts</a>
+    <a href="#quran">📖 Quran</a>
+    <a href="#weather">🌤️ Weather</a>
+    <a href="#badges">🏆 Badges</a>
+    <a href="#rewards">🎁 Rewards</a>
+    <a href="#stats">📊 Stats</a>
+    <a href="#backup">💾 Backup</a>
+  </div>
+
+  <!-- ============ HEALTH ============ -->
+  <div class="api-section" id="health">
+    <h2 class="api-section-title">
+      <span class="api-section-title-icon">❤️</span>
+      Health Check
+      <span class="endpoint-count">1 endpoint</span>
+    </h2>
+    <p class="api-section-desc">
+      فحص حالة السيرفر — يُستخدم عادةً من قِبل أدوات المراقبة.
+    </p>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/health</span>
+      </div>
+      <div class="endpoint-desc">يرجع حالة السيرفر والإصدار.</div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>Response</span>
+          <button class="copy-btn" onclick="copyCode(this, `{
+  &quot;success&quot;: true,
+  &quot;data&quot;: {
+    &quot;status&quot;: &quot;healthy&quot;,
+    &quot;version&quot;: &quot;4.0.0&quot;,
+    &quot;surahs_loaded&quot;: 114
+  }
+}`)">📋 نسخ</button>
+        </div>
+{
+  <span class="json-key">"success"</span>: <span class="json-bool">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"status"</span>: <span class="json-string">"healthy"</span>,
+    <span class="json-key">"version"</span>: <span class="json-string">"4.0.0"</span>,
+    <span class="json-key">"surahs_loaded"</span>: <span class="json-number">114</span>
+  }
+}
+      </div>
+
+      <div class="status-codes">
+        <span class="status-code success">200 OK</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ USER ============ -->
+  <div class="api-section" id="user">
+    <h2 class="api-section-title">
+      <span class="api-section-title-icon">👤</span>
+      User API
+      <span class="endpoint-count">6 endpoints</span>
+    </h2>
+    <p class="api-section-desc">
+      إدارة بيانات المستخدم والإعدادات والإحصائيات.
+    </p>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/user</span>
+      </div>
+      <div class="endpoint-desc">جلب بيانات المستخدم.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/user</span>
+      </div>
+      <div class="endpoint-desc">تحديث بيانات المستخدم (name, age, gender, height, weight).</div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>Request Body</span>
+          <button class="copy-btn" onclick="copyCode(this, `{
+  &quot;name&quot;: &quot;حازم&quot;,
+  &quot;age&quot;: 13,
+  &quot;gender&quot;: &quot;male&quot;
+}`)">📋 نسخ</button>
+        </div>
+{
+  <span class="json-key">"name"</span>: <span class="json-string">"حازم"</span>,
+  <span class="json-key">"age"</span>: <span class="json-number">13</span>,
+  <span class="json-key">"gender"</span>: <span class="json-string">"male"</span>
+}
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/user/settings</span>
+      </div>
+      <div class="endpoint-desc">جلب الإعدادات (darkMode, sound, weekend...).</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge put">PUT</span>
+        <span class="endpoint-path">/api/user/settings</span>
+      </div>
+      <div class="endpoint-desc">تحديث الإعدادات.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/user/stats</span>
+      </div>
+      <div class="endpoint-desc">جلب الإحصائيات (نقاط، Streak، مهام...).</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/user/stats</span>
+      </div>
+      <div class="endpoint-desc">تحديث الإحصائيات (زيادة نقاط/مهام/تمرين).</div>
+    </div>
+  </div>
+
+  <!-- ============ SCHEDULE ============ -->
+  <div class="api-section" id="schedule">
+    <h2 class="api-section-title">
+      <span class="api-section-title-icon">📅</span>
+      Schedule API
+      <span class="endpoint-count">4 endpoints</span>
+    </h2>
+    <p class="api-section-desc">
+      إدارة الجدول اليومي — الحفظ، والتوليد، والتعديل.
+    </p>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/schedule</span>
+      </div>
+      <div class="endpoint-desc">جلب الجدول الحالي.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/schedule</span>
+      </div>
+      <div class="endpoint-desc">حفظ جدول جديد (استبدال الحالي).</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/schedule/generate</span>
+      </div>
+      <div class="endpoint-desc">توليد جدول تلقائياً بناءً على المدخلات.</div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>Request Body</span>
+          <button class="copy-btn" onclick="copyCode(this, `{
+  &quot;wakeUp&quot;: &quot;06:00&quot;,
+  &quot;schoolStart&quot;: &quot;07:00&quot;,
+  &quot;schoolEnd&quot;: &quot;14:30&quot;,
+  &quot;trainingTime&quot;: &quot;17:00&quot;,
+  &quot;trainingDuration&quot;: 90,
+  &quot;weekend&quot;: false,
+  &quot;homeworks&quot;: [],
+  &quot;quran&quot;: { &quot;new&quot;: 1, &quot;recent&quot;: 2, &quot;old&quot;: 1 }
+}`)">📋 نسخ</button>
+        </div>
+{
+  <span class="json-key">"wakeUp"</span>: <span class="json-string">"06:00"</span>,
+  <span class="json-key">"schoolStart"</span>: <span class="json-string">"07:00"</span>,
+  <span class="json-key">"schoolEnd"</span>: <span class="json-string">"14:30"</span>,
+  <span class="json-key">"trainingTime"</span>: <span class="json-string">"17:00"</span>,
+  <span class="json-key">"trainingDuration"</span>: <span class="json-number">90</span>,
+  <span class="json-key">"weekend"</span>: <span class="json-bool">false</span>,
+  <span class="json-key">"homeworks"</span>: [],
+  <span class="json-key">"quran"</span>: { <span class="json-key">"new"</span>: <span class="json-number">1</span>, <span class="json-key">"recent"</span>: <span class="json-number">2</span>, <span class="json-key">"old"</span>: <span class="json-number">1</span> }
+}
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/schedule/adjust</span>
+      </div>
+      <div class="endpoint-desc">تعديل طارئ للجدول (إعادة ترتيب المهام المتبقية).</div>
+    </div>
+  </div>
+
+  <!-- ============ WORKOUTS ============ -->
+  <div class="api-section" id="workouts">
+    <h2 class="api-section-title">
+      <span class="api-section-title-icon">⚽</span>
+      Workouts API
+      <span class="endpoint-count">4 endpoints</span>
+    </h2>
+    <p class="api-section-desc">
+      18 تمرين رياضي في 3 فئات: رشاقة، قوة، وتحمل.
+    </p>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/workouts</span>
+      </div>
+      <div class="endpoint-desc">جلب كل التمارين.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/workouts/&lt;category&gt;</span>
+      </div>
+      <div class="endpoint-desc">
+        تمارين فئة معينة. <strong>category:</strong> agility | strength | endurance
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/workouts/&lt;category&gt;/&lt;id&gt;</span>
+      </div>
+      <div class="endpoint-desc">تفاصيل تمرين معين.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/workouts/routine</span>
+      </div>
+      <div class="endpoint-desc">توليد روتين مخصص حسب الوقت والمستوى.</div>
+    </div>
+  </div>
+
+  <!-- ============ QURAN ============ -->
+  <div class="api-section" id="quran">
+    <h2 class="api-section-title">
+      <span class="api-section-title-icon">📖</span>
+      Quran API
+      <span class="endpoint-count">8 endpoints</span>
+    </h2>
+    <p class="api-section-desc">
+      القرآن الكريم — 114 سورة، 10 قراء، مع خطط الحفظ.
+    </p>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/quran/surahs</span>
+      </div>
+      <div class="endpoint-desc">قائمة كل السور (114 سورة).</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/quran/surah/&lt;id&gt;</span>
+      </div>
+      <div class="endpoint-desc">تفاصيل سورة (id من 1 إلى 114).</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/quran/ayah/&lt;surah&gt;/&lt;ayah&gt;</span>
+      </div>
+      <div class="endpoint-desc">آية محددة.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/quran/audio/&lt;id&gt;</span>
+      </div>
+      <div class="endpoint-desc">رابط صوت سورة كاملة. Query: <code>?reciter=alafasy</code></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/quran/reciters</span>
+      </div>
+      <div class="endpoint-desc">قائمة القراء المتاحين (10 قراء).</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/quran/plan</span>
+      </div>
+      <div class="endpoint-desc">توليد خطة حفظ قرآنية.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/quran/progress</span>
+      </div>
+      <div class="endpoint-desc">جلب تقدم الحفظ.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/quran/progress</span>
+      </div>
+      <div class="endpoint-desc">تحديث تقدم الحفظ.</div>
+    </div>
+  </div>
+
+  <!-- ============ WEATHER ============ -->
+  <div class="api-section" id="weather">
+    <h2 class="api-section-title">
+      <span class="api-section-title-icon">🌤️</span>
+      Weather API
+      <span class="endpoint-count">2 endpoints</span>
+    </h2>
+    <p class="api-section-desc">
+      حالة الطقس + نصائح رياضية حسب الجو.
+    </p>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/weather</span>
+      </div>
+      <div class="endpoint-desc">جلب الطقس. Query: <code>?lat=24.7&amp;lon=46.7</code></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/weather/advice</span>
+      </div>
+      <div class="endpoint-desc">نصيحة رياضية حسب الحرارة والرمز.</div>
+    </div>
+  </div>
+
+  <!-- ============ BADGES ============ -->
+  <div class="api-section" id="badges">
+    <h2 class="api-section-title">
+      <span class="api-section-title-icon">🏆</span>
+      Badges API
+      <span class="endpoint-count">2 endpoints</span>
+    </h2>
+    <p class="api-section-desc">
+      27 شارة في 5 فئات — مع فحص الجديد.
+    </p>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/badges</span>
+      </div>
+      <div class="endpoint-desc">كل الشارات مع حالة كل واحدة.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/badges/check</span>
+      </div>
+      <div class="endpoint-desc">فحص الشارات الجديدة المكتسبة.</div>
+    </div>
+  </div>
+
+  <!-- ============ REWARDS ============ -->
+  <div class="api-section" id="rewards">
+    <h2 class="api-section-title">
+      <span class="api-section-title-icon">🎁</span>
+      Rewards API
+      <span class="endpoint-count">4 endpoints</span>
+    </h2>
+    <p class="api-section-desc">
+      المكافآت الأسرية — إضافة، حذف، واستبدال.
+    </p>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/rewards</span>
+      </div>
+      <div class="endpoint-desc">جلب كل المكافآت مع نسبة التقدم.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/rewards</span>
+      </div>
+      <div class="endpoint-desc">إضافة مكافأة جديدة.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge delete">DELETE</span>
+        <span class="endpoint-path">/api/rewards/&lt;id&gt;</span>
+      </div>
+      <div class="endpoint-desc">حذف مكافأة.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/rewards/&lt;id&gt;/claim</span>
+      </div>
+      <div class="endpoint-desc">استبدال مكافأة (يخصم النقاط).</div>
+    </div>
+  </div>
+
+  <!-- ============ STATS ============ -->
+  <div class="api-section" id="stats">
+    <h2 class="api-section-title">
+      <span class="api-section-title-icon">📊</span>
+      Stats API
+      <span class="endpoint-count">3 endpoints</span>
+    </h2>
+    <p class="api-section-desc">
+      إحصائيات أسبوعية وشهرية + تصدير.
+    </p>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/stats/weekly</span>
+      </div>
+      <div class="endpoint-desc">إحصائيات آخر 7 أيام.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/stats/monthly</span>
+      </div>
+      <div class="endpoint-desc">إحصائيات آخر 30 يوم.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/stats/export</span>
+      </div>
+      <div class="endpoint-desc">تصدير كل الإحصائيات.</div>
+    </div>
+  </div>
+
+  <!-- ============ BACKUP ============ -->
+  <div class="api-section" id="backup">
+    <h2 class="api-section-title">
+      <span class="api-section-title-icon">💾</span>
+      Backup API
+      <span class="endpoint-count">3 endpoints</span>
+    </h2>
+    <p class="api-section-desc">
+      النسخ الاحتياطي والاسترجاع.
+    </p>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/backup</span>
+      </div>
+      <div class="endpoint-desc">إنشاء نسخة احتياطية جديدة.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge get">GET</span>
+        <span class="endpoint-path">/api/backup/list</span>
+      </div>
+      <div class="endpoint-desc">قائمة النسخ الاحتياطية المتاحة.</div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method-badge post">POST</span>
+        <span class="endpoint-path">/api/restore</span>
+      </div>
+      <div class="endpoint-desc">استرجاع نسخة احتياطية.</div>
+    </div>
+  </div>
+
+  <!-- ============ TRY IT ============ -->
+  <div class="api-section">
+    <h2 class="api-section-title">
+      <span class="api-section-title-icon">🧪</span>
+      جرّب الـ API مباشرة
+    </h2>
+    <p class="api-section-desc">
+      اختبر الـ endpoints مباشرة من المتصفح (يحتاج Flask server شغال).
+    </p>
+
+    <div class="try-section">
+      <h4>⚡ Try it</h4>
+      <input type="text" id="tryUrl" value="http://localhost:5000/health" placeholder="URL...">
+      <button class="try-btn" onclick="tryApi()" id="tryBtn">
+        <span>▶️</span> إرسال الطلب
+      </button>
+      <div class="try-result" id="tryResult" style="display: none;"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-icon">⚽</span>
+        <span class="brand-text">يومي</span>
+      </div>
+      <p class="footer-desc">منظّم الطالب الرياضي الذكي</p>
+    </div>
+    <div class="footer-col">
+      <h4>التطبيق</h4>
+      <ul>
+        <li><a href="app.html">افتح التطبيق</a></li>
+        <li><a href="features.html">المميزات</a></li>
+        <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+        <li><a href="../index.html#download">التحميل</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>المصادر</h4>
+      <ul>
+        <li><a href="github.html">GitHub</a></li>
+        <li><a href="api.html">API</a></li>
+        <li><a href="table_creator.html">صانع الجداول</a></li>
+        <li><a href="test.html">اختبار</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>عن التطبيق</h4>
+      <ul>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="about.html#privacy">سياسة الخصوصية</a></li>
+        <li><a href="about.html#terms">شروط الاستخدام</a></li>
+        <li><a href="about.html#license">الترخيص</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 يومي — MIT License</p>
+    <p>صُنع بحب للطلاب الرياضيين ⚽📚</p>
+  </div>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script>
+/* ============ COPY HELPERS ============ */
+function copyCode(btn, text) {
+  const decoded = text.replace(/\\n/g, '\n').replace(/&quot;/g, '"');
+  navigator.clipboard.writeText(decoded).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = '✅ تم';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = '📋 نسخ';
+    }, 2000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = decoded;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    btn.classList.add('copied');
+    btn.textContent = '✅ تم';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = '📋 نسخ';
+    }, 2000);
+  });
+}
+
+function copyBaseUrl() {
+  const url = document.getElementById('baseUrl').textContent;
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('✅ تم نسخ الـ URL');
+  });
+}
+
+/* ============ TRY API ============ */
+async function tryApi() {
+  const url = document.getElementById('tryUrl').value.trim();
+  const btn = document.getElementById('tryBtn');
+  const result = document.getElementById('tryResult');
+
+  if (!url) {
+    showToast('⚠️ اكتب URL');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span> جاري...';
+
+  result.style.display = 'block';
+  result.textContent = '⏳ جاري إرسال الطلب...';
+
+  try {
+    const startTime = performance.now();
+    const res = await fetch(url, { timeout: 10000 });
+    const elapsed = Math.round(performance.now() - startTime);
+
+    let data;
+    const contentType = res.headers.get('content-type') || '';
+
+    if (contentType.includes('application/json')) {
+      data = await res.json();
+      data = JSON.stringify(data, null, 2);
+    } else {
+      data = await res.text();
+    }
+
+    result.innerHTML = `✅ HTTP ${res.status} ${res.statusText} (${elapsed}ms)\n\n${data}`;
+  } catch (err) {
+    result.innerHTML = `❌ فشل الطلب:\n\n${err.message}\n\nتأكد إن السيرفر شغال:\ncd py\npython api.py`;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>▶️</span> إرسال الطلب';
+  }
+}
+
+/* ============ TOAST ============ */
+function showToast(message) {
+  let toast = document.getElementById('__toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = '__toast';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #333;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 14px;
+      z-index: 10000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: all 0.3s ease;
+      max-width: 90%;
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    `;
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  setTimeout(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+  }, 10);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(100px)';
+  }, 2500);
+}
+
+/* ============ NAV ============ */
+function toggleNavMenu() {
+  const links = document.getElementById('navLinks');
+  const toggle = document.querySelector('.nav-toggle');
+  links.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  });
+});
+
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  if (window.pageYOffset > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+// Smooth scroll for nav
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href && href.startsWith('#') && href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        const offset = 100;
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      }
+    }
+  });
+});
+
+// Dark mode
+try {
+  const saved = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+  if (saved.darkMode) {
+    document.body.classList.add('dark');
+  }
+} catch (e) {}
+
+console.log('🔌 API Page Loaded');
+</script>
+
+</body>
+</html>

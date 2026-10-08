@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#1a237e">
+<meta name="description" content="مشروع يومي مفتوح المصدر على GitHub - ساهم في التطوير">
+<meta name="author" content="Hazem">
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="manifest" href="../assets/site.webmanifest">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/index.css">
+
+<title>🐙 GitHub - يومي</title>
+
+<style>
+  /* ============ GitHub Page Specific ============ */
+  .page-hero {
+    background: linear-gradient(135deg, #0d1117, #21262d);
+    color: white;
+    padding: 130px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(88,166,255,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(88,166,255,0.1) 0%, transparent 50%);
+  }
+
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-hero-icon {
+    font-size: 72px;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 15px;
+    color: white;
+    font-weight: 900;
+  }
+
+  .page-hero p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    color: white;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(255,255,255,0.1);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .breadcrumb span:not(:last-child)::after {
+    content: '›';
+    margin-right: 8px;
+    opacity: 0.6;
+  }
+
+  /* ============ Container ============ */
+  .github-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ============ Section ============ */
+  .gh-section {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 35px 30px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+  }
+
+  .gh-section:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .gh-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.4rem;
+    color: var(--text);
+    margin-bottom: 20px;
+    font-weight: 800;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-light);
+  }
+
+  .gh-section-title-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .gh-section-text {
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.9;
+  }
+
+  /* ============ Repo Card ============ */
+  .repo-card {
+    background: linear-gradient(135deg, #0d1117, #161b22);
+    border-radius: 20px;
+    padding: 30px;
+    color: white;
+    border: 1px solid #30363d;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .repo-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(88,166,255,0.08) 0%, transparent 60%);
+    animation: rotate 30s linear infinite;
+  }
+
+  @keyframes rotate {
+    to { transform: rotate(360deg); }
+  }
+
+  .repo-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .repo-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+  }
+
+  .repo-icon {
+    font-size: 36px;
+  }
+
+  .repo-name {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #58a6ff;
+  }
+
+  .repo-owner {
+    font-size: 13px;
+    color: #8b949e;
+    margin-bottom: 15px;
+  }
+
+  .repo-desc {
+    font-size: 14px;
+    color: #c9d1d9;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .repo-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid #30363d;
+  }
+
+  .repo-stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #8b949e;
+    font-weight: 600;
+  }
+
+  .repo-stat-icon {
+    font-size: 16px;
+  }
+
+  .repo-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .repo-btn {
+    padding: 10px 20px;
+    border-radius: 12px;
+    background: #238636;
+    color: white;
+    border: none;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+
+  .repo-btn:hover {
+    background: #2ea043;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(35,134,54,0.4);
+  }
+
+  .repo-btn.secondary {
+    background: #21262d;
+    border: 1px solid #30363d;
+  }
+
+  .repo-btn.secondary:hover {
+    background: #30363d;
+    border-color: #8b949e;
+    box-shadow: 0 4px 15px rgba(139,148,158,0.2);
+  }
+
+  /* ============ Contribution Grid ============ */
+  .contrib-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .contrib-card {
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .contrib-card:hover {
+    transform: translateY(-4px);
+    border-color: #58a6ff;
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .contrib-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .contrib-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .contrib-desc {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  /* ============ Code Block ============ */
+  .code-block {
+    background: #0d1117;
+    border-radius: 14px;
+    padding: 20px;
+    color: #c9d1d9;
+    font-family: 'Courier New', Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+    border: 1px solid #30363d;
+    position: relative;
+    margin-bottom: 15px;
+  }
+
+  .code-block .comment { color: #8b949e; font-style: italic; }
+  .code-block .command { color: #7ee787; }
+  .code-block .string { color: #a5d6ff; }
+  .code-block .keyword { color: #ff7b72; }
+
+  .code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #30363d;
+    font-size: 12px;
+    color: #8b949e;
+  }
+
+  .copy-btn {
+    background: #21262d;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+
+  .copy-btn:hover {
+    background: #30363d;
+    border-color: #58a6ff;
+    color: #58a6ff;
+  }
+
+  .copy-btn.copied {
+    background: #238636;
+    color: white;
+    border-color: #2ea043;
+  }
+
+  /* ============ Steps ============ */
+  .steps-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: step-counter;
+    margin-top: 20px;
+  }
+
+  .steps-list li {
+    counter-increment: step-counter;
+    padding: 18px 18px 18px 70px;
+    margin-bottom: 15px;
+    background: var(--bg);
+    border-radius: 16px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+    transition: all 0.3s ease;
+    border-right: 4px solid #58a6ff;
+  }
+
+  .steps-list li:hover {
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+    transform: translateX(-4px);
+  }
+
+  .steps-list li::before {
+    content: counter(step-counter);
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #58a6ff, #1f6feb);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 16px;
+  }
+
+  .steps-list li strong {
+    color: var(--text);
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  .steps-list li p {
+    font-size: 13px;
+    color: var(--text-light);
+    margin: 5px 0 0;
+  }
+
+  /* ============ Issue Types ============ */
+  .issue-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .issue-type {
+    border-radius: 16px;
+    padding: 20px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .issue-type:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .issue-type.bug {
+    background: linear-gradient(135deg, #e53935, #c62828);
+  }
+
+  .issue-type.feature {
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+  }
+
+  .issue-type.question {
+    background: linear-gradient(135deg, #29b6f6, #0288d1);
+  }
+
+  .issue-icon {
+    font-size: 36px;
+    flex-shrink: 0;
+  }
+
+  .issue-content h4 {
+    font-size: 15px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 4px;
+  }
+
+  .issue-content p {
+    font-size: 12px;
+    color: white;
+    opacity: 0.9;
+    margin: 0;
+  }
+
+  /* ============ Tech Stack ============ */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .tech-card {
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 18px 12px;
+    text-align: center;
+    transition: all 0.25s ease;
+    border: 2px solid transparent;
+  }
+
+  .tech-card:hover {
+    transform: translateY(-4px);
+    border-color: #58a6ff;
+    background: var(--card);
+  }
+
+  .tech-card-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .tech-card-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .tech-card-desc {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 3px;
+  }
+
+  /* ============ CTA Buttons ============ */
+  .cta-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .cta-btn {
+    flex: 1;
+    min-width: 200px;
+    padding: 16px 24px;
+    border-radius: 16px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .cta-btn.primary {
+    background: linear-gradient(135deg, #238636, #2ea043);
+    color: white;
+  }
+
+  .cta-btn.primary:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(35,134,54,0.4);
+  }
+
+  .cta-btn.secondary {
+    background: var(--card);
+    color: var(--text);
+    border-color: var(--border);
+  }
+
+  .cta-btn.secondary:hover {
+    transform: translateY(-4px);
+    border-color: #58a6ff;
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* ============ Stats Banner ============ */
+  .stats-banner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+
+  .stat-box {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 22px 15px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .stat-box:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: #58a6ff;
+  }
+
+  .stat-box-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .stat-box-value {
+    font-size: 1.75rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #58a6ff, #1f6feb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-box-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+  }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 110px 15px 50px;
+    }
+
+    .page-hero-icon {
+      font-size: 55px;
+    }
+
+    .github-container {
+      padding: 0 12px 60px;
+    }
+
+    .gh-section {
+      padding: 22px 18px;
+    }
+
+    .gh-section-title {
+      font-size: 1.2rem;
+    }
+
+    .repo-card {
+      padding: 22px 18px;
+    }
+
+    .repo-name {
+      font-size: 1.25rem;
+    }
+
+    .repo-actions {
+      flex-direction: column;
+    }
+
+    .repo-btn {
+      justify-content: center;
+      width: 100%;
+    }
+
+    .steps-list li {
+      padding: 14px 14px 14px 60px;
+      font-size: 13px;
+    }
+
+    .steps-list li::before {
+      width: 32px;
+      height: 32px;
+      font-size: 14px;
+      right: 14px;
+      top: 14px;
+    }
+
+    .cta-btn {
+      min-width: 100%;
+    }
+
+    .code-block {
+      font-size: 11px;
+      padding: 14px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .stat-box-value {
+      font-size: 1.4rem;
+    }
+
+    .repo-stat {
+      font-size: 12px;
+    }
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">يومي</span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNavMenu()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="features.html">المميزات</a></li>
+      <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+      <li><a href="quran.html">القرآن</a></li>
+      <li><a href="workouts.html">التمارين</a></li>
+      <li><a href="about.html">عن التطبيق</a></li>
+      <li class="nav-cta"><a href="app.html">🚀 افتح التطبيق</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="../index.html">الرئيسية</a>
+      <span>GitHub</span>
+    </div>
+    <div class="page-hero-icon">🐙</div>
+    <h1>المشروع على GitHub</h1>
+    <p>مفتوح المصدر · مجاني · مرحّب بالمساهمات</p>
+  </div>
+</section>
+
+<!-- ============ CONTENT ============ -->
+<div class="github-container">
+
+  <!-- ============ REPO CARD ============ -->
+  <div class="repo-card">
+    <div class="repo-content">
+      <div class="repo-header">
+        <span class="repo-icon">📁</span>
+        <span class="repo-name">yawmi</span>
+      </div>
+      <div class="repo-owner">by HazemYT55</div>
+      <p class="repo-desc">
+        ⚽ منظّم الطالب الرياضي الذكي — تطبيق PWA لتوليد جدول يومي متوازن،
+        مع 18 تمرين رياضي، 27 شارة، القرآن كامل، وكل اللي محتاجه الطالب الرياضي.
+      </p>
+
+      <div class="repo-stats">
+        <div class="repo-stat">
+          <span class="repo-stat-icon">⭐</span>
+          <span id="ghStars">— Stars</span>
+        </div>
+        <div class="repo-stat">
+          <span class="repo-stat-icon">🍴</span>
+          <span id="ghForks">— Forks</span>
+        </div>
+        <div class="repo-stat">
+          <span class="repo-stat-icon">🐛</span>
+          <span id="ghIssues">— Issues</span>
+        </div>
+        <div class="repo-stat">
+          <span class="repo-stat-icon">📜</span>
+          <span>MIT License</span>
+        </div>
+      </div>
+
+      <div class="repo-actions">
+        <a href="https://github.com/HazemYT55/yawmi" target="_blank" rel="noopener" class="repo-btn">
+          <span>⭐</span> Star على GitHub
+        </a>
+        <a href="https://github.com/HazemYT55/yawmi/fork" target="_blank" rel="noopener" class="repo-btn secondary">
+          <span>🍴</span> Fork المشروع
+        </a>
+        <a href="https://github.com/HazemYT55/yawmi/issues" target="_blank" rel="noopener" class="repo-btn secondary">
+          <span>🐛</span> الإبلاغ عن مشكلة
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STATS ============ -->
+  <div class="stats-banner">
+    <div class="stat-box">
+      <span class="stat-box-icon">📄</span>
+      <div class="stat-box-value" id="ghFiles">—</div>
+      <div class="stat-box-label">ملف</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-box-icon">💻</span>
+      <div class="stat-box-value" id="ghLines">—</div>
+      <div class="stat-box-label">سطر كود</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-box-icon">🎯</span>
+      <div class="stat-box-value">v4.0</div>
+      <div class="stat-box-label">الإصدار</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-box-icon">🌍</span>
+      <div class="stat-box-value">AR</div>
+      <div class="stat-box-label">اللغة</div>
+    </div>
+  </div>
+
+  <!-- ============ QUICK START ============ -->
+  <div class="gh-section">
+    <h2 class="gh-section-title">
+      <span class="gh-section-title-icon">🚀</span>
+      ابدأ بسرعة
+    </h2>
+
+    <div class="gh-section-text">
+      <p>لتشغيل المشروع محلياً على جهازك، اتبع الخطوات البسيطة دي:</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span>Terminal</span>
+        <button class="copy-btn" onclick="copyCode(this, 'git clone https://github.com/HazemYT55/yawmi.git\ncd yawmi\npython -m http.server 8000')">📋 نسخ</button>
+      </div>
+      <div><span class="comment"># 1. استنسخ المشروع</span></div>
+      <div><span class="command">git clone</span> <span class="string">https://github.com/HazemYT55/yawmi.git</span></div>
+      <div></div>
+      <div><span class="comment"># 2. ادخل للمجلد</span></div>
+      <div><span class="command">cd</span> <span class="string">yawmi</span></div>
+      <div></div>
+      <div><span class="comment"># 3. شغّل سيرفر محلي</span></div>
+      <div><span class="command">python</span> -m http.server 8000</div>
+      <div></div>
+      <div><span class="comment"># 4. افتح المتصفح على</span></div>
+      <div><span class="comment"># http://localhost:8000</span></div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span>Alternative (Python API Server)</span>
+        <button class="copy-btn" onclick="copyCode(this, 'pip install flask flask-cors\ncd py\npython api.py')">📋 نسخ</button>
+      </div>
+      <div><span class="comment"># لتشغيل Flask API Server</span></div>
+      <div><span class="command">pip install</span> <span class="string">flask flask-cors</span></div>
+      <div><span class="command">cd</span> <span class="string">py</span></div>
+      <div><span class="command">python</span> <span class="string">api.py</span></div>
+      <div></div>
+      <div><span class="comment"># السيرفر على http://localhost:5000</span></div>
+    </div>
+  </div>
+
+  <!-- ============ HOW TO CONTRIBUTE ============ -->
+  <div class="gh-section">
+    <h2 class="gh-section-title">
+      <span class="gh-section-title-icon">🤝</span>
+      كيف تساهم؟
+    </h2>
+
+    <div class="gh-section-text">
+      <p>المشروع مفتوح للمساهمات! سواء كنت مطور، مصمم، أو حتى عندك اقتراح — كل مساهمة مرحّب بها.</p>
+    </div>
+
+    <ol class="steps-list">
+      <li>
+        <strong>1. Fork المشروع</strong>
+        <p>اضغط زر "Fork" في أعلى صفحة GitHub لإنشاء نسخة خاصة بك</p>
+      </li>
+      <li>
+        <strong>2. استنسخ نسختك</strong>
+        <p>git clone https://github.com/YOUR-USERNAME/yawmi.git</p>
+      </li>
+      <li>
+        <strong>3. أنشئ فرع جديد</strong>
+        <p>git checkout -b feature/amazing-feature</p>
+      </li>
+      <li>
+        <strong>4. اعمل التعديلات و Commit</strong>
+        <p>git commit -m 'أضفت ميزة رائعة'</p>
+      </li>
+      <li>
+        <strong>5. ارفع الفرع</strong>
+        <p>git push origin feature/amazing-feature</p>
+      </li>
+      <li>
+        <strong>6. افتح Pull Request</strong>
+        <p>ارجع لـ GitHub وافتح PR — هنراجعه في أقرب وقت</p>
+      </li>
+    </ol>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span>Git Workflow</span>
+        <button class="copy-btn" onclick="copyCode(this, 'git checkout -b feature/amazing-feature\ngit add .\ngit commit -m &quot;إضافة ميزة جديدة&quot;\ngit push origin feature/amazing-feature')">📋 نسخ</button>
+      </div>
+      <div><span class="comment"># خطوات Git الكاملة</span></div>
+      <div><span class="command">git checkout</span> -b <span class="string">feature/amazing-feature</span></div>
+      <div><span class="command">git add</span> .</div>
+      <div><span class="command">git commit</span> -m <span class="string">"إضافة ميزة جديدة"</span></div>
+      <div><span class="command">git push</span> origin <span class="string">feature/amazing-feature</span></div>
+    </div>
+  </div>
+
+  <!-- ============ REPORT ISSUES ============ -->
+  <div class="gh-section">
+    <h2 class="gh-section-title">
+      <span class="gh-section-title-icon">🐛</span>
+      الإبلاغ عن مشاكل
+    </h2>
+
+    <div class="gh-section-text">
+      <p>لو لقيت مشكلة أو عندك اقتراح، اختر النوع المناسب:</p>
+    </div>
+
+    <div class="issue-types">
+      <a href="https://github.com/HazemYT55/yawmi/issues/new?labels=bug" target="_blank" rel="noopener" class="issue-type bug">
+        <span class="issue-icon">🐛</span>
+        <div class="issue-content">
+          <h4>الإبلاغ عن Bug</h4>
+          <p>حاجة مش شغالة صح</p>
+        </div>
+      </a>
+
+      <a href="https://github.com/HazemYT55/yawmi/issues/new?labels=enhancement" target="_blank" rel="noopener" class="issue-type feature">
+        <span class="issue-icon">✨</span>
+        <div class="issue-content">
+          <h4>اقتراح ميزة</h4>
+          <p>عندك فكرة جديدة</p>
+        </div>
+      </a>
+
+      <a href="https://github.com/HazemYT55/yawmi/issues/new?labels=question" target="_blank" rel="noopener" class="issue-type question">
+        <span class="issue-icon">❓</span>
+        <div class="issue-content">
+          <h4>سؤال</h4>
+          <p>استفسار عن المشروع</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="gh-section-text" style="margin-top: 25px;">
+      <p><strong>⚠️ قبل ما تفتح Issue:</strong></p>
+      <ul style="padding-right: 20px; line-height: 2;">
+        <li>اتأكد إن المشكلة مش موجودة في Issues القديمة</li>
+        <li>اكتب وصف واضح ومفصل</li>
+        <li>ضيف صورة لو ممكن</li>
+        <li>اذكر: نوع الجهاز، المتصفح، خطوات إعادة المشكلة</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ TECH STACK ============ -->
+  <div class="gh-section">
+    <h2 class="gh-section-title">
+      <span class="gh-section-title-icon">🛠️</span>
+      التقنيات المستخدمة
+    </h2>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <span class="tech-card-icon">📄</span>
+        <div class="tech-card-name">HTML5</div>
+        <div class="tech-card-desc">الهيكل</div>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-icon">🎨</span>
+        <div class="tech-card-name">CSS3</div>
+        <div class="tech-card-desc">التصميم</div>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-icon">⚡</span>
+        <div class="tech-card-name">JavaScript</div>
+        <div class="tech-card-desc">المنطق</div>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-icon">🐍</span>
+        <div class="tech-card-name">Python</div>
+        <div class="tech-card-desc">API</div>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-icon">📦</span>
+        <div class="tech-card-name">Flask</div>
+        <div class="tech-card-desc">Framework</div>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-icon">📖</span>
+        <div class="tech-card-name">quran-json</div>
+        <div class="tech-card-desc">القرآن</div>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-icon">🌤️</span>
+        <div class="tech-card-name">Open-Meteo</div>
+        <div class="tech-card-desc">الطقس</div>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-icon">🔊</span>
+        <div class="tech-card-name">Web Audio</div>
+        <div class="tech-card-desc">الأصوات</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PROJECT STRUCTURE ============ -->
+  <div class="gh-section">
+    <h2 class="gh-section-title">
+      <span class="gh-section-title-icon">📁</span>
+      هيكل المشروع
+    </h2>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span>Project Structure</span>
+        <button class="copy-btn" onclick="copyCode(this, 'yawmi/\n├── index.html\n├── assets/\n├── css/\n├── js/\n├── json/\n├── py/\n├── html/\n└── download/')">📋 نسخ</button>
+      </div>
+      <div><span class="string">yawmi/</span></div>
+      <div>├── <span class="string">index.html</span> <span class="comment">— صفحة الهبوط</span></div>
+      <div>├── <span class="string">README.md</span> <span class="comment">— التوثيق</span></div>
+      <div>│</div>
+      <div>├── 📁 <span class="string">assets/</span> <span class="comment">— الأيقونات والصور</span></div>
+      <div>├── 📁 <span class="string">css/</span> <span class="comment">— التنسيقات</span></div>
+      <div>├── 📁 <span class="string">js/</span> <span class="comment">— JavaScript</span></div>
+      <div>├── 📁 <span class="string">json/</span> <span class="comment">— البيانات</span></div>
+      <div>├── 📁 <span class="string">py/</span> <span class="comment">— Python API</span></div>
+      <div>├── 📁 <span class="string">html/</span> <span class="comment">— الصفحات</span></div>
+      <div>└── 📁 <span class="string">download/</span> <span class="comment">— ملفات التحميل</span></div>
+    </div>
+  </div>
+
+  <!-- ============ ROADMAP ============ -->
+  <div class="gh-section">
+    <h2 class="gh-section-title">
+      <span class="gh-section-title-icon">🗺️</span>
+      خارطة الطريق
+    </h2>
+
+    <div class="gh-section-text">
+      <p>شوف خطة تطوير المشروع على المدى القريب والبعيد:</p>
+    </div>
+
+    <div class="contrib-grid">
+      <div class="contrib-card" style="border-color: #43a047;">
+        <span class="contrib-icon">✅</span>
+        <div class="contrib-title">v4.0 (الحالي)</div>
+        <div class="contrib-desc">18 تمرين، 27 شارة، القرآن، AI Adjust</div>
+      </div>
+
+      <div class="contrib-card" style="border-color: #fb8c00;">
+        <span class="contrib-icon">🚧</span>
+        <div class="contrib-title">v4.1 (قريباً)</div>
+        <div class="contrib-desc">إصلاحات + تحسينات أداء</div>
+      </div>
+
+      <div class="contrib-card">
+        <span class="contrib-icon">☁️</span>
+        <div class="contrib-title">v5.0 (مخطط)</div>
+        <div class="contrib-desc">حساب مستخدم + مزامنة سحابية</div>
+      </div>
+
+      <div class="contrib-card">
+        <span class="contrib-icon">🥽</span>
+        <div class="contrib-title">v6.0 (مستقبلي)</div>
+        <div class="contrib-desc">مدرب 3D + الواقع المعزز</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CTA ============ -->
+  <div class="gh-section" style="text-align: center; background: linear-gradient(135deg, #0d1117, #21262d); color: white;">
+    <div style="font-size: 60px; margin-bottom: 15px;">🐙</div>
+    <h2 style="font-size: 1.6rem; color: white; margin-bottom: 12px; font-weight: 900;">جاهز تنضم للمشروع؟</h2>
+    <p style="color: #c9d1d9; margin-bottom: 25px; font-size: 15px; max-width: 600px; margin-left: auto; margin-right: auto;">
+      سواء كنت مطور، أو عندك فكرة، أو حتى عايز تجرب التطبيق — كل حاجة موجودة على GitHub
+    </p>
+
+    <div class="cta-buttons" style="justify-content: center;">
+      <a href="https://github.com/HazemYT55/yawmi" target="_blank" rel="noopener" class="cta-btn primary">
+        <span>⭐</span> زور المشروع
+      </a>
+      <a href="https://github.com/HazemYT55/yawmi/fork" target="_blank" rel="noopener" class="cta-btn secondary" style="background: #21262d; color: white; border-color: #30363d;">
+        <span>🍴</span> اعمل Fork
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-icon">⚽</span>
+        <span class="brand-text">يومي</span>
+      </div>
+      <p class="footer-desc">منظّم الطالب الرياضي الذكي</p>
+    </div>
+    <div class="footer-col">
+      <h4>التطبيق</h4>
+      <ul>
+        <li><a href="app.html">افتح التطبيق</a></li>
+        <li><a href="features.html">المميزات</a></li>
+        <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+        <li><a href="../index.html#download">التحميل</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>المصادر</h4>
+      <ul>
+        <li><a href="github.html">GitHub</a></li>
+        <li><a href="api.html">API</a></li>
+        <li><a href="table_creator.html">صانع الجداول</a></li>
+        <li><a href="test.html">اختبار</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>عن التطبيق</h4>
+      <ul>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="about.html#privacy">سياسة الخصوصية</a></li>
+        <li><a href="about.html#terms">شروط الاستخدام</a></li>
+        <li><a href="about.html#license">الترخيص</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 يومي — MIT License</p>
+    <p>صُنع بحب للطلاب الرياضيين ⚽📚</p>
+  </div>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script>
+/* ============ COPY CODE ============ */
+function copyCode(btn, text) {
+  const decoded = text.replace(/\\n/g, '\n').replace(/&quot;/g, '"');
+  navigator.clipboard.writeText(decoded).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = '✅ تم النسخ!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = '📋 نسخ';
+    }, 2000);
+  }).catch(() => {
+    // Fallback
+    const textarea = document.createElement('textarea');
+    textarea.value = decoded;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    btn.classList.add('copied');
+    btn.textContent = '✅ تم النسخ!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = '📋 نسخ';
+    }, 2000);
+  });
+}
+
+/* ============ GITHUB STATS (عبر API) ============ */
+async function loadGitHubStats() {
+  try {
+    const res = await fetch('https://api.github.com/repos/HazemYT55/yawmi');
+    if (!res.ok) throw new Error('API failed');
+
+    const data = await res.json();
+
+    const starsEl = document.getElementById('ghStars');
+    const forksEl = document.getElementById('ghForks');
+    const issuesEl = document.getElementById('ghIssues');
+
+    if (starsEl) starsEl.textContent = `${data.stargazers_count} Stars`;
+    if (forksEl) forksEl.textContent = `${data.forks_count} Forks`;
+    if (issuesEl) issuesEl.textContent = `${data.open_issues_count} Issues`;
+
+    // Stats
+    const filesEl = document.getElementById('ghFiles');
+    if (filesEl) filesEl.textContent = `32+`;
+
+    const linesEl = document.getElementById('ghLines');
+    if (linesEl) linesEl.textContent = `11K+`;
+  } catch (e) {
+    console.warn('⚠️ فشل تحميل إحصائيات GitHub:', e);
+    // Fallback values
+    const starsEl = document.getElementById('ghStars');
+    if (starsEl) starsEl.textContent = '⭐ Star';
+    const forksEl = document.getElementById('ghForks');
+    if (forksEl) forksEl.textContent = '🍴 Fork';
+    const issuesEl = document.getElementById('ghIssues');
+    if (issuesEl) issuesEl.textContent = '🐛 Issues';
+  }
+}
+
+/* ============ NAV ============ */
+function toggleNavMenu() {
+  const links = document.getElementById('navLinks');
+  const toggle = document.querySelector('.nav-toggle');
+  links.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  });
+});
+
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  if (window.pageYOffset > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+/* ============ DARK MODE ============ */
+try {
+  const saved = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+  if (saved.darkMode) {
+    document.body.classList.add('dark');
+  }
+} catch (e) {}
+
+/* ============ START ============ */
+document.addEventListener('DOMContentLoaded', loadGitHubStats);
+
+console.log('🐙 GitHub Page Loaded');
+</script>
+
+</body>
+</html>

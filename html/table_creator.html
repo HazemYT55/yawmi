@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#1a237e">
+<meta name="description" content="صانع الجداول - أنشئ جدولك بنفسك">
+<meta name="author" content="Hazem">
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="manifest" href="../assets/site.webmanifest">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/index.css">
+
+<title>🎨 صانع الجداول - يومي</title>
+
+<style>
+  /* ============ Table Creator Page ============ */
+  .page-hero {
+    background: linear-gradient(135deg, #7e57c2, #5e35b1);
+    color: white;
+    padding: 130px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  }
+
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-hero-icon {
+    font-size: 72px;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 15px;
+    color: white;
+    font-weight: 900;
+  }
+
+  .page-hero p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    color: white;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .breadcrumb span:not(:last-child)::after {
+    content: '›';
+    margin-right: 8px;
+    opacity: 0.6;
+  }
+
+  /* ============ Container ============ */
+  .creator-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ============ Tabs ============ */
+  .creator-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 25px;
+    padding: 8px;
+    background: var(--card);
+    border-radius: 18px;
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+  }
+
+  .creator-tab {
+    flex: 1;
+    padding: 14px 20px;
+    background: transparent;
+    color: var(--text-light);
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    min-width: 140px;
+  }
+
+  .creator-tab:hover {
+    background: var(--bg);
+  }
+
+  .creator-tab.active {
+    background: linear-gradient(135deg, #7e57c2, #5e35b1);
+    color: white;
+    box-shadow: 0 4px 15px rgba(126,87,194,0.3);
+  }
+
+  /* ============ Tab Content ============ */
+  .tab-content {
+    display: none;
+    animation: slideUp 0.4s ease;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ Card ============ */
+  .creator-card {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+  }
+
+  .creator-card h3 {
+    font-size: 1.3rem;
+    color: var(--text);
+    margin-bottom: 20px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-light);
+  }
+
+  .creator-card h3 span {
+    font-size: 28px;
+  }
+
+  /* ============ Form Grid ============ */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 12px 14px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 14px;
+    background: var(--bg);
+    color: var(--text);
+    transition: all 0.3s ease;
+    font-family: inherit;
+    margin: 0;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: #7e57c2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(126,87,194,0.15);
+    background: var(--card);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  /* ============ Color Picker ============ */
+  .color-picker {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+  }
+
+  .color-option {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .color-option:hover {
+    transform: scale(1.15);
+  }
+
+  .color-option.selected {
+    border-color: var(--text);
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--text);
+  }
+
+  /* ============ Buttons ============ */
+  .creator-btn {
+    padding: 14px 24px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #7e57c2, #5e35b1);
+    color: white;
+    border: none;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(126,87,194,0.3);
+  }
+
+  .creator-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(126,87,194,0.4);
+  }
+
+  .creator-btn.secondary {
+    background: var(--card);
+    color: var(--text);
+    border: 2px solid var(--border);
+    box-shadow: none;
+  }
+
+  .creator-btn.secondary:hover {
+    border-color: #7e57c2;
+    color: #7e57c2;
+  }
+
+  .creator-btn.danger {
+    background: linear-gradient(135deg, #e53935, #c62828);
+    box-shadow: 0 4px 12px rgba(229,57,53,0.3);
+  }
+
+  .creator-btn.success {
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+    box-shadow: 0 4px 12px rgba(67,160,71,0.3);
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+  }
+
+  .btn-group .creator-btn {
+    flex: 1;
+    min-width: 150px;
+  }
+
+  /* ============ Task List ============ */
+  .tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+
+  .task-item {
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    transition: all 0.25s ease;
+    border-right: 4px solid #7e57c2;
+    position: relative;
+  }
+
+  .task-item:hover {
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+    transform: translateX(-3px);
+  }
+
+  .task-time {
+    background: linear-gradient(135deg, #7e57c2, #5e35b1);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+    text-align: center;
+    min-width: 70px;
+  }
+
+  .task-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .task-name {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .task-meta {
+    font-size: 11px;
+    color: var(--text-light);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .task-category-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 800;
+    color: white;
+  }
+
+  .task-actions {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
+  .task-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: var(--text-light);
+  }
+
+  .task-action-btn:hover {
+    background: var(--danger);
+    color: white;
+    border-color: var(--danger);
+    transform: scale(1.1);
+  }
+
+  /* ============ Empty State ============ */
+  .empty-tasks {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-light);
+  }
+
+  .empty-tasks-icon {
+    font-size: 60px;
+    margin-bottom: 12px;
+    opacity: 0.4;
+  }
+
+  /* ============ Stats ============ */
+  .stats-mini {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .stat-mini {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .stat-mini-value {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #7e57c2;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  .stat-mini-label {
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 700;
+  }
+
+  /* ============ Templates ============ */
+  .templates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+  }
+
+  .template-card {
+    background: var(--bg);
+    border-radius: 18px;
+    padding: 22px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .template-card:hover {
+    transform: translateY(-6px);
+    border-color: #7e57c2;
+    background: var(--card);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .template-icon {
+    font-size: 42px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .template-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .template-desc {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  /* ============ Preview Table ============ */
+  .preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    font-size: 13px;
+    margin-top: 15px;
+  }
+
+  .preview-table thead {
+    background: linear-gradient(135deg, #7e57c2, #5e35b1);
+    color: white;
+  }
+
+  .preview-table th {
+    padding: 12px 10px;
+    text-align: right;
+    font-weight: 800;
+    font-size: 12px;
+  }
+
+  .preview-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text);
+  }
+
+  .preview-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .preview-table tr:hover {
+    background: var(--bg);
+  }
+
+  /* ============ Range Slider ============ */
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    outline: none;
+    margin: 10px 0;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #7e57c2;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(126,87,194,0.4);
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #7e57c2;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(126,87,194,0.4);
+  }
+
+  .range-value {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #7e57c2;
+    margin-top: 5px;
+  }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 110px 15px 50px;
+    }
+
+    .page-hero-icon {
+      font-size: 55px;
+    }
+
+    .creator-container {
+      padding: 0 12px 60px;
+    }
+
+    .creator-card {
+      padding: 20px;
+    }
+
+    .creator-card h3 {
+      font-size: 1.15rem;
+    }
+
+    .creator-tab {
+      padding: 12px 16px;
+      font-size: 13px;
+      min-width: 120px;
+    }
+
+    .task-item {
+      flex-wrap: wrap;
+    }
+
+    .task-time {
+      min-width: 60px;
+      padding: 6px 10px;
+      font-size: 11px;
+    }
+
+    .stats-mini {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .templates-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .preview-table {
+      font-size: 11px;
+    }
+
+    .preview-table th,
+    .preview-table td {
+      padding: 8px 6px;
+    }
+
+    .btn-group .creator-btn {
+      min-width: 100%;
+    }
+
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">يومي</span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNavMenu()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="features.html">المميزات</a></li>
+      <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+      <li><a href="quran.html">القرآن</a></li>
+      <li><a href="workouts.html">التمارين</a></li>
+      <li><a href="about.html">عن التطبيق</a></li>
+      <li class="nav-cta"><a href="app.html">🚀 افتح التطبيق</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="../index.html">الرئيسية</a>
+      <span>صانع الجداول</span>
+    </div>
+    <div class="page-hero-icon">🎨</div>
+    <h1>صانع الجداول</h1>
+    <p>أنشئ جدولك المخصص — يدوياً أو من قوالب جاهزة</p>
+  </div>
+</section>
+
+<!-- ============ CONTENT ============ -->
+<div class="creator-container">
+
+  <!-- ============ TABS ============ -->
+  <div class="creator-tabs">
+    <button class="creator-tab active" onclick="switchCreatorTab('build')">
+      <span>🔨</span> إنشاء يدوي
+    </button>
+    <button class="creator-tab" onclick="switchCreatorTab('templates')">
+      <span>📋</span> قوالب جاهزة
+    </button>
+    <button class="creator-tab" onclick="switchCreatorTab('preview')">
+      <span>👁️</span> معاينة
+    </button>
+    <button class="creator-tab" onclick="switchCreatorTab('export')">
+      <span>💾</span> تصدير
+    </button>
+  </div>
+
+  <!-- ============ TAB 1: BUILD ============ -->
+  <div id="tab-build" class="tab-content active">
+
+    <!-- Settings -->
+    <div class="creator-card">
+      <h3><span>⚙️</span> إعدادات الجدول</h3>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>📅 اسم الجدول</label>
+          <input type="text" id="tableName" placeholder="مثال: جدولي اليومي" value="جدولي اليومي">
+        </div>
+
+        <div class="form-group">
+          <label>🕐 وقت البداية</label>
+          <input type="time" id="startTime" value="06:00">
+        </div>
+
+        <div class="form-group">
+          <label>🕐 وقت النهاية</label>
+          <input type="time" id="endTime" value="22:00">
+        </div>
+
+        <div class="form-group">
+          <label>📅 الأيام</label>
+          <select id="tableDays">
+            <option value="all">كل الأيام</option>
+            <option value="weekdays">أيام الأسبوع</option>
+            <option value="weekend">نهاية الأسبوع</option>
+            <option value="custom">مخصص</option>
+          </select>
+        </div>
+      </div>
+
+      <label style="display: block; font-size: 13px; font-weight: 700; color: var(--text-light); margin-bottom: 8px;">
+        🎨 لون الجدول
+      </label>
+      <div class="color-picker" id="colorPicker">
+        <div class="color-option selected" data-color="#7e57c2" style="background: #7e57c2;" onclick="selectColor(this, '#7e57c2')"></div>
+        <div class="color-option" data-color="#1a237e" style="background: #1a237e;" onclick="selectColor(this, '#1a237e')"></div>
+        <div class="color-option" data-color="#43a047" style="background: #43a047;" onclick="selectColor(this, '#43a047')"></div>
+        <div class="color-option" data-color="#fb8c00" style="background: #fb8c00;" onclick="selectColor(this, '#fb8c00')"></div>
+        <div class="color-option" data-color="#e53935" style="background: #e53935;" onclick="selectColor(this, '#e53935')"></div>
+        <div class="color-option" data-color="#29b6f6" style="background: #29b6f6;" onclick="selectColor(this, '#29b6f6')"></div>
+        <div class="color-option" data-color="#8e24aa" style="background: #8e24aa;" onclick="selectColor(this, '#8e24aa')"></div>
+        <div class="color-option" data-color="#26a69a" style="background: #26a69a;" onclick="selectColor(this, '#26a69a')"></div>
+      </div>
+    </div>
+
+    <!-- Add Task -->
+    <div class="creator-card">
+      <h3><span>➕</span> إضافة مهمة</h3>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>📝 اسم المهمة</label>
+          <input type="text" id="taskName" placeholder="مثال: مذاكرة رياضيات">
+        </div>
+
+        <div class="form-group">
+          <label>🕐 من الساعة</label>
+          <input type="time" id="taskStart" value="08:00">
+        </div>
+
+        <div class="form-group">
+          <label>🕐 إلى الساعة</label>
+          <input type="time" id="taskEnd" value="09:00">
+        </div>
+
+        <div class="form-group">
+          <label>🏷️ الفئة</label>
+          <select id="taskCategory">
+            <option value="study">📚 دراسة</option>
+            <option value="quran">📖 قرآن</option>
+            <option value="sport">⚽ رياضة</option>
+            <option value="school">🏫 مدرسة</option>
+            <option value="meal">🍽️ وجبة</option>
+            <option value="sleep">😴 نوم</option>
+            <option value="other">📌 أخرى</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>📄 ملاحظات (اختياري)</label>
+        <textarea id="taskNotes" placeholder="تفاصيل إضافية عن المهمة..."></textarea>
+      </div>
+
+      <button class="creator-btn" onclick="addTask()">
+        <span>➕</span> إضافة المهمة
+      </button>
+    </div>
+
+    <!-- Tasks List -->
+    <div class="creator-card">
+      <h3><span>📋</span> المهام المضافة</h3>
+
+      <div class="stats-mini">
+        <div class="stat-mini">
+          <div class="stat-mini-value" id="totalTasksCount">0</div>
+          <div class="stat-mini-label">مهمة</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-mini-value" id="totalMinutes">0</div>
+          <div class="stat-mini-label">دقيقة</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-mini-value" id="totalHours">0</div>
+          <div class="stat-mini-label">ساعة</div>
+        </div>
+      </div>
+
+      <div class="tasks-list" id="tasksList">
+        <div class="empty-tasks">
+          <div class="empty-tasks-icon">📝</div>
+          <p>ما فيش مهام لسه. ابدأ بإضافة مهام!</p>
+        </div>
+      </div>
+
+      <div class="btn-group" id="tasksActions" style="display: none;">
+        <button class="creator-btn danger" onclick="clearAllTasks()">
+          <span>🗑️</span> حذف الكل
+        </button>
+        <button class="creator-btn success" onclick="saveTable()">
+          <span>💾</span> حفظ الجدول
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============ TAB 2: TEMPLATES ============ -->
+  <div id="tab-templates" class="tab-content">
+
+    <div class="creator-card">
+      <h3><span>📋</span> اختر قالب جاهز</h3>
+
+      <div class="templates-grid">
+        <div class="template-card" onclick="loadTemplate('student')">
+          <span class="template-icon">📚</span>
+          <div class="template-name">يوم دراسي عادي</div>
+          <div class="template-desc">جدول مثالي لأيام الأسبوع — مذاكرة + رياضة + قرآن</div>
+        </div>
+
+        <div class="template-card" onclick="loadTemplate('weekend')">
+          <span class="template-icon">🏖️</span>
+          <div class="template-name">يوم إجازة</div>
+          <div class="template-desc">بدون مدرسة — رياضة أطول وترفيه وحفظ قرآن</div>
+        </div>
+
+        <div class="template-card" onclick="loadTemplate('athlete')">
+          <span class="template-icon">⚽</span>
+          <div class="template-name">يوم رياضي مكثف</div>
+          <div class="template-desc">تركيز على التدريب واللياقة مع الحد الأدنى من الدراسة</div>
+        </div>
+
+        <div class="template-card" onclick="loadTemplate('exam')">
+          <span class="template-icon">📖</span>
+          <div class="template-name">يوم امتحان</div>
+          <div class="template-desc">تركيز كامل على المذاكرة والمراجعة</div>
+        </div>
+
+        <div class="template-card" onclick="loadTemplate('quran')">
+          <span class="template-icon">🕌</span>
+          <div class="template-name">يوم قرآني</div>
+          <div class="template-desc">حفظ ومراجعة قرآنية مكثفة</div>
+        </div>
+
+        <div class="template-card" onclick="loadTemplate('empty')">
+          <span class="template-icon">✨</span>
+          <div class="template-name">من الصفر</div>
+          <div class="template-desc">ابدأ بجدول فاضي وأضف مهامك بنفسك</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============ TAB 3: PREVIEW ============ -->
+  <div id="tab-preview" class="tab-content">
+
+    <div class="creator-card">
+      <h3><span>👁️</span> معاينة الجدول</h3>
+      <div id="previewContainer">
+        <div class="empty-tasks">
+          <div class="empty-tasks-icon">👀</div>
+          <p>ما فيش مهام لسه. ارجع لـ "إنشاء يدوي" وأضف مهامك.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============ TAB 4: EXPORT ============ -->
+  <div id="tab-export" class="tab-content">
+
+    <div class="creator-card">
+      <h3><span>💾</span> تصدير الجدول</h3>
+
+      <p style="font-size: 14px; color: var(--text-light); margin-bottom: 20px; line-height: 1.7;">
+        اختر الصيغة اللي تناسبك — تقدر تستخدم الجدول في تطبيق يومي أو تشاركه مع أصدقائك.
+      </p>
+
+      <div class="btn-group">
+        <button class="creator-btn" onclick="exportAs('json')">
+          <span>📄</span> تصدير JSON
+        </button>
+        <button class="creator-btn success" onclick="exportAs('txt')">
+          <span>📝</span> تصدير نصي
+        </button>
+        <button class="creator-btn secondary" onclick="exportAs('print')">
+          <span>🖨️</span> طباعة
+        </button>
+      </div>
+    </div>
+
+    <div class="creator-card">
+      <h3><span>📥</span> استيراد جدول</h3>
+
+      <p style="font-size: 14px; color: var(--text-light); margin-bottom: 15px;">
+        تقدر تستورد جدول من ملف JSON محفوظ مسبقاً.
+      </p>
+
+      <input type="file" id="importFile" accept=".json" 
+             style="padding: 15px; border: 2px dashed var(--border); border-radius: 14px; cursor: pointer;"
+             onchange="importTable(event)">
+
+      <div id="importStatus" style="margin-top: 15px; font-size: 13px;"></div>
+    </div>
+
+    <div class="creator-card">
+      <h3><span>🔗</span> حفظ في تطبيق يومي</h3>
+
+      <p style="font-size: 14px; color: var(--text-light); margin-bottom: 15px; line-height: 1.7;">
+        الجدول ده هيتحفظ في التطبيق مباشرة وهيبقى جاهز للاستخدام.
+      </p>
+
+      <button class="creator-btn success" onclick="saveToApp()">
+        <span>⚡</span> حفظ في التطبيق الآن
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-icon">⚽</span>
+        <span class="brand-text">يومي</span>
+      </div>
+      <p class="footer-desc">منظّم الطالب الرياضي الذكي</p>
+    </div>
+    <div class="footer-col">
+      <h4>التطبيق</h4>
+      <ul>
+        <li><a href="app.html">افتح التطبيق</a></li>
+        <li><a href="features.html">المميزات</a></li>
+        <li><a href="how_to_use.html">طريقة الاستخدام</a></li>
+        <li><a href="../index.html#download">التحميل</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>المصادر</h4>
+      <ul>
+        <li><a href="github.html">GitHub</a></li>
+        <li><a href="api.html">API</a></li>
+        <li><a href="table_creator.html">صانع الجداول</a></li>
+        <li><a href="test.html">اختبار</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>عن التطبيق</h4>
+      <ul>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="about.html#privacy">سياسة الخصوصية</a></li>
+        <li><a href="about.html#terms">شروط الاستخدام</a></li>
+        <li><a href="about.html#license">الترخيص</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 يومي — MIT License</p>
+    <p>صُنع بحب للطلاب الرياضيين ⚽📚</p>
+  </div>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script>
+/* ============================================
+   TABLE CREATOR - MAIN LOGIC
+   ============================================ */
+
+const creatorState = {
+  tableName: 'جدولي اليومي',
+  startTime: '06:00',
+  endTime: '22:00',
+  color: '#7e57c2',
+  tasks: []
+};
+
+const CATEGORY_INFO = {
+  study: { name: 'دراسة', icon: '📚', color: '#43a047' },
+  quran: { name: 'قرآن', icon: '📖', color: '#fbc02d' },
+  sport: { name: 'رياضة', icon: '⚽', color: '#fb8c00' },
+  school: { name: 'مدرسة', icon: '🏫', color: '#1e88e5' },
+  meal: { name: 'وجبة', icon: '🍽️', color: '#6d4c41' },
+  sleep: { name: 'نوم', icon: '😴', color: '#8e24aa' },
+  other: { name: 'أخرى', icon: '📌', color: '#546e7a' }
+};
+
+/* ============ TAB SWITCHING ============ */
+function switchCreatorTab(tab) {
+  document.querySelectorAll('.creator-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+  event.target.closest('.creator-tab').classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+
+  if (tab === 'preview') renderPreview();
+  if (tab === 'export') renderPreview(); // in case
+}
+
+/* ============ COLOR PICKER ============ */
+function selectColor(el, color) {
+  document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  creatorState.color = color;
+}
+
+/* ============ ADD TASK ============ */
+function addTask() {
+  const name = document.getElementById('taskName').value.trim();
+  const start = document.getElementById('taskStart').value;
+  const end = document.getElementById('taskEnd').value;
+  const category = document.getElementById('taskCategory').value;
+  const notes = document.getElementById('taskNotes').value.trim();
+
+  if (!name) {
+    showToast('⚠️ اكتب اسم المهمة');
+    return;
+  }
+
+  if (!start || !end) {
+    showToast('⚠️ اختر وقت البداية والنهاية');
+    return;
+  }
+
+  // حساب المدة
+  const startMin = timeToMinutes(start);
+  const endMin = timeToMinutes(end);
+
+  if (endMin <= startMin) {
+    showToast('⚠️ وقت النهاية لازم يكون بعد البداية');
+    return;
+  }
+
+  const duration = endMin - startMin;
+
+  creatorState.tasks.push({
+    id: 'task_' + Date.now(),
+    name,
+    start,
+    end,
+    category,
+    notes,
+    duration
+  });
+
+  // Sort by start time
+  creatorState.tasks.sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start));
+
+  // Clear form
+  document.getElementById('taskName').value = '';
+  document.getElementById('taskNotes').value = '';
+
+  // Update UI
+  renderTasks();
+  updateStats();
+
+  showToast('✅ تمت إضافة المهمة');
+}
+
+/* ============ RENDER TASKS ============ */
+function renderTasks() {
+  const container = document.getElementById('tasksList');
+  const actions = document.getElementById('tasksActions');
+
+  if (creatorState.tasks.length === 0) {
+    container.innerHTML = `
+      <div class="empty-tasks">
+        <div class="empty-tasks-icon">📝</div>
+        <p>ما فيش مهام لسه. ابدأ بإضافة مهام!</p>
+      </div>
+    `;
+    actions.style.display = 'none';
+    return;
+  }
+
+  actions.style.display = 'flex';
+
+  container.innerHTML = creatorState.tasks.map(task => {
+    const cat = CATEGORY_INFO[task.category] || CATEGORY_INFO.other;
+
+    return `
+      <div class="task-item" style="border-right-color: ${cat.color};">
+        <div class="task-time" style="background: linear-gradient(135deg, ${cat.color}, ${cat.color}dd);">
+          ${task.start}<br>${task.end}
+        </div>
+        <div class="task-info">
+          <div class="task-name">${cat.icon} ${task.name}</div>
+          <div class="task-meta">
+            <span class="task-category-badge" style="background: ${cat.color};">${cat.name}</span>
+            <span>⏱️ ${task.duration} دقيقة</span>
+          </div>
+        </div>
+        <div class="task-actions">
+          <button class="task-action-btn" onclick="deleteTask('${task.id}')" title="حذف">🗑️</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function deleteTask(id) {
+  creatorState.tasks = creatorState.tasks.filter(t => t.id !== id);
+  renderTasks();
+  updateStats();
+  showToast('🗑️ تم حذف المهمة');
+}
+
+function clearAllTasks() {
+  if (!confirm('⚠️ هل تريد حذف كل المهام؟')) return;
+  creatorState.tasks = [];
+  renderTasks();
+  updateStats();
+  showToast('🗑️ تم حذف كل المهام');
+}
+
+/* ============ STATS ============ */
+function updateStats() {
+  const total = creatorState.tasks.length;
+  const totalMin = creatorState.tasks.reduce((sum, t) => sum + t.duration, 0);
+
+  document.getElementById('totalTasksCount').textContent = total;
+  document.getElementById('totalMinutes').textContent = totalMin;
+  document.getElementById('totalHours').textContent = (totalMin / 60).toFixed(1);
+}
+
+/* ============ TEMPLATES ============ */
+function loadTemplate(type) {
+  const templates = {
+    student: [
+      { name: 'الاستيقاظ وصلاة الفجر', start: '06:00', end: '06:15', category: 'other' },
+      { name: 'حفظ القرآن', start: '06:15', end: '06:45', category: 'quran' },
+      { name: 'الفطور والاستعداد', start: '06:45', end: '07:00', category: 'meal' },
+      { name: 'المدرسة', start: '07:00', end: '14:30', category: 'school' },
+      { name: 'الغداء والراحة', start: '14:30', end: '15:15', category: 'meal' },
+      { name: 'واجبات مدرسية', start: '15:15', end: '16:30', category: 'study' },
+      { name: 'مراجعة القرآن', start: '16:30', end: '16:45', category: 'quran' },
+      { name: 'التدريب الرياضي', start: '17:00', end: '18:30', category: 'sport' },
+      { name: 'العشاء', start: '19:00', end: '19:45', category: 'meal' },
+      { name: 'وقت حر', start: '19:45', end: '20:30', category: 'other' },
+      { name: 'مراجعة قبل النوم', start: '20:30', end: '20:45', category: 'quran' },
+      { name: 'النوم', start: '21:00', end: '06:00', category: 'sleep' }
+    ],
+    weekend: [
+      { name: 'الاستيقاظ المتأخر', start: '08:00', end: '08:30', category: 'other' },
+      { name: 'فطور مريح', start: '08:30', end: '09:30', category: 'meal' },
+      { name: 'حفظ قرآن مكثف', start: '09:30', end: '11:00', category: 'quran' },
+      { name: 'تدريب رياضي طويل', start: '11:00', end: '13:00', category: 'sport' },
+      { name: 'الغداء', start: '13:30', end: '14:30', category: 'meal' },
+      { name: 'وقت حر / ترفيه', start: '14:30', end: '17:00', category: 'other' },
+      { name: 'مذاكرة خفيفة', start: '17:00', end: '18:00', category: 'study' },
+      { name: 'العشاء + وقت عائلي', start: '19:00', end: '20:30', category: 'meal' },
+      { name: 'مراجعة قرآن', start: '20:30', end: '21:00', category: 'quran' },
+      { name: 'النوم', start: '22:00', end: '08:00', category: 'sleep' }
+    ],
+    athlete: [
+      { name: 'الاستيقاظ + فجر', start: '05:30', end: '06:00', category: 'other' },
+      { name: 'جري صباحي', start: '06:00', end: '07:00', category: 'sport' },
+      { name: 'فطور بروتيني', start: '07:00', end: '07:30', category: 'meal' },
+      { name: 'حفظ قرآن', start: '07:30', end: '08:15', category: 'quran' },
+      { name: 'المدرسة', start: '08:15', end: '14:30', category: 'school' },
+      { name: 'الغداء', start: '14:30', end: '15:15', category: 'meal' },
+      { name: 'مذاكرة مركزة', start: '15:15', end: '16:30', category: 'study' },
+      { name: 'تدريب كرة القدم', start: '17:00', end: '19:00', category: 'sport' },
+      { name: 'تمارين استشفاء', start: '19:00', end: '19:30', category: 'sport' },
+      { name: 'العشاء', start: '19:30', end: '20:30', category: 'meal' },
+      { name: 'مراجعة قرآن + نوم', start: '20:30', end: '21:30', category: 'quran' },
+      { name: 'النوم', start: '21:30', end: '05:30', category: 'sleep' }
+    ],
+    exam: [
+      { name: 'الاستيقاظ + فجر', start: '05:00', end: '05:30', category: 'other' },
+      { name: 'مراجعة سريعة', start: '05:30', end: '06:30', category: 'study' },
+      { name: 'حفظ قرآن', start: '06:30', end: '07:00', category: 'quran' },
+      { name: 'فطور + استعداد', start: '07:00', end: '07:30', category: 'meal' },
+      { name: 'المدرسة / الامتحان', start: '07:30', end: '13:00', category: 'school' },
+      { name: 'غداء + راحة', start: '13:00', end: '14:00', category: 'meal' },
+      { name: 'مذاكرة مكثفة', start: '14:00', end: '16:30', category: 'study' },
+      { name: 'راحة قصيرة', start: '16:30', end: '17:00', category: 'other' },
+      { name: 'مذاكرة مكثفة 2', start: '17:00', end: '19:00', category: 'study' },
+      { name: 'عشاء + راحة', start: '19:00', end: '20:00', category: 'meal' },
+      { name: 'مراجعة أخيرة', start: '20:00', end: '21:30', category: 'study' },
+      { name: 'النوم', start: '22:00', end: '05:00', category: 'sleep' }
+    ],
+    quran: [
+      { name: 'الاستيقاظ + فجر', start: '05:00', end: '05:30', category: 'other' },
+      { name: 'حفظ قرآن (جديد)', start: '05:30', end: '07:00', category: 'quran' },
+      { name: 'فطور', start: '07:00', end: '07:45', category: 'meal' },
+      { name: 'مراجعة قريبة', start: '07:45', end: '09:00', category: 'quran' },
+      { name: 'المدرسة', start: '09:00', end: '14:00', category: 'school' },
+      { name: 'غداء + راحة', start: '14:00', end: '15:00', category: 'meal' },
+      { name: 'مراجعة بعيدة', start: '15:00', end: '16:30', category: 'quran' },
+      { name: 'تدريب رياضي', start: '17:00', end: '18:30', category: 'sport' },
+      { name: 'عشاء', start: '19:00', end: '19:45', category: 'meal' },
+      { name: 'مراجعة قرآن', start: '19:45', end: '21:00', category: 'quran' },
+      { name: 'النوم', start: '21:30', end: '05:00', category: 'sleep' }
+    ],
+    empty: []
+  };
+
+  const template = templates[type] || [];
+
+  if (type === 'empty') {
+    if (!confirm('⚠️ سيتم حذف المهام الحالية. هل أنت متأكد؟')) return;
+  }
+
+  creatorState.tasks = template.map((t, i) => ({
+    id: 'task_' + Date.now() + '_' + i,
+    ...t,
+    duration: timeToMinutes(t.end) > timeToMinutes(t.start)
+      ? timeToMinutes(t.end) - timeToMinutes(t.start)
+      : (24 * 60 - timeToMinutes(t.start) + timeToMinutes(t.end)),
+    notes: ''
+  }));
+
+  renderTasks();
+  updateStats();
+  showToast(`✅ تم تحميل ${template.length} مهمة`);
+
+  // Switch to build tab
+  switchCreatorTabTo('build');
+}
+
+function switchCreatorTabTo(tab) {
+  document.querySelectorAll('.creator-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+  const tabIndex = { build: 0, templates: 1, preview: 2, export: 3 }[tab];
+  document.querySelectorAll('.creator-tab')[tabIndex].classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+/* ============ PREVIEW ============ */
+function renderPreview() {
+  const container = document.getElementById('previewContainer');
+
+  if (creatorState.tasks.length === 0) {
+    container.innerHTML = `
+      <div class="empty-tasks">
+        <div class="empty-tasks-icon">👀</div>
+        <p>ما فيش مهام لسه. ارجع لـ "إنشاء يدوي" وأضف مهامك.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const html = `
+    <div style="margin-bottom: 20px;">
+      <h4 style="font-size: 1.2rem; color: ${creatorState.color}; margin-bottom: 8px;">
+        📅 ${creatorState.tableName}
+      </h4>
+      <p style="font-size: 13px; color: var(--text-light);">
+        من ${creatorState.startTime} إلى ${creatorState.endTime} • ${creatorState.tasks.length} مهمة
+      </p>
+    </div>
+
+    <table class="preview-table">
+      <thead>
+        <tr>
+          <th>الوقت</th>
+          <th>المهمة</th>
+          <th>الفئة</th>
+          <th>المدة</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${creatorState.tasks.map(task => {
+          const cat = CATEGORY_INFO[task.category] || CATEGORY_INFO.other;
+          return `
+            <tr>
+              <td><strong>${task.start} - ${task.end}</strong></td>
+              <td>${cat.icon} ${task.name}</td>
+              <td><span class="task-category-badge" style="background: ${cat.color};">${cat.name}</span></td>
+              <td>${task.duration} د</td>
+            </tr>
+          `;
+        }).join('')}
+      </tbody>
+    </table>
+  `;
+
+  container.innerHTML = html;
+}
+
+/* ============ EXPORT ============ */
+function exportAs(format) {
+  if (creatorState.tasks.length === 0) {
+    showToast('⚠️ ما فيش مهام للتصدير');
+    return;
+  }
+
+  const data = {
+    tableName: creatorState.tableName,
+    startTime: creatorState.startTime,
+    endTime: creatorState.endTime,
+    color: creatorState.color,
+    tasks: creatorState.tasks.map(t => ({
+      name: t.name,
+      start: t.start,
+      end: t.end,
+      category: t.category,
+      notes: t.notes
+    })),
+    exportedAt: new Date().toISOString(),
+    version: '4.0'
+  };
+
+  if (format === 'json') {
+    const json = JSON.stringify(data, null, 2);
+    downloadFile(json, `${creatorState.tableName}.json`, 'application/json');
+    showToast('✅ تم تصدير JSON');
+  } else if (format === 'txt') {
+    let text = `📅 ${creatorState.tableName}\n`;
+    text += `${'='.repeat(40)}\n\n`;
+    creatorState.tasks.forEach(t => {
+      const cat = CATEGORY_INFO[t.category] || CATEGORY_INFO.other;
+      text += `⏰ ${t.start} - ${t.end}\n`;
+      text += `${cat.icon} ${t.name}\n`;
+      text += `📌 ${cat.name} • ${t.duration} دقيقة\n`;
+      if (t.notes) text += `📝 ${t.notes}\n`;
+      text += '\n';
+    });
+    text += `\n📊 الإجمالي: ${creatorState.tasks.length} مهمة\n`;
+    text += `⏱️ المدة: ${creatorState.tasks.reduce((s, t) => s + t.duration, 0)} دقيقة\n`;
+
+    downloadFile(text, `${creatorState.tableName}.txt`, 'text/plain');
+    showToast('✅ تم تصدير النص');
+  } else if (format === 'print') {
+    window.print();
+  }
+}
+
+function downloadFile(content, filename, mimeType) {
+  const blob = new Blob([content], { type: mimeType + ';charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ============ IMPORT ============ */
+function importTable(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+
+      if (!data.tasks || !Array.isArray(data.tasks)) {
+        throw new Error('الملف مش صحيح');
+      }
+
+      creatorState.tableName = data.tableName || 'جدول مستورد';
+      creatorState.color = data.color || '#7e57c2';
+      creatorState.tasks = data.tasks.map((t, i) => ({
+        id: 'task_' + Date.now() + '_' + i,
+        name: t.name,
+        start: t.start,
+        end: t.end,
+        category: t.category || 'other',
+        notes: t.notes || '',
+        duration: timeToMinutes(t.end) > timeToMinutes(t.start)
+          ? timeToMinutes(t.end) - timeToMinutes(t.start)
+          : (24 * 60 - timeToMinutes(t.start) + timeToMinutes(t.end))
+      }));
+
+      renderTasks();
+      updateStats();
+
+      document.getElementById('importStatus').innerHTML = `
+        <div style="background: rgba(67,160,71,0.15); color: #2e7d32; padding: 12px; border-radius: 10px;">
+          ✅ تم استيراد ${data.tasks.length} مهمة بنجاح
+        </div>
+      `;
+
+      showToast('✅ تم الاستيراد');
+    } catch (err) {
+      document.getElementById('importStatus').innerHTML = `
+        <div style="background: rgba(229,57,53,0.15); color: #c62828; padding: 12px; border-radius: 10px;">
+          ❌ فشل الاستيراد: ${err.message}
+        </div>
+      `;
+      showToast('❌ فشل الاستيراد');
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* ============ SAVE TO APP ============ */
+function saveToApp() {
+  if (creatorState.tasks.length === 0) {
+    showToast('⚠️ ما فيش مهام لحفظها');
+    return;
+  }
+
+  try {
+    // حفظ في localStorage
+    const state = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+
+    state.schedule = creatorState.tasks.map((t, i) => ({
+      id: 'task_' + i,
+      start: t.start,
+      end: t.end,
+      title: t.name,
+      category: t.category,
+      desc: t.notes || '',
+      startMin: timeToMinutes(t.start),
+      endMin: timeToMinutes(t.end)
+    }));
+    state.completed = {};
+
+    localStorage.setItem('yawmi_yawmi_v4', JSON.stringify(state));
+
+    showToast('✅ تم حفظ الجدول في التطبيق!');
+    setTimeout(() => {
+      if (confirm('هل تريد فتح التطبيق الآن؟')) {
+        window.location.href = 'app.html';
+      }
+    }, 1000);
+  } catch (e) {
+    console.error(e);
+    showToast('❌ فشل الحفظ');
+  }
+}
+
+/* ============ SAVE TABLE ============ */
+function saveTable() {
+  try {
+    const state = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+    state.customTables = state.customTables || [];
+
+    const table = {
+      id: 'table_' + Date.now(),
+      name: creatorState.tableName,
+      color: creatorState.color,
+      tasks: creatorState.tasks,
+      savedAt: new Date().toISOString()
+    };
+
+    state.customTables.push(table);
+    localStorage.setItem('yawmi_yawmi_v4', JSON.stringify(state));
+
+    showToast('✅ تم حفظ الجدول');
+  } catch (e) {
+    showToast('❌ فشل الحفظ');
+  }
+}
+
+/* ============ HELPERS ============ */
+function timeToMinutes(t) {
+  if (!t) return 0;
+  const [h, m] = t.split(':').map(Number);
+  return h * 60 + m;
+}
+
+function showToast(message) {
+  let toast = document.getElementById('__custom_toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = '__custom_toast';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #333;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 14px;
+      z-index: 10000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: all 0.3s ease;
+      max-width: 90%;
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    `;
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  setTimeout(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+  }, 10);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(100px)';
+  }, 2500);
+}
+
+/* ============ NAV ============ */
+function toggleNavMenu() {
+  const links = document.getElementById('navLinks');
+  const toggle = document.querySelector('.nav-toggle');
+  links.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('active');
+    document.querySelector('.nav-toggle').classList.remove('active');
+  });
+});
+
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  if (window.pageYOffset > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+// Dark mode
+try {
+  const saved = JSON.parse(localStorage.getItem('yawmi_yawmi_v4') || '{}');
+  if (saved.darkMode) {
+    document.body.classList.add('dark');
+  }
+} catch (e) {}
+
+console.log('🎨 Table Creator Page Loaded');
+</script>
+
+</body>
+</html>
