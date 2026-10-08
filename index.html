@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#1a237e">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>يومي - منظّم الطالب الذكي</title>
+<title>يومي v4 - منظّم الطالب الذكي</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; -webkit-tap-highlight-color: transparent; }
   
@@ -23,6 +23,7 @@
     --quran: #fdd835;
     --sleep: #8e24aa;
     --school: #1e88e5;
+    --gold: #ffd700;
   }
   
   body.dark {
@@ -110,6 +111,7 @@
   .btn-danger { background: linear-gradient(135deg, #e53935, #c62828); }
   .btn-success { background: linear-gradient(135deg, #43a047, #2e7d32); }
   .btn-small { padding: 10px; font-size: 14px; margin-top: 5px; }
+  .btn-gold { background: linear-gradient(135deg, #ffa000, #ff6f00); }
   
   .toggle-row {
     display: flex; justify-content: space-between; align-items: center;
@@ -151,6 +153,7 @@
   .mood-selector {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
   }
+  .mood-selector.two { grid-template-columns: repeat(2, 1fr); }
   .mood-option {
     padding: 12px 8px; border-radius: 12px; text-align: center;
     border: 2px solid var(--border); background: var(--card);
@@ -261,17 +264,135 @@
   body.dark .stat-value { color: #7986cb; }
   .stat-label { font-size: 11px; color: var(--text-light); margin-top: 4px; }
   
+  /* Badges Section - NEW */
+  .badge-category {
+    margin-bottom: 20px;
+  }
+  .badge-category-title {
+    font-size: 14px; font-weight: bold; color: var(--primary);
+    margin-bottom: 10px; display: flex; justify-content: space-between;
+    align-items: center;
+  }
+  body.dark .badge-category-title { color: #7986cb; }
+  .badge-category-count {
+    background: var(--bg); padding: 3px 10px; border-radius: 12px;
+    font-size: 11px; color: var(--text-light);
+  }
   .badges-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .badge-item {
     text-align: center; padding: 10px 5px; border-radius: 12px;
     background: var(--bg); transition: 0.3s; opacity: 0.4;
+    position: relative;
   }
   .badge-item.unlocked {
     opacity: 1; background: linear-gradient(135deg, #fff9c4, #ffeb3b);
     box-shadow: 0 4px 12px rgba(255,235,59,0.4);
   }
+  .badge-item.unlocked.gold {
+    background: linear-gradient(135deg, #ffe082, #ffa000);
+    box-shadow: 0 4px 15px rgba(255,160,0,0.5);
+  }
   .badge-icon { font-size: 28px; }
-  .badge-name { font-size: 10px; font-weight: bold; margin-top: 4px; color: var(--text); }
+  .badge-name { font-size: 9px; font-weight: bold; margin-top: 4px; color: var(--text); line-height: 1.2; }
+  
+  /* Workout Library - NEW */
+  .workout-tabs {
+    display: flex; gap: 8px; margin-bottom: 15px;
+    overflow-x: auto; padding-bottom: 5px;
+  }
+  .workout-tab {
+    padding: 10px 16px; border-radius: 20px;
+    background: var(--bg); color: var(--text-light);
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    white-space: nowrap; border: 2px solid transparent;
+    transition: 0.2s;
+  }
+  .workout-tab.active {
+    background: var(--primary); color: white;
+    border-color: var(--primary-light);
+  }
+  .workout-list { display: flex; flex-direction: column; gap: 10px; }
+  .workout-card {
+    background: var(--card); border-radius: 14px; padding: 14px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    cursor: pointer; transition: 0.2s;
+    border: 2px solid transparent;
+  }
+  .workout-card:active { transform: scale(0.98); }
+  .workout-card.selected {
+    border-color: var(--primary-light);
+    background: rgba(57,73,171,0.05);
+  }
+  .workout-icon {
+    font-size: 36px; width: 56px; height: 56px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg); border-radius: 14px;
+    flex-shrink: 0;
+  }
+  .workout-info { flex: 1; }
+  .workout-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .workout-meta { font-size: 12px; color: var(--text-light); display: flex; gap: 10px; }
+  .workout-arrow { color: var(--text-light); font-size: 20px; }
+  
+  /* 3D Viewer Modal */
+  .viewer-modal {
+    position: fixed; inset: 0; background: #000;
+    z-index: 700; display: none;
+    flex-direction: column;
+  }
+  .viewer-modal.show { display: flex; }
+  .viewer-header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white; padding: 16px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .viewer-header h3 { font-size: 18px; }
+  .viewer-close {
+    background: rgba(255,255,255,0.2); border: none; color: white;
+    width: 36px; height: 36px; border-radius: 50%;
+    font-size: 18px; cursor: pointer;
+  }
+  .viewer-body {
+    flex: 1; position: relative;
+    background: linear-gradient(135deg, #1a237e, #0d47a1);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .viewer-canvas {
+    width: 100%; height: 100%;
+    display: block;
+  }
+  .viewer-instructions {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.9));
+    color: white; padding: 30px 20px 20px;
+    font-size: 14px; line-height: 1.7;
+  }
+  .viewer-instructions ol {
+    padding-right: 25px;
+    margin-top: 8px;
+  }
+  .viewer-instructions li { margin-bottom: 4px; }
+  .viewer-controls {
+    background: #111; padding: 12px;
+    display: flex; gap: 8px; justify-content: center;
+  }
+  .viewer-controls .btn {
+    flex: 1; padding: 12px; font-size: 14px; margin: 0;
+  }
+  .viewer-badge {
+    position: absolute; top: 15px; right: 15px;
+    background: rgba(255,255,255,0.15); color: white;
+    padding: 6px 12px; border-radius: 15px;
+    font-size: 11px; backdrop-filter: blur(10px);
+  }
+  
+  /* Gender select */
+  .gender-options {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    margin-bottom: 12px;
+  }
   
   .hidden { display: none !important; }
   
@@ -284,7 +405,7 @@
   .nav-item {
     display: flex; flex-direction: column; align-items: center;
     color: var(--text-light); font-size: 10px; cursor: pointer;
-    padding: 5px 10px; border-radius: 12px; transition: 0.2s; gap: 2px;
+    padding: 5px 8px; border-radius: 12px; transition: 0.2s; gap: 2px;
   }
   .nav-item.active { color: var(--primary); }
   body.dark .nav-item.active { color: #7986cb; }
@@ -488,22 +609,33 @@
     margin-bottom: 10px; font-size: 13px; line-height: 1.6;
   }
   .tactical-tip strong { display: block; margin-bottom: 4px; font-size: 14px; }
-
-  /* Download page */
+  
+  /* Download */
   #downloadScreen .btn {
-    text-decoration: none;
-    display: block;
-    text-align: center;
-    padding: 14px;
-    margin-top: 0;
+    text-decoration: none; display: block; text-align: center;
+    padding: 14px; margin-top: 0;
   }
   #downloadScreen ol {
-    padding-right: 25px;
-    margin: 8px 0;
+    padding-right: 25px; margin: 8px 0;
   }
-  #downloadScreen ol li {
-    margin-bottom: 4px;
+  #downloadScreen ol li { margin-bottom: 4px; }
+  
+  /* User Profile Card */
+  .user-profile {
+    background: linear-gradient(135deg, #ffa000, #f57c00);
+    color: white; border-radius: 18px; padding: 16px;
+    margin-bottom: 15px; display: flex; align-items: center; gap: 15px;
+    box-shadow: 0 4px 15px rgba(255,160,0,0.3);
   }
+  .user-avatar {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+  }
+  .user-info { flex: 1; }
+  .user-name { font-size: 18px; font-weight: bold; margin-bottom: 4px; }
+  .user-details { font-size: 12px; opacity: 0.9; }
 </style>
 </head>
 <body>
@@ -511,7 +643,7 @@
 <header>
   <div class="header-top">
     <div>
-      <h1>⚽ يومي</h1>
+      <h1>⚽ يومي <span style="font-size:12px; opacity:0.8;">v4</span></h1>
       <p>منظّم الطالب الذكي</p>
     </div>
     <div class="header-actions">
@@ -530,7 +662,39 @@
 
 <div class="container">
 
+  <!-- ============ شاشة الإدخال ============ -->
   <div id="inputScreen">
+    
+    <!-- البيانات الشخصية -->
+    <div class="card">
+      <h2><div class="title-text">👤 بياناتك الشخصية</div></h2>
+      
+      <label>الاسم</label>
+      <input type="text" id="userName" placeholder="اكتب اسمك هنا">
+      
+      <label>العمر</label>
+      <input type="number" id="userAge" value="13" min="10" max="18">
+      
+      <label>الجنس</label>
+      <div class="gender-options">
+        <div class="mood-option selected" data-gender="male" onclick="selectGender('male')">
+          <span class="mood-emoji">👦</span>
+          <div class="mood-text">ولد</div>
+        </div>
+        <div class="mood-option" data-gender="female" onclick="selectGender('female')">
+          <span class="mood-emoji">👧</span>
+          <div class="mood-text">بنت</div>
+        </div>
+      </div>
+      
+      <label>الطول (سم) - اختياري</label>
+      <input type="number" id="userHeight" placeholder="155" min="100" max="220">
+      
+      <label>الوزن (كجم) - اختياري</label>
+      <input type="number" id="userWeight" placeholder="45" min="20" max="150">
+    </div>
+
+    <!-- وضع اليوم -->
     <div class="card">
       <h2><div class="title-text">🏖️ وضع اليوم</div></h2>
       <div class="toggle-row">
@@ -539,6 +703,7 @@
       </div>
     </div>
 
+    <!-- الطاقة والمزاج -->
     <div class="card">
       <h2><div class="title-text">😊 طاقتك اليوم</div></h2>
       <div class="mood-selector">
@@ -557,6 +722,7 @@
       </div>
     </div>
 
+    <!-- الأوقات -->
     <div class="card">
       <h2><div class="title-text">🌅 أوقاتك اليومية</div></h2>
       <label>وقت الاستيقاظ</label>
@@ -569,12 +735,14 @@
       </div>
     </div>
 
+    <!-- الواجبات -->
     <div class="card">
       <h2><div class="title-text">📚 الواجبات المدرسية</div></h2>
       <div id="homeworkList"></div>
       <button class="add-hw" onclick="addHomework()">➕ إضافة واجب جديد</button>
     </div>
 
+    <!-- القرآن -->
     <div class="card">
       <h2><div class="title-text">📖 الحفظ القرآني</div></h2>
       <div class="quran-section">
@@ -591,6 +759,7 @@
       </div>
     </div>
 
+    <!-- الرياضة -->
     <div class="card">
       <h2><div class="title-text">⚽ الرياضة والتدريب</div></h2>
       <label>وقت التدريب الرياضي</label>
@@ -610,7 +779,12 @@
     <button class="btn" onclick="generateSchedule()">🎯 ولّد جدولي الآن</button>
   </div>
 
+  <!-- ============ شاشة الجدول ============ -->
   <div id="scheduleScreen" class="hidden">
+    
+    <!-- User Profile -->
+    <div class="user-profile" id="userProfileCard"></div>
+    
     <div id="weatherCard"></div>
     <div id="weekendScheduleBadge"></div>
     <div id="tacticalTip"></div>
@@ -631,52 +805,14 @@
     
     <div class="timeline" id="timeline"></div>
     
-    <button class="ai-btn" onclick="emergencyAdjust()">🤖 تعديل طارئ</button>
+    <button class="ai-btn" onclick="emergencyAdjust()">🤖 تعديل طارئ (تأخرت / ظرف مفاجئ)</button>
     <button class="btn btn-secondary" onclick="backToInput()" style="margin-top: 10px;">🔄 تعديل البيانات</button>
     <button class="btn" onclick="resetDay()" style="margin-top: 10px;">🌅 بداية يوم جديد</button>
   </div>
 
-  <div id="statsScreen" class="hidden">
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-value" id="statStreak">0</div>
-        <div class="stat-label">🔥 أيام متتالية</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="statPoints">0</div>
-        <div class="stat-label">⭐ نقاط</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="statTasks">0</div>
-        <div class="stat-label">✅ مهام مكتملة</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="statQuran">0</div>
-        <div class="stat-label">📖 صفحات قرآن</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2><div class="title-text">🎁 مكافآت عائلية</div></h2>
-      <div id="rewardsList"></div>
-      <button class="add-hw" onclick="addReward()" style="margin-top: 10px;">➕ إضافة مكافأة</button>
-    </div>
-
-    <div class="card">
-      <h2><div class="title-text">🏆 الشارات</div></h2>
-      <div class="badges-grid" id="badgesGrid"></div>
-    </div>
-
-    <div class="card">
-      <h2><div class="title-text">📈 آخر 7 أيام</div></h2>
-      <div id="weeklyChart" style="display: flex; align-items: flex-end; gap: 6px; height: 120px; padding: 10px 0;"></div>
-    </div>
-
-    <button class="btn" onclick="shareProgress()" style="margin-bottom: 10px;">📤 مشاركة إنجازي</button>
-    <button class="btn btn-danger" onclick="resetAllData()">🗑️ حذف كل البيانات</button>
-  </div>
-
+  <!-- ============ شاشة التمارين ============ -->
   <div id="workoutScreen" class="hidden">
+    
     <div class="card">
       <h2><div class="title-text">⏱️ مؤقت التمارين</div></h2>
       <div class="stopwatch-display" id="stopwatchDisplay">00:00.0</div>
@@ -698,10 +834,61 @@
       </div>
     </div>
 
+    <!-- مكتبة التمارين -->
     <div class="card">
-      <h2><div class="title-text">💪 تمارين المدافع المنزلية</div></h2>
-      <div id="homeWorkoutList"></div>
+      <h2><div class="title-text">📚 مكتبة التمارين</div></h2>
+      <div class="workout-tabs">
+        <div class="workout-tab active" data-cat="agility" onclick="selectWorkoutCat('agility')">🏃 رشاقة</div>
+        <div class="workout-tab" data-cat="strength" onclick="selectWorkoutCat('strength')">💪 قوة</div>
+        <div class="workout-tab" data-cat="endurance" onclick="selectWorkoutCat('endurance')">🫀 تحمل</div>
+      </div>
+      <div class="workout-list" id="workoutList"></div>
     </div>
+
+  </div>
+
+  <!-- ============ شاشة الإحصائيات ============ -->
+  <div id="statsScreen" class="hidden">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="statStreak">0</div>
+        <div class="stat-label">🔥 أيام متتالية</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statPoints">0</div>
+        <div class="stat-label">⭐ نقاط</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statTasks">0</div>
+        <div class="stat-label">✅ مهام مكتملة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statQuran">0</div>
+        <div class="stat-label">📖 صفحات قرآن</div>
+      </div>
+    </div>
+
+    <!-- الإنجازات -->
+    <div class="card">
+      <h2><div class="title-text">🏆 الإنجازات</div></h2>
+      <div id="badgesContainer"></div>
+    </div>
+
+    <!-- المكافآت -->
+    <div class="card">
+      <h2><div class="title-text">🎁 مكافآت عائلية</div></h2>
+      <div id="rewardsList"></div>
+      <button class="add-hw" onclick="addReward()" style="margin-top: 10px;">➕ إضافة مكافأة</button>
+    </div>
+
+    <!-- الرسم البياني -->
+    <div class="card">
+      <h2><div class="title-text">📈 آخر 7 أيام</div></h2>
+      <div id="weeklyChart" style="display: flex; align-items: flex-end; gap: 6px; height: 120px; padding: 10px 0;"></div>
+    </div>
+
+    <button class="btn" onclick="shareProgress()" style="margin-bottom: 10px;">📤 مشاركة إنجازي</button>
+    <button class="btn btn-danger" onclick="resetAllData()">🗑️ حذف كل البيانات</button>
   </div>
 
   <!-- ============ شاشة التحميل ============ -->
@@ -775,6 +962,7 @@
 
 </div>
 
+<!-- Bottom Navigation -->
 <div class="bottom-nav">
   <div class="nav-item" onclick="switchTab('input')" id="navInput">
     <span class="nav-icon">✏️</span><span>الإدخال</span>
@@ -793,6 +981,33 @@
   </div>
 </div>
 
+<!-- 3D Viewer Modal -->
+<div class="viewer-modal" id="viewerModal">
+  <div class="viewer-header">
+    <h3 id="viewerTitle">🏋️ عرض التمرين</h3>
+    <button class="viewer-close" onclick="closeViewer()">×</button>
+  </div>
+  <div class="viewer-body">
+    <div class="viewer-badge" id="viewerBadge">عرض توضيحي</div>
+    <div class="viewer-canvas" id="viewerCanvas" style="display: flex; align-items: center; justify-content: center; flex-direction: column; color: white;">
+      <!-- شخص 3D بسيط بـ CSS -->
+      <div style="font-size: 120px; animation: bounce 1s infinite;">🧍‍♂️</div>
+      <div style="font-size: 20px; margin-top: 20px; opacity: 0.9;" id="viewerExerciseName">جاري التحميل...</div>
+      <div style="font-size: 14px; margin-top: 10px; opacity: 0.7;">(عرض توضيحي - المرحلة التالية: 3D حقيقي)</div>
+    </div>
+    <div class="viewer-instructions">
+      <strong>📝 التعليمات:</strong>
+      <ol id="viewerInstructions"></ol>
+    </div>
+  </div>
+  <div class="viewer-controls">
+    <button class="btn btn-success" onclick="playViewerAnimation()">▶️ تشغيل</button>
+    <button class="btn btn-gold" onclick="showToast('📱 الواقع المعزز قريباً!')">📱 AR</button>
+    <button class="btn btn-secondary" onclick="closeViewer()">✖️ إغلاق</button>
+  </div>
+</div>
+
+<!-- Pomodoro Overlay -->
 <div class="pomodoro-overlay" id="pomodoroOverlay">
   <div class="pomodoro-box">
     <div class="pomodoro-mode" id="pomodoroMode">🍅 وقت التركيز</div>
@@ -816,6 +1031,7 @@
   </div>
 </div>
 
+<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-icon" id="modalIcon">🎉</div>
@@ -826,20 +1042,28 @@
   </div>
 </div>
 
+<!-- Notif -->
 <div class="notif-banner" id="notifBanner">
   <div class="notif-title" id="notifTitle"></div>
   <div class="notif-body" id="notifBody"></div>
 </div>
 
+<!-- Toast -->
 <div class="toast" id="toast"></div>
-
 <script>
 /* ============================================
    STATE & STORAGE
 ============================================ */
-const STORAGE_KEY = 'yawmi_v3';
+const STORAGE_KEY = 'yawmi_v4';
 
 const defaultState = {
+  user: {
+    name: '',
+    age: 13,
+    gender: 'male',
+    height: null,
+    weight: null
+  },
   inputs: {
     wakeUp: '06:00',
     schoolStart: '07:00',
@@ -859,6 +1083,13 @@ const defaultState = {
   totalPoints: 0,
   totalTasksCompleted: 0,
   totalQuranPages: 0,
+  totalWorkouts: 0,
+  totalStrength: 0,
+  totalAgility: 0,
+  totalEndurance: 0,
+  pomodoroSessions: 0,
+  earlyWakeups: 0,
+  perfectDays: 0,
   weeklyHistory: {},
   darkMode: false,
   soundEnabled: true,
@@ -869,10 +1100,99 @@ const defaultState = {
     { id: 'r2', name: '🍕 رحلة مطعم نهاية الأسبوع', cost: 1000 },
     { id: 'r3', name: '⚽ كرة قدم جديدة', cost: 2000 }
   ],
-  weather: null
+  weather: null,
+  currentWorkoutCat: 'agility'
 };
 
 let state = JSON.parse(JSON.stringify(defaultState));
+
+/* ============================================
+   WORKOUT LIBRARY (18 Exercises)
+============================================ */
+const WORKOUT_LIBRARY = {
+  agility: [
+    { id: 'a1', name: 'سلّم الرشاقة', duration: '5 دقائق', icon: '🪜', desc: 'خطوات سريعة داخل/خارج', instructions: ['قف أمام السلّم', 'خطوة داخل ثم خارج بسرعة', 'كرر بالقدمين بالتبادل', 'حافظ على ظهرك مستقيم'] },
+    { id: 'a2', name: 'تغيير الاتجاه 180°', duration: '3×10', icon: '🔄', desc: 'عدو + دوران', instructions: ['اركض 5 أمتار للأمام', 'استدر 180 درجة بسرعة', 'ارجع للبداية', 'كرر 10 مرات'] },
+    { id: 'a3', name: 'تمركز الظل', duration: '5 دقائق', icon: '🎯', desc: 'تحرك دفاعي بدون كرة', instructions: ['قف في وضع الدفاع', 'تحرك يميناً ويساراً', 'تخيل مهاجم أمامك', 'حافظ على وزنك على مقدمة القدم'] },
+    { id: 'a4', name: 'Zig-Zag', duration: '4 مجموعات', icon: '⚡', desc: 'عدو بين العلامات', instructions: ['ضع 5 علامات متعرجة', 'اركض بينها بسرعة', 'لا تلمس العلامات', 'كرر 4 مرات'] },
+    { id: 'a5', name: 'قفز جانبي', duration: '3×15', icon: '↔️', desc: 'قفز يمين-يسار', instructions: ['قف على قدم واحدة', 'اقفز يميناً ثم يساراً', 'حافظ على توازنك', 'كرر 15 مرة'] },
+    { id: 'a6', name: 'سلم + كرة', duration: '5 دقائق', icon: '⚽', desc: 'رشاقة + تحكم', instructions: ['ضع الكرة عند نهاية السلم', 'اركض على السلم', 'اسيطر على الكرة', 'ارجع بنفس الطريقة'] }
+  ],
+  strength: [
+    { id: 's1', name: 'قرفصاء (Squats)', duration: '3×15', icon: '🦵', desc: 'لتقوية الأرجل', instructions: ['قف بقدمين متباعدتين', 'انزل كأنك تجلس على كرسي', 'حافظ على ظهرك مستقيم', 'ارجع للوضع الأول'] },
+    { id: 's2', name: 'بلانك (Plank)', duration: '3×45ث', icon: '💪', desc: 'لتقوية البطن', instructions: ['استلقِ على بطنك', 'ارفع جسمك على الكوعين', 'حافظ على جسمك مستقيماً', 'اثبت 45 ثانية'] },
+    { id: 's3', name: 'ضغط (Push-ups)', duration: '3×10', icon: '🏋️', desc: 'لتقوية الصدر والذراع', instructions: ['استلقِ على بطنك', 'ضع يديك على جانبيك', 'ارفع جسمك بذراعيك', 'انزل ببطء'] },
+    { id: 's4', name: 'Lunges', duration: '3×12', icon: '🦿', desc: 'لتقوية الفخذ', instructions: ['قف مستقيم', 'خطوة واسعة للأمام', 'انزل بالركبة الخلفية', 'ارجع وكرر بالقدم الأخرى'] },
+    { id: 's5', name: 'جسر المؤخرة', duration: '3×20', icon: '🌉', desc: 'لتقوية الظهر', instructions: ['استلقِ على ظهرك', 'اثنِ ركبتيك', 'ارفع حوضك لأعلى', 'اثبت ثم انزل'] },
+    { id: 's6', name: 'رفع السمانة', duration: '3×20', icon: '👟', desc: 'لتقوية الساق', instructions: ['قف مستقيم', 'ارفع كعبيك لأعلى', 'اثبت ثانية', 'انزل ببطء'] }
+  ],
+  endurance: [
+    { id: 'e1', name: 'جري خفيف', duration: '15 دقيقة', icon: '🏃', desc: 'تسخين وإطالة', instructions: ['ابدأ بمشي 2 دقيقة', 'اركض بسرعة معتدلة', 'تنفس بإيقاع منتظم', 'اختم بمشي 2 دقيقة'] },
+    { id: 'e2', name: 'جري متقطع', duration: '8×1 د', icon: '⚡', desc: 'سرعة + راحة', instructions: ['اركض سريعاً دقيقة', 'امشِ دقيقة للراحة', 'كرر 8 مرات', 'حافظ على تنفسك'] },
+    { id: 'e3', name: 'ركوب دراجة', duration: '20 دقيقة', icon: '🚴', desc: 'تحمل عام', instructions: ['ابدأ بسرعة معتدلة', 'زد السرعة تدريجياً', 'حافظ على إيقاع ثابت', 'اختم ببطء'] },
+    { id: 'e4', name: 'قفز الحبل', duration: '3×1 د', icon: '🪢', desc: 'تحمل + رشاقة', instructions: ['امسك الحبل بيديك', 'اقفز بقدمين معاً', 'حافظ على إيقاع ثابت', 'خذ راحة 30 ثانية بين المجموعات'] },
+    { id: 'e5', name: 'تمدد وإطالة', duration: '10 دقائق', icon: '🧘', desc: 'استشفاء', instructions: ['ابدأ بتمدد الرقبة', 'ثم الكتفين والذراعين', 'ثم الظهر والفخذين', 'اختم بتمدد الساقين'] },
+    { id: 'e6', name: 'مشي سريع', duration: '20 دقيقة', icon: '🚶', desc: 'تحمل خفيف', instructions: ['امشِ بخطوات واسعة', 'حرك ذراعيك بشكل طبيعي', 'حافظ على تنفس منتظم', 'السرعة: 6-7 كم/س'] }
+  ]
+};
+
+/* ============================================
+   BADGES SYSTEM (27 Badges in 5 Categories)
+============================================ */
+const BADGES = {
+  streak: {
+    title: '🔥 شارات الاستمرارية',
+    items: [
+      { id: 'st1', icon: '🌱', name: 'بداية الطريق', check: s => s.streak >= 1 },
+      { id: 'st2', icon: '🔥', name: '3 أيام', check: s => s.streak >= 3 },
+      { id: 'st3', icon: '🔥🔥', name: 'أسبوع كامل', check: s => s.streak >= 7 },
+      { id: 'st4', icon: '💪💪', name: 'أسبوعين', check: s => s.streak >= 14 },
+      { id: 'st5', icon: '👑', name: 'شهر كامل', check: s => s.streak >= 30 },
+      { id: 'st6', icon: '🌟', name: 'أسطورة', check: s => s.streak >= 100, gold: true }
+    ]
+  },
+  points: {
+    title: '⭐ شارات النقاط',
+    items: [
+      { id: 'p1', icon: '⭐', name: 'مبتدئ', check: s => s.totalPoints >= 50 },
+      { id: 'p2', icon: '⭐⭐', name: 'نشيط', check: s => s.totalPoints >= 100 },
+      { id: 'p3', icon: '⭐⭐⭐', name: 'مجتهد', check: s => s.totalPoints >= 250 },
+      { id: 'p4', icon: '💎', name: 'محترف', check: s => s.totalPoints >= 500 },
+      { id: 'p5', icon: '👑', name: 'خبير', check: s => s.totalPoints >= 1000, gold: true }
+    ]
+  },
+  quran: {
+    title: '📖 شارات القرآن',
+    items: [
+      { id: 'q1', icon: '📖', name: 'أول صفحة', check: s => s.totalQuranPages >= 1 },
+      { id: 'q2', icon: '📚', name: '10 صفحات', check: s => s.totalQuranPages >= 10 },
+      { id: 'q3', icon: '📚📚', name: '50 صفحة', check: s => s.totalQuranPages >= 50 },
+      { id: 'q4', icon: '🕌', name: 'جزء كامل', check: s => s.totalQuranPages >= 20 },
+      { id: 'q5', icon: '👑', name: 'ملك الحفظ', check: s => s.totalQuranPages >= 200, gold: true }
+    ]
+  },
+  sport: {
+    title: '⚽ شارات الرياضة',
+    items: [
+      { id: 'sp1', icon: '⚽', name: 'رياضي مبتدئ', check: s => s.totalWorkouts >= 5 },
+      { id: 'sp2', icon: '🏃', name: 'رياضي نشيط', check: s => s.totalWorkouts >= 20 },
+      { id: 'sp3', icon: '💪', name: 'قوي', check: s => s.totalStrength >= 10 },
+      { id: 'sp4', icon: '🏃‍♂️', name: 'رشيق', check: s => s.totalAgility >= 10 },
+      { id: 'sp5', icon: '🫀', name: 'متحمل', check: s => s.totalEndurance >= 10 },
+      { id: 'sp6', icon: '🏆', name: 'بطل', check: s => s.totalWorkouts >= 100, gold: true }
+    ]
+  },
+  special: {
+    title: '🎯 شارات خاصة',
+    items: [
+      { id: 'x1', icon: '🌅', name: 'مبكر', check: s => s.earlyWakeups >= 7 },
+      { id: 'x2', icon: '🎯', name: 'مدقق', check: s => s.perfectDays >= 3 },
+      { id: 'x3', icon: '🧠', name: 'مركز', check: s => s.pomodoroSessions >= 10 },
+      { id: 'x4', icon: '🏖️', name: 'مستمتع', check: s => s.weekendMode === true },
+      { id: 'x5', icon: '🌙', name: 'مثالي', check: s => s.perfectDays >= 5, gold: true }
+    ]
+  }
+};
 
 function saveState() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
@@ -979,6 +1299,9 @@ function playAlert() {
   [880, 660, 880].forEach((f, i) => setTimeout(() => playBeep(f, 200, 'triangle'), i * 200));
 }
 
+/* ============================================
+   TOGGLES
+============================================ */
 function toggleSound() {
   state.soundEnabled = !state.soundEnabled;
   document.getElementById('soundBtn').textContent = state.soundEnabled ? '🔊' : '🔇';
@@ -1005,13 +1328,25 @@ function toggleWeekend() {
 
 function selectMood(mood) {
   state.mood = mood;
-  document.querySelectorAll('.mood-option').forEach(el => {
+  document.querySelectorAll('.mood-option[data-mood]').forEach(el => {
     el.classList.toggle('selected', el.dataset.mood === mood);
   });
   playTick();
   saveState();
 }
 
+function selectGender(gender) {
+  state.user.gender = gender;
+  document.querySelectorAll('[data-gender]').forEach(el => {
+    el.classList.toggle('selected', el.dataset.gender === gender);
+  });
+  playTick();
+  saveState();
+}
+
+/* ============================================
+   HOMEWORK
+============================================ */
 function addHomework(data = null) {
   const div = document.createElement('div');
   div.className = 'homework-item';
@@ -1037,6 +1372,9 @@ function collectHomeworks() {
   return list;
 }
 
+/* ============================================
+   WEATHER
+============================================ */
 async function fetchWeather() {
   try {
     const pos = await new Promise((resolve, reject) => {
@@ -1096,7 +1434,19 @@ function renderWeather() {
   `;
 }
 
+/* ============================================
+   GENERATE SCHEDULE
+============================================ */
 function generateSchedule() {
+  // Save user data first
+  state.user = {
+    name: document.getElementById('userName').value.trim() || 'بطل',
+    age: parseInt(document.getElementById('userAge').value) || 13,
+    gender: state.user.gender || 'male',
+    height: parseInt(document.getElementById('userHeight').value) || null,
+    weight: parseInt(document.getElementById('userWeight').value) || null
+  };
+
   const wakeUp = timeToMinutes(document.getElementById('wakeUp').value);
   const trainingTime = timeToMinutes(document.getElementById('trainingTime').value);
   const trainingDur = parseInt(document.getElementById('trainingDuration').value) || 90;
@@ -1123,6 +1473,9 @@ function generateSchedule() {
     trainingType, homeworks,
     quranRecent, quranOld, quranNew
   };
+
+  // Early wakeup tracking
+  if (wakeUp <= 6 * 60) state.earlyWakeups++;
 
   const schedule = [];
   let cursor = wakeUp;
@@ -1228,9 +1581,27 @@ function getWorkoutForToday(type) {
   return workouts[type] || workouts.agility;
 }
 
+/* ============================================
+   RENDER SCHEDULE
+============================================ */
 function renderSchedule() {
   const timeline = document.getElementById('timeline');
   timeline.innerHTML = '';
+  
+  // Render user profile
+  const profileCard = document.getElementById('userProfileCard');
+  const u = state.user;
+  profileCard.innerHTML = `
+    <div class="user-avatar">${u.gender === 'female' ? '👧' : '👦'}</div>
+    <div class="user-info">
+      <div class="user-name">أهلاً ${u.name || 'بطل'}! 👋</div>
+      <div class="user-details">
+        ${u.age} سنة 
+        ${u.height ? ' • ' + u.height + ' سم' : ''}
+        ${u.weight ? ' • ' + u.weight + ' كجم' : ''}
+      </div>
+    </div>
+  `;
   
   if (!state.schedule.length) {
     timeline.innerHTML = '<div class="empty"><div class="empty-icon">📅</div><p>لا يوجد جدول بعد</p></div>';
@@ -1297,6 +1668,7 @@ function toggleTask(taskId) {
     }
     
     if (Object.keys(state.completed).length === state.schedule.length) {
+      state.perfectDays++;
       setTimeout(() => {
         fireConfetti();
         showModal('🏆', 'أحسنت يا بطل!', 'أكملت جميع مهام اليوم!');
@@ -1347,6 +1719,9 @@ function updateCurrentBanner(nowMin) {
   `;
 }
 
+/* ============================================
+   AI ADJUST
+============================================ */
 function emergencyAdjust() {
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
@@ -1381,6 +1756,9 @@ function emergencyAdjust() {
   showModal('🤖', 'تم التعديل الذكي!', 'أعاد التطبيق ترتيب مهامك المتبقية.');
 }
 
+/* ============================================
+   POMODORO
+============================================ */
 let pomodoroState = {
   active: false, timeLeft: 25 * 60, isBreak: false, interval: null,
   currentTaskId: null, sound: 'none', soundNodes: []
@@ -1409,6 +1787,7 @@ function startPomodoroInterval() {
     
     if (pomodoroState.timeLeft <= 0) {
       if (!pomodoroState.isBreak) {
+        state.pomodoroSessions++;
         playSuccess();
         showNotif('✅ انتهى وقت التركيز!', 'خذ راحة 5 دقائق');
         pomodoroState.isBreak = true;
@@ -1421,6 +1800,7 @@ function startPomodoroInterval() {
         pomodoroState.timeLeft = 25 * 60;
         document.getElementById('pomodoroMode').textContent = '🍅 وقت التركيز';
       }
+      saveState();
       updatePomodoroDisplay();
     }
   }, 1000);
@@ -1498,6 +1878,9 @@ function stopAmbientSound() {
   pomodoroState.soundNodes = [];
 }
 
+/* ============================================
+   STOPWATCH
+============================================ */
 let stopwatchState = { running: false, elapsed: 0, interval: null };
 
 function startStopwatch() {
@@ -1553,6 +1936,99 @@ function quickTimer(seconds) {
   }, 1000);
 }
 
+/* ============================================
+   WORKOUT LIBRARY
+============================================ */
+function selectWorkoutCat(cat) {
+  state.currentWorkoutCat = cat;
+  document.querySelectorAll('.workout-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.cat === cat);
+  });
+  renderWorkoutList();
+  playTick();
+  saveState();
+}
+
+function renderWorkoutList() {
+  const list = document.getElementById('workoutList');
+  const cat = state.currentWorkoutCat || 'agility';
+  const workouts = WORKOUT_LIBRARY[cat];
+  
+  list.innerHTML = workouts.map(w => `
+    <div class="workout-card" onclick="openViewer('${w.id}', '${cat}')">
+      <div class="workout-icon">${w.icon}</div>
+      <div class="workout-info">
+        <div class="workout-name">${w.name}</div>
+        <div class="workout-meta">
+          <span>⏱️ ${w.duration}</span>
+          <span>${w.desc}</span>
+        </div>
+      </div>
+      <div class="workout-arrow">›</div>
+    </div>
+  `).join('');
+}
+
+/* ============================================
+   3D VIEWER (Simplified)
+============================================ */
+let currentViewerExercise = null;
+let viewerAnimating = false;
+
+function openViewer(exerciseId, category) {
+  const exercise = WORKOUT_LIBRARY[category].find(w => w.id === exerciseId);
+  if (!exercise) return;
+  
+  currentViewerExercise = exercise;
+  
+  document.getElementById('viewerTitle').textContent = `${exercise.icon} ${exercise.name}`;
+  document.getElementById('viewerExerciseName').textContent = exercise.name;
+  document.getElementById('viewerBadge').textContent = `${exercise.duration}`;
+  
+  const instructionsList = document.getElementById('viewerInstructions');
+  instructionsList.innerHTML = exercise.instructions.map(i => `<li>${i}</li>`).join('');
+  
+  document.getElementById('viewerModal').classList.add('show');
+  playBeep(700, 100);
+  
+  // Track workout
+  if (category === 'strength') state.totalStrength++;
+  else if (category === 'agility') state.totalAgility++;
+  else if (category === 'endurance') state.totalEndurance++;
+  state.totalWorkouts++;
+  saveState();
+}
+
+function closeViewer() {
+  document.getElementById('viewerModal').classList.remove('show');
+  viewerAnimating = false;
+}
+
+function playViewerAnimation() {
+  const person = document.querySelector('#viewerCanvas > div:first-child');
+  if (!person) return;
+  
+  viewerAnimating = true;
+  playBeep(800, 100);
+  showToast('▶️ جاري تشغيل التمرين...');
+  
+  // Simple animation - change emoji to show motion
+  const frames = ['🧍‍♂️', '🏃', '🧎', '🧍‍♂️'];
+  let i = 0;
+  const interval = setInterval(() => {
+    person.textContent = frames[i % frames.length];
+    i++;
+    if (i > 8 || !viewerAnimating) {
+      clearInterval(interval);
+      person.textContent = '🧍‍♂️';
+      showToast('✅ انتهى العرض');
+    }
+  }, 400);
+}
+
+/* ============================================
+   NOTIFICATIONS
+============================================ */
 async function requestNotificationPermission() {
   if ('Notification' in window && Notification.permission === 'default') {
     await Notification.requestPermission();
@@ -1601,6 +2077,49 @@ function scheduleNotifications() {
   });
 }
 
+/* ============================================
+   BADGES
+============================================ */
+function renderBadges() {
+  const container = document.getElementById('badgesContainer');
+  let html = '';
+  let totalUnlocked = 0;
+  let totalBadges = 0;
+  
+  for (const key in BADGES) {
+    const cat = BADGES[key];
+    const unlockedInCat = cat.items.filter(b => b.check(state)).length;
+    totalUnlocked += unlockedInCat;
+    totalBadges += cat.items.length;
+    
+    html += `
+      <div class="badge-category">
+        <div class="badge-category-title">
+          <span>${cat.title}</span>
+          <span class="badge-category-count">${unlockedInCat}/${cat.items.length}</span>
+        </div>
+        <div class="badges-grid">
+          ${cat.items.map(b => {
+            const unlocked = b.check(state);
+            return `
+              <div class="badge-item ${unlocked ? 'unlocked' : ''} ${b.gold ? 'gold' : ''}">
+                <div class="badge-icon">${unlocked ? b.icon : '🔒'}</div>
+                <div class="badge-name">${b.name}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  }
+  
+  container.innerHTML = html;
+  return { totalUnlocked, totalBadges };
+}
+
+/* ============================================
+   REWARDS
+============================================ */
 function renderRewards() {
   const list = document.getElementById('rewardsList');
   list.innerHTML = state.rewards.map(r => {
@@ -1632,6 +2151,9 @@ function addReward() {
   showToast('✅ تمت الإضافة');
 }
 
+/* ============================================
+   STATS
+============================================ */
 function renderStats() {
   document.getElementById('statStreak').textContent = state.streak;
   document.getElementById('statPoints').textContent = state.totalPoints;
@@ -1640,26 +2162,6 @@ function renderStats() {
   renderBadges();
   renderWeeklyChart();
   renderRewards();
-}
-
-function renderBadges() {
-  const badges = [
-    { icon: '🌱', name: 'البداية', unlocked: state.totalTasksCompleted >= 1 },
-    { icon: '🔥', name: '3 أيام', unlocked: state.streak >= 3 },
-    { icon: '⭐', name: '100 نقطة', unlocked: state.totalPoints >= 100 },
-    { icon: '📖', name: '10 صفحات', unlocked: state.totalQuranPages >= 10 },
-    { icon: '⚽', name: 'رياضي', unlocked: state.totalTasksCompleted >= 5 },
-    { icon: '🏆', name: 'بطل', unlocked: state.streak >= 7 },
-    { icon: '💎', name: '500 نقطة', unlocked: state.totalPoints >= 500 },
-    { icon: '👑', name: 'ملك الحفظ', unlocked: state.totalQuranPages >= 50 },
-    { icon: '🌟', name: 'أسطورة', unlocked: state.streak >= 30 }
-  ];
-  document.getElementById('badgesGrid').innerHTML = badges.map(b => `
-    <div class="badge-item ${b.unlocked ? 'unlocked' : ''}">
-      <div class="badge-icon">${b.icon}</div>
-      <div class="badge-name">${b.name}</div>
-    </div>
-  `).join('');
 }
 
 function renderWeeklyChart() {
@@ -1694,7 +2196,8 @@ function shareProgress() {
     `🔥 ${state.streak} يوم متتالي\n` +
     `⭐ ${state.totalPoints} نقطة\n` +
     `✅ ${state.totalTasksCompleted} مهمة\n` +
-    `📖 ${state.totalQuranPages} صفحة قرآن`;
+    `📖 ${state.totalQuranPages} صفحة قرآن\n` +
+    `⚽ ${state.totalWorkouts} تمرين`;
   
   if (navigator.share) {
     navigator.share({ title: 'إنجازي في يومي', text }).catch(() => {});
@@ -1703,6 +2206,9 @@ function shareProgress() {
   }
 }
 
+/* ============================================
+   NAVIGATION
+============================================ */
 function switchTab(tab) {
   ['schedule', 'input', 'stats', 'workout', 'download'].forEach(t => {
     document.getElementById(t + 'Screen').classList.toggle('hidden', t !== tab);
@@ -1711,11 +2217,19 @@ function switchTab(tab) {
   });
   if (tab === 'stats') renderStats();
   if (tab === 'schedule' && state.schedule.length) renderSchedule();
-  if (tab === 'workout') renderHomeWorkouts();
+  if (tab === 'workout') renderWorkoutList();
   window.scrollTo(0, 0);
 }
 
 function backToInput() {
+  document.getElementById('userName').value = state.user.name || '';
+  document.getElementById('userAge').value = state.user.age || 13;
+  document.getElementById('userHeight').value = state.user.height || '';
+  document.getElementById('userWeight').value = state.user.weight || '';
+  document.querySelectorAll('[data-gender]').forEach(el => {
+    el.classList.toggle('selected', el.dataset.gender === state.user.gender);
+  });
+  
   document.getElementById('wakeUp').value = state.inputs.wakeUp;
   document.getElementById('schoolStart').value = state.inputs.schoolStart;
   document.getElementById('schoolEnd').value = state.inputs.schoolEnd;
@@ -1736,7 +2250,7 @@ function backToInput() {
   document.getElementById('weekendToggle').classList.toggle('on', state.weekendMode);
   document.getElementById('schoolFields').style.display = state.weekendMode ? 'none' : 'block';
   
-  document.querySelectorAll('.mood-option').forEach(el => {
+  document.querySelectorAll('.mood-option[data-mood]').forEach(el => {
     el.classList.toggle('selected', el.dataset.mood === state.mood);
   });
   
@@ -1760,28 +2274,9 @@ function resetAllData() {
   }
 }
 
-function renderHomeWorkouts() {
-  const list = document.getElementById('homeWorkoutList');
-  const workouts = [
-    { name: '🦘 قفز رأسي', detail: '3 مجموعات × 12 عدة' },
-    { name: '🏃 جري في المكان', detail: '3 دقائق سريع' },
-    { name: '💪 بلانك', detail: '3 × 45 ثانية' },
-    { name: '🦵 قرفصاء', detail: '3 × 15 عدة' },
-    { name: '🎯 تمركز دفاعي', detail: 'تدريب ظل 5 دقائق' },
-    { name: '🧘 تمدد وإطالة', detail: '10 دقائق كاملة' },
-    { name: '⚡ سلّم رشاقة وهمي', detail: 'خطوات سريعة أرضية' }
-  ];
-  list.innerHTML = workouts.map(w => `
-    <div class="reward-item">
-      <div class="reward-info">
-        <div class="reward-name">${w.name}</div>
-        <div class="reward-desc">${w.detail}</div>
-      </div>
-      <button class="task-check" onclick="this.classList.toggle('done'); this.textContent = this.classList.contains('done') ? '✓' : ''; playTick();"></button>
-    </div>
-  `).join('');
-}
-
+/* ============================================
+   TACTICAL TIP
+============================================ */
 function renderTacticalTip() {
   const tips = [
     { title: '🛡️ التغطية العكسية', text: 'راقب المهاجم اللي بيقطع من العمق. اتخذ خطوة للخلف قبل ما يوصلك الباص.' },
@@ -1801,6 +2296,9 @@ function renderTacticalTip() {
   `;
 }
 
+/* ============================================
+   STREAK
+============================================ */
 function updateStreak() {
   const today = todayKey();
   const yesterday = (() => {
@@ -1816,6 +2314,9 @@ function updateStreak() {
   saveState();
 }
 
+/* ============================================
+   CONFETTI
+============================================ */
 function fireConfetti() {
   const colors = ['#1a237e', '#3949ab', '#43a047', '#fb8c00', '#fdd835', '#e53935', '#8e24aa'];
   for (let i = 0; i < 50; i++) {
@@ -1831,14 +2332,21 @@ function fireConfetti() {
   }
 }
 
+/* ============================================
+   SETTINGS
+============================================ */
 function showSettings() {
   showModal('⚙️', 'الإعدادات',
     `🔊 الصوت: ${state.soundEnabled ? 'مفعّل' : 'معطّل'}\n` +
     `🌙 الوضع الليلي: ${state.darkMode ? 'مفعّل' : 'معطّل'}\n` +
-    `🏖️ وضع الإجازة: ${state.weekendMode ? 'مفعّل' : 'معطّل'}`
+    `🏖️ وضع الإجازة: ${state.weekendMode ? 'مفعّل' : 'معطّل'}\n` +
+    `🏆 الإنجازات: ${renderBadges().totalUnlocked} من ${renderBadges().totalBadges}`
   );
 }
 
+/* ============================================
+   INIT
+============================================ */
 function init() {
   loadState();
   
@@ -1851,6 +2359,16 @@ function init() {
   document.getElementById('streakDays').textContent = state.streak;
   document.getElementById('pointsValue').textContent = state.totalPoints;
   
+  // Load user
+  document.getElementById('userName').value = state.user.name || '';
+  document.getElementById('userAge').value = state.user.age || 13;
+  document.getElementById('userHeight').value = state.user.height || '';
+  document.getElementById('userWeight').value = state.user.weight || '';
+  document.querySelectorAll('[data-gender]').forEach(el => {
+    el.classList.toggle('selected', el.dataset.gender === state.user.gender);
+  });
+  
+  // Load inputs
   document.getElementById('wakeUp').value = state.inputs.wakeUp;
   document.getElementById('schoolStart').value = state.inputs.schoolStart;
   document.getElementById('schoolEnd').value = state.inputs.schoolEnd;
@@ -1865,10 +2383,11 @@ function init() {
   document.getElementById('weekendBadge').classList.toggle('hidden', !state.weekendMode);
   document.getElementById('schoolFields').style.display = state.weekendMode ? 'none' : 'block';
   
-  document.querySelectorAll('.mood-option').forEach(el => {
+  document.querySelectorAll('.mood-option[data-mood]').forEach(el => {
     el.classList.toggle('selected', el.dataset.mood === state.mood);
   });
   
+  // Load homeworks
   document.getElementById('homeworkList').innerHTML = '';
   if (state.inputs.homeworks?.length) {
     state.inputs.homeworks.forEach(hw => addHomework(hw));
@@ -1878,6 +2397,7 @@ function init() {
   
   fetchWeather().then(() => renderWeather());
   renderTacticalTip();
+  renderWorkoutList();
   
   if (state.schedule.length) {
     renderSchedule();
