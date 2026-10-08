@@ -1,0 +1,894 @@
+/* ============================================
+   ⚽ يومي v4.0 - App Page Styles
+   ============================================
+   يُستخدم فقط في html/app.html
+   ============================================ */
+
+/* ============================================
+   1. APP BODY OVERRIDE
+============================================ */
+body.app-mode {
+  padding-bottom: 90px;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+body.app-mode .container {
+  padding: 15px;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   2. APP HEADER
+============================================ */
+.app-header {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  padding: 16px 18px;
+  border-radius: 0 0 25px 25px;
+  box-shadow: 0 4px 20px rgba(26, 35, 126, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-header .header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-header h1 {
+  font-size: 20px;
+  margin-bottom: 3px;
+  color: white;
+  font-weight: 800;
+}
+
+.app-header p {
+  font-size: 11px;
+  opacity: 0.9;
+  margin: 0;
+  color: white;
+}
+
+.app-header .header-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.app-header .icon-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.app-header .icon-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.app-header .icon-btn:active {
+  transform: scale(0.9);
+}
+
+.app-header .info-bar {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.app-header .info-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 11px;
+  color: white;
+  animation: fadeIn 0.5s ease;
+}
+
+/* ============================================
+   3. SCREENS MANAGEMENT
+============================================ */
+#inputScreen,
+#scheduleScreen,
+#workoutScreen,
+#quranScreen,
+#statsScreen,
+#downloadScreen {
+  animation: slideUp 0.4s ease-out;
+}
+
+#inputScreen.hidden,
+#scheduleScreen.hidden,
+#workoutScreen.hidden,
+#quranScreen.hidden,
+#statsScreen.hidden,
+#downloadScreen.hidden {
+  display: none !important;
+}
+
+/* ============================================
+   4. QURAN SCREEN SPECIFIC
+============================================ */
+#quranScreen .quran-stats-card {
+  background: linear-gradient(135deg, #fff9c4, #ffeb3b);
+  color: #333;
+  text-align: center;
+}
+
+#quranScreen .quran-stats-card h2 {
+  color: #333;
+  justify-content: center;
+}
+
+#quranScreen #quranSearch {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: 25px;
+  font-size: 14px;
+  background: var(--card);
+  color: var(--text);
+  transition: all 0.3s ease;
+  font-family: inherit;
+  margin: 0;
+}
+
+#quranScreen #quranSearch:focus {
+  border-color: var(--primary-light);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.1);
+}
+
+#quranScreen .workout-list {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+#quranScreen .workout-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+#quranScreen .workout-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+/* ============================================
+   5. BOTTOM NAVIGATION (5 TABS)
+============================================ */
+body.app-mode .bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+  z-index: 200;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.app-mode .bottom-nav .nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+  font-size: 10px;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  gap: 2px;
+  text-decoration: none;
+  flex: 1;
+  min-width: 0;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+
+body.app-mode .bottom-nav .nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 24px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 3px 3px 0 0;
+  transition: transform 0.25s ease;
+}
+
+body.app-mode .bottom-nav .nav-item.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+body.app-mode .bottom-nav .nav-item:hover {
+  background: var(--bg);
+}
+
+body.app-mode .bottom-nav .nav-item.active {
+  color: var(--primary);
+}
+
+body.dark.app-mode .bottom-nav .nav-item.active {
+  color: var(--primary-lighter);
+}
+
+body.app-mode .bottom-nav .nav-icon {
+  font-size: 20px;
+  line-height: 1;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+body.app-mode .bottom-nav .nav-item.active .nav-icon {
+  transform: scale(1.15);
+}
+
+body.app-mode .bottom-nav .nav-item span:last-child {
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+/* ============================================
+   6. GENDER OPTIONS
+============================================ */
+.gender-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.gender-options .mood-option {
+  padding: 14px 12px;
+}
+
+/* ============================================
+   7. LOADING STATE
+============================================ */
+#quranList .empty .empty-icon {
+  animation: spin 1s linear infinite;
+}
+
+#quranList .empty .empty-icon:not(:contains("⏳")) {
+  animation: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   8. IMPROVED CARDS
+============================================ */
+body.app-mode .card {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  animation: slideUp 0.4s ease-out;
+}
+
+body.app-mode .card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+body.app-mode .card h2 {
+  font-size: 16px;
+  color: var(--primary);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  font-weight: 700;
+}
+
+body.dark.app-mode .card h2 {
+  color: var(--primary-lighter);
+}
+
+/* ============================================
+   9. IMPROVED INPUTS
+============================================ */
+body.app-mode input[type="text"],
+body.app-mode input[type="number"],
+body.app-mode input[type="time"],
+body.app-mode select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-size: 15px;
+  margin-bottom: 12px;
+  background: var(--card);
+  color: var(--text);
+  transition: all 0.3s ease;
+  font-family: inherit;
+  outline: none;
+}
+
+body.app-mode input:focus,
+body.app-mode select:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.1);
+}
+
+body.app-mode input::placeholder {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ============================================
+   10. VIEWER MODAL (3D SIMULATION)
+============================================ */
+.viewer-canvas {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.viewer-canvas > div:first-child {
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4));
+}
+
+/* ============================================
+   11. USER PROFILE CARD
+============================================ */
+.user-profile {
+  background: linear-gradient(135deg, #ffa000, #f57c00);
+  color: white;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 15px rgba(255, 160, 0, 0.3);
+  animation: slideUp 0.4s ease-out;
+}
+
+.user-profile .user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.user-profile .user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-profile .user-name {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-profile .user-details {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+/* ============================================
+   12. IMPROVED PROGRESS
+============================================ */
+body.app-mode .progress-container {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow-sm);
+  animation: slideUp 0.4s ease-out;
+}
+
+body.app-mode .progress-fill {
+  background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--primary-lighter));
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ============================================
+   13. IMPROVED TIMELINE
+============================================ */
+body.app-mode .timeline {
+  position: relative;
+  padding-right: 30px;
+  padding-bottom: 10px;
+}
+
+body.app-mode .task {
+  position: relative;
+  background: var(--card);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  border-right: 5px solid var(--primary-light);
+  transition: all 0.3s ease;
+  animation: slideUp 0.4s ease-out backwards;
+}
+
+body.app-mode .task:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(-3px);
+}
+
+/* ============================================
+   14. SCROLL BEHAVIOR
+============================================ */
+body.app-mode {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================
+   15. MOBILE OPTIMIZATIONS
+============================================ */
+@media (max-width: 480px) {
+  body.app-mode .container {
+    padding: 12px;
+  }
+
+  .app-header {
+    padding: 14px 15px;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .app-header h1 {
+    font-size: 18px;
+  }
+
+  .app-header .icon-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  body.app-mode .card {
+    padding: 15px;
+    border-radius: 16px;
+  }
+
+  body.app-mode .card h2 {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  body.app-mode .bottom-nav .nav-item {
+    padding: 5px 4px;
+    font-size: 9px;
+  }
+
+  body.app-mode .bottom-nav .nav-icon {
+    font-size: 18px;
+  }
+
+  body.app-mode input,
+  body.app-mode select {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  body.app-mode .user-profile {
+    padding: 14px;
+  }
+
+  body.app-mode .user-avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 26px;
+  }
+
+  body.app-mode .user-name {
+    font-size: 16px;
+  }
+
+  .gender-options {
+    gap: 8px;
+  }
+
+  .gender-options .mood-option {
+    padding: 12px 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  body.app-mode .bottom-nav .nav-item span:last-child {
+    display: none;
+  }
+
+  body.app-mode .bottom-nav .nav-icon {
+    font-size: 22px;
+  }
+
+  body.app-mode .bottom-nav .nav-item {
+    padding: 8px 4px;
+  }
+}
+
+/* ============================================
+   16. SAFE AREA (iPhone X+)
+============================================ */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  body.app-mode {
+    padding-bottom: calc(90px + env(safe-area-inset-bottom));
+  }
+
+  body.app-mode .bottom-nav {
+    padding-bottom: calc(6px + env(safe-area-inset-bottom));
+  }
+
+  .app-header {
+    padding-top: calc(16px + env(safe-area-inset-top));
+  }
+}
+
+/* ============================================
+   17. DARK MODE ADJUSTMENTS
+============================================ */
+body.dark.app-mode .user-profile {
+  background: linear-gradient(135deg, #b26500, #8a4a00);
+  box-shadow: 0 4px 15px rgba(178, 101, 0, 0.3);
+}
+
+body.dark.app-mode #quranScreen .quran-stats-card {
+  background: linear-gradient(135deg, #4a4a00, #3d3d00);
+  color: #ffeb3b;
+}
+
+body.dark.app-mode #quranScreen .quran-stats-card h2 {
+  color: #ffeb3b;
+}
+
+body.dark.app-mode #quranScreen .quran-stats-card p {
+  color: #ffeb3b;
+  opacity: 0.8;
+}
+
+body.dark.app-mode .viewer-canvas {
+  background: linear-gradient(135deg, #0d1654, #050a2e);
+}
+
+/* ============================================
+   18. PRINT
+============================================ */
+@media print {
+  .app-header,
+  .bottom-nav,
+  .ai-btn,
+  .btn,
+  .user-profile,
+  .viewer-modal,
+  .pomodoro-overlay,
+  .modal-overlay,
+  .notif-banner,
+  .toast {
+    display: none !important;
+  }
+
+  body.app-mode {
+    padding: 0;
+    background: white;
+  }
+
+  .card,
+  .task {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    page-break-inside: avoid;
+  }
+}
+
+/* ============================================
+   19. ACCESSIBILITY
+============================================ */
+body.app-mode .bottom-nav .nav-item:focus-visible,
+body.app-mode .icon-btn:focus-visible,
+body.app-mode .btn:focus-visible,
+body.app-mode .task-check:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.app-mode *,
+  body.app-mode *::before,
+  body.app-mode *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   20. EXTRA UTILITIES
+============================================ */
+body.app-mode .flex-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+body.app-mode .flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+body.app-mode .gap-sm { gap: 6px; }
+body.app-mode .gap-md { gap: 12px; }
+body.app-mode .gap-lg { gap: 20px; }
+
+body.app-mode .text-sm { font-size: 12px; }
+body.app-mode .text-md { font-size: 14px; }
+body.app-mode .text-lg { font-size: 18px; }
+
+body.app-mode .text-muted { color: var(--text-muted); }
+body.app-mode .text-light { color: var(--text-light); }
+
+body.app-mode .bg-highlight {
+  background: linear-gradient(135deg, #fff9c4, #ffeb3b);
+  border-radius: 12px;
+  padding: 15px;
+}
+
+/* ============================================
+   21. NAV ITEM ACTIVE INDICATOR
+============================================ */
+body.app-mode .bottom-nav .nav-item .nav-icon {
+  position: relative;
+  z-index: 1;
+}
+
+body.app-mode .bottom-nav .nav-item.active .nav-icon::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  background: radial-gradient(circle, rgba(26, 35, 126, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* ============================================
+   22. QURAN SURAH CARD SPECIAL
+============================================ */
+#quranScreen .workout-icon {
+  background: linear-gradient(135deg, #fff9c4, #ffeb3b) !important;
+  color: #333 !important;
+  font-weight: 800;
+  font-size: 18px !important;
+}
+
+/* ============================================
+   23. EMPTY STATE
+============================================ */
+body.app-mode .empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-light);
+}
+
+body.app-mode .empty-icon {
+  font-size: 60px;
+  margin-bottom: 10px;
+  opacity: 0.5;
+  display: inline-block;
+}
+
+/* ============================================
+   24. HEADER ANIMATION
+============================================ */
+.app-header {
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ============================================
+   25. BADGE SCREEN CUSTOMIZATION
+============================================ */
+#badgesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#badgesContainer .badge-category {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   26. REWARDS LIST
+============================================ */
+#rewardsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ============================================
+   27. WEEKLY CHART
+============================================ */
+#weeklyChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 120px;
+  padding: 10px 0;
+  border-radius: 12px;
+  background: var(--bg);
+  padding: 15px 10px;
+}
+
+body.dark.app-mode #weeklyChart {
+  background: var(--border-light);
+}
+
+/* ============================================
+   28. STATS GRID ENHANCEMENT
+============================================ */
+body.app-mode .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+body.app-mode .stat-card {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 16px 12px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  transition: all 0.25s ease;
+  cursor: default;
+}
+
+body.app-mode .stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+body.app-mode .stat-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+body.dark.app-mode .stat-value {
+  color: var(--primary-lighter);
+}
+
+body.app-mode .stat-label {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+/* ============================================
+   29. RESPONSIVE HEADER
+============================================ */
+@media (max-width: 400px) {
+  .app-header .header-actions {
+    gap: 4px;
+  }
+
+  .app-header .icon-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .app-header h1 {
+    font-size: 16px;
+  }
+
+  .app-header p {
+    font-size: 10px;
+  }
+}
+
+/* ============================================
+   30. FINAL TOUCHES
+============================================ */
+body.app-mode .btn {
+  font-family: inherit;
+  letter-spacing: -0.2px;
+}
+
+body.app-mode .add-hw {
+  transition: all 0.25s ease;
+}
+
+body.app-mode .add-hw:hover {
+  background: rgba(57, 73, 171, 0.06);
+  transform: translateY(-1px);
+}
+
+body.app-mode .pomodoro-btn {
+  transition: all 0.2s ease;
+}
+
+body.app-mode .pomodoro-btn:hover {
+  background: rgba(229, 57, 53, 0.15);
+  transform: scale(1.05);
+}
+
+/* ============================================
+   31. SUBTLE BACKGROUND PATTERN
+============================================ */
+body.app-mode::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(57, 73, 171, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255, 160, 0, 0.02) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body.app-mode .container {
+  position: relative;
+  z-index: 1;
+}
